@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#0e141c",
+                    "tertiary-fixed": "#eddcff",
+                    "on-primary-fixed-variant": "#003daa",
+                    "surface-container-high": "#242a33",
+                    "inverse-on-surface": "#2b3139",
+                    "on-tertiary-fixed": "#290055",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#00daf3",
+                    "tertiary-fixed-dim": "#d8b9ff",
+                    "surface-container": "#1a2028",
+                    "on-secondary": "#00363d",
+                    "outline": "#8d909f",
+                    "on-tertiary-fixed-variant": "#6300bb",
+                    "on-tertiary": "#450086",
+                    "inverse-surface": "#dde3ee",
+                    "on-error": "#690005",
+                    "on-background": "#dde3ee",
+                    "surface-variant": "#2f353e",
+                    "on-surface": "#dde3ee",
+                    "surface-container-low": "#161c24",
+                    "secondary-fixed": "#9cf0ff",
+                    "outline-variant": "#434654",
+                    "tertiary": "#d8b9ff",
+                    "secondary": "#bdf4ff",
+                    "primary-container": "#628aff",
+                    "primary": "#b4c5ff",
+                    "surface-dim": "#0e141c",
+                    "secondary-container": "#00e3fd",
+                    "on-primary": "#002979",
+                    "on-secondary-fixed": "#001f24",
+                    "on-primary-fixed": "#00174c",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-error-container": "#ffdad6",
+                    "surface-tint": "#b4c5ff",
+                    "surface-bright": "#343a42",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-surface-variant": "#c3c6d6",
+                    "inverse-primary": "#1e55cf",
+                    "tertiary-container": "#ae71ff",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#00616d",
+                    "on-tertiary-container": "#3c0076",
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#00236a",
+                    "surface-container-lowest": "#090f16",
+                    "surface-container-highest": "#2f353e",
+                    "background": "#0e141c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-mask {
+            mask-image: linear-gradient(to right, black 50%, transparent 100%);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(52, 58, 66, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#0e141c]/60 backdrop-blur-xl shadow-2xl shadow-black/40">
+<div class="flex justify-between items-center px-8 h-20 max-w-[1920px] mx-auto font-['Space_Grotesk'] tracking-tight">
+<div class="text-2xl font-bold tracking-tighter text-white">Nexus Core</div>
+<!-- Desktop Navigation -->
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-[#b4c5ff] border-b-2 border-[#4C79F4] pb-1" href="#">Marketplace</a>
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Top-ups</a>
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Accounts</a>
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Buy Games</a>
+</div>
+<!-- Search and Actions -->
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container-highest px-4 py-2 rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 placeholder-on-surface-variant/50" placeholder="Search skins, items, games..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-[#343a42]/40 transition-all duration-300 p-2 rounded-full active:scale-95 text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-[#343a42]/40 transition-all duration-300 p-2 rounded-full active:scale-95 text-on-surface-variant">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary/30">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional gamer with neon lighting highlights on their face in a dark room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFtlgy5XGb4f7CPO4k4yPjzKaKWwg9fjmHzO-g6niEqC0krahLLBwqxu_er1H9U-p-cZPkRk3yQiY6S1VuiH2VbdfqHM8gNOADugUdX5qvzIeWSTCzQgwe1g4nx-p-Rn8I3gR9_ffFPiE05m0LeLmtECPi6wuOrPXycU1-Fm0ebBYsIcpsBWeHbT-7BeEmnyim80UU0mcgPSvsdAqxVNHrQlslfbWLhiH5IlqPebHLEq-BKo9hEbFljuLQoe1BntVwfAiSWcKhoHp6"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[819px] flex items-center overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 z-0">
+<img alt="Cinematic Gaming Asset" class="w-full h-full object-cover opacity-40" data-alt="Epic cinematic wide shot of a futuristic cyberpunk city at night with glowing neon billboards and atmospheric fog" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQvNHrpv2cntYOPebgHhgroAvKIr21YC_knco00Ns6pX32hStScOOrmcOoBtMp6hvsVEwZzQVayTP8-tbNylq3O3rX9b-PGDO4qWlFwbQytL3DcIWOJdRzACBWqHb9Y-Iw23BWmRDtIJZvq1ozzSsp-1HTHuHx2GSAqBT6dpJij6XfjUfaHxPv8xMeZhhMEwnqNeQwrf88wVzperpLpBnVzIcNDRv52AVPZJumjq9o7M0N1zWWr0uzjYaBX3RhMECl97vzEQmCMsHs"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
+</div>
+<div class="container mx-auto px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-6">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/10 border border-secondary-container/30 text-secondary-container text-xs font-bold tracking-widest uppercase">
+                        New Season Drops
+                    </div>
+<h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter leading-none text-white">
+                        THE NEON <br/><span class="text-primary italic">CURATOR</span>
+</h1>
+<p class="text-on-surface-variant text-lg max-w-md font-light leading-relaxed">
+                        Access the world's most elite marketplace for skins, digital assets, and high-tier gaming accounts. Verified by the Core.
+                    </p>
+<div class="flex gap-4 pt-4">
+<button class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-lg active:scale-95 transition-transform">
+                            Explore Marketplace
+                        </button>
+<button class="px-8 py-4 bg-surface-container-highest border border-outline-variant/20 text-white font-bold rounded-lg hover:bg-surface-bright transition-colors active:scale-95">
+                            Sell Items
+                        </button>
+</div>
+</div>
+<div class="hidden lg:block">
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary/20 blur-3xl rounded-full group-hover:bg-primary/30 transition-all"></div>
+<div class="relative bg-surface-container-high rounded-xl overflow-hidden border border-outline-variant/30 transform hover:-rotate-2 transition-transform duration-500 shadow-2xl">
+<img alt="Featured Item" class="w-full h-96 object-cover" data-alt="High-detail 3D render of a futuristic cybernetic sword with glowing blue energy edges against a dark studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHVlkz9e_RylV279KW4y5XQ9X7HEZWwgYeKERAQesjaE1fOtzmNLiwxR0_TlBqCXdEm4Z1UGX7JeIi6LDaWtPD4XXJgt6S94oqgAPA-gxxYpDYTQAfReYqKC6YQrLlk40rJ3j_zYpLIxfc3BD-jEnuMd1WdgpXwlBFVALOn3xFlvt0OEbPANSfNUx7fb42PaoyoFgdZ50H-WD2k8boa2p2dsUJg2VzeAZ4Vy3lXvetomBF8BqsozsqfHNdL5BQ_J5Wucn_NEDJKwV5"/>
+<div class="p-6 space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-secondary font-bold uppercase tracking-widest text-xs">Legendary Asset</span>
+<span class="text-white font-headline font-bold text-xl">$1,240.00</span>
+</div>
+<h3 class="text-white text-2xl font-bold">Azure Phase-Shift Katana</h3>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-xs">verified</span>
+<span>Instant Delivery Verified</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories Bento Grid -->
+<section class="py-24 bg-surface-container-low">
+<div class="container mx-auto px-8">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+<div>
+<h2 class="font-headline text-4xl font-black text-white tracking-tight uppercase">Browse Hubs</h2>
+<div class="h-1 w-20 bg-primary mt-2"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 relative group h-80 rounded-xl overflow-hidden cursor-pointer">
+<img alt="PC Gaming" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Ultra-modern custom PC build with glowing RGB lighting in a dark room focusing on the internal components" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEQgBj9C0PdI07khojtaazvWpRGBnQtNdeoyiyicqroJ-lBeHE41p2ljANmPAGaNY-FR0goJV-ZmW8r3-DCPPOZHhzmN8ykQcjWD28t7H2YlJ45_oE8033s4CQdkVCWGeSsIfnXzwUWs5NZKsJgl34iZGsi2eCBxjYt-n41K4LeST4Fd52w2H7JZTdp4rB5w9YUnBS2fTVaMzdkR3J-SlWaXPzdoPxnHM1rmTvuPAsYGiyWbHvh2iuQJcmktSpCWRxLwuG9Lf4gIcE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h3 class="text-white font-headline text-3xl font-bold tracking-tighter">PC MASTERY</h3>
+<p class="text-on-surface-variant text-sm uppercase tracking-widest">Skins • Currency • Accounts</p>
+</div>
+</div>
+<div class="relative group h-80 rounded-xl overflow-hidden cursor-pointer">
+<img alt="Gift Cards" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Stacked plastic gift cards with abstract colorful patterns in a clean minimalist composition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-d6i3hr6qiZ8g3bJLPqQCnVXmQ3F0HAuc9lDCUmHqLx5NafulkiVb2yX3TSxeulpwq4QDzY0TJM8lhhZDRalOJeD-3ErUy4NbfaoiaGtmr65Rzul1tF3FQNiCm_RQFM78T9sP-cZWjn0pRQWZS26TCpiBVjZaklURyq4LoNDbWm_Z3YRwCTTgWPyHV0WatDZSuojA-5-f0iFDbLCNGGmcdkPRRugR2uqmTU6f1v-1y2i6VH92NQALStDItXu-7SBTIyqxxA0oodGj"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h3 class="text-white font-headline text-2xl font-bold tracking-tighter">GIFT CARDS</h3>
+<p class="text-on-surface-variant text-xs uppercase tracking-widest">Instant Code Delivery</p>
+</div>
+</div>
+<div class="relative group h-80 rounded-xl overflow-hidden cursor-pointer">
+<img alt="Mobile Gaming" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Close up of a smartphone screen showing a colorful mobile game in a dark environment with soft bokeh lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuvDX5KcWCNoao5Vktmx74f79u364vIyGq-td6lGQ1jpg6WAmE_rI3WouQR_Akmvk8I8hyZHFrcI9NFmO0U1UdnAksXMchkWxFiMSo_HmrG-T8sneNcUa2Kep4aO4ncIiA_Z7Z4lu3N9Rdltf-4dTuJuqp54fbeFJVbUeLUam2Rbo9tefQIDnylUWO7XEIFvEpzlnVUYsmbva06gaWQKJpdMVZc2MvVrUhcyHeUUnsVfubzjgXjlo8JCp53-G1n9XWDIzuHbst4LtI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+<div class="absolute bottom-8 left-8">
+<h3 class="text-white font-headline text-2xl font-bold tracking-tighter">MOBILE</h3>
+<p class="text-on-surface-variant text-xs uppercase tracking-widest">Top-ups • Boosts</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Flash Deals -->
+<section class="py-24 bg-surface overflow-hidden">
+<div class="container mx-auto px-8">
+<div class="flex items-center justify-between mb-12">
+<div class="flex items-center gap-6">
+<h2 class="font-headline text-4xl font-black text-white tracking-tight uppercase">Flash Deals</h2>
+<div class="flex gap-2">
+<div class="bg-error-container text-on-error-container px-3 py-1 font-headline font-bold text-lg rounded border border-error/20">08</div>
+<span class="text-error font-bold text-xl self-center">:</span>
+<div class="bg-error-container text-on-error-container px-3 py-1 font-headline font-bold text-lg rounded border border-error/20">42</div>
+<span class="text-error font-bold text-xl self-center">:</span>
+<div class="bg-error-container text-on-error-container px-3 py-1 font-headline font-bold text-lg rounded border border-error/20">15</div>
+</div>
+</div>
+<a class="text-primary font-bold uppercase tracking-widest text-sm hover:underline" href="#">View All Deals</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Deal Card 1 -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden group border border-outline-variant/10">
+<div class="relative h-48">
+<img alt="Deal Item" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Colorful abstract gaming icons for virtual currency and loot boxes in a glowing neon style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2ERd-FsXfIlkqPSfW5j9_47k0l-synLHd7PMmwXR2ym4L6I3Nqbeiyfc2ffJ9biXQODlBJw8tB3yV6aPIV5mkedWdh_LUFspGC0YCuMqP72_6eo3Km_167SS54pOQa15p8__3wfPjBeuzcBnMu3V_EVFOq-b3LCGy7j4jLW8SBgs6_daahcllVKtI9kmSzaMNXJ4ygXjf7Jnvwfs33_Ui1FrZ2Ddq7_La_Efg_HWnUnoyR-rX0x8yw00rCfpPgLPYSDWjrWhyqgK-"/>
+<div class="absolute top-4 left-4 bg-primary text-on-primary text-xs font-black px-2 py-1 rounded">-45%</div>
+</div>
+<div class="p-6">
+<h4 class="text-on-surface-variant text-xs font-bold uppercase tracking-tighter mb-1">Fortnite V-Bucks</h4>
+<p class="text-white font-bold text-lg mb-4">13,500 V-Bucks Bundle</p>
+<div class="flex justify-between items-center">
+<div>
+<span class="text-primary font-bold text-xl">$44.99</span>
+<span class="text-on-surface-variant/50 line-through text-sm ml-2">$79.99</span>
+</div>
+<button class="w-10 h-10 bg-surface-bright rounded-lg flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Deal Card 2 -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden group border border-outline-variant/10">
+<div class="relative h-48">
+<img alt="Deal Item" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="PlayStation Store digital gift card logo glowing on a dark textured background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKUP42PqWfGiREz68lMgEzRe82la1qjCyzhiWYC9UySDCZlIvRkYNI3KpSG1Eq6EiA1aJpKX2sS9r7TUW6FX0jAsmEfM2tKekUei6THv6L7o12Xkup0rSvsZURCKz41h1ytS6Whre89uR5pQiHg-oDncHmV8ANcBhDfPuaYTm3d6OFTuYZm81Z4D8lDXGwtGLZ_Weuc6Zy8amtO8sKb4aD9s1rUCcbxiUGQPIBzMDlq31x-_N7D-QYn33IJgorUba9tNipG8Cpr_1h"/>
+<div class="absolute top-4 left-4 bg-primary text-on-primary text-xs font-black px-2 py-1 rounded">-12%</div>
+</div>
+<div class="p-6">
+<h4 class="text-on-surface-variant text-xs font-bold uppercase tracking-tighter mb-1">PlayStation Network</h4>
+<p class="text-white font-bold text-lg mb-4">$50 PSN Gift Card</p>
+<div class="flex justify-between items-center">
+<div>
+<span class="text-primary font-bold text-xl">$43.50</span>
+<span class="text-on-surface-variant/50 line-through text-sm ml-2">$50.00</span>
+</div>
+<button class="w-10 h-10 bg-surface-bright rounded-lg flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Deal Card 3 -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden group border border-outline-variant/10">
+<div class="relative h-48">
+<img alt="Deal Item" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close up of a keyboard and mouse with purple RGB lighting highlighting the 'WASD' keys" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjdsy1tAfuunZeid06zvI1da2NVpn_UK4ASOXp6tqtj_ZJ3ECHo-kUuBd5j2fpjwarlEkJTKcKkVxB8RsISY7t5wdbepO4HtTvLw7cXNdRJhO13k9OGoh3r-gvOJ5-YCmrZ4XT57F-ghOhIEua55zj1xjDWlKvgcPWOtdvmEUObXSLfaOIhITKIx-d_XWN4pUQV8xSsLK-1KUArzL46akOK4ZoIEzSLyrZd3asrSvMPAutNOxPtjpgDwyARc_QloLHOILQqWE3N-i_"/>
+<div class="absolute top-4 left-4 bg-primary text-on-primary text-xs font-black px-2 py-1 rounded">-30%</div>
+</div>
+<div class="p-6">
+<h4 class="text-on-surface-variant text-xs font-bold uppercase tracking-tighter mb-1">Roblox Robux</h4>
+<p class="text-white font-bold text-lg mb-4">10,000 Robux Package</p>
+<div class="flex justify-between items-center">
+<div>
+<span class="text-primary font-bold text-xl">$69.00</span>
+<span class="text-on-surface-variant/50 line-through text-sm ml-2">$99.00</span>
+</div>
+<button class="w-10 h-10 bg-surface-bright rounded-lg flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Deal Card 4 -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden group border border-outline-variant/10">
+<div class="relative h-48">
+<img alt="Deal Item" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Xbox Game Pass logo illuminated in bright green on a dark sleek electronic surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiVKozUgCSnEYtgdYIbYjI9ZZ6kH0fCv66nFyz5iHJbv-lIAS27VwH3dfhXvPzt8tG1QUNT3lFbwc2iAeeWCQmsaJ2GDu702n_9PSbYrk90x0NgmhERNf-cInNGikY4IyGYsmQcWtMUwQd6nBVbdXBapqMo-5KKTMeqzUiJpf_57w5Z2ylwxzijnknrlE3K_94_u4JlYsPpus3YDuL7GD-JLYnNdmEulyki5sKNjsHqkvR8praB1_Yjwiu_24VbQgApoHie9W5SYt2"/>
+<div class="absolute top-4 left-4 bg-primary text-on-primary text-xs font-black px-2 py-1 rounded">-20%</div>
+</div>
+<div class="p-6">
+<h4 class="text-on-surface-variant text-xs font-bold uppercase tracking-tighter mb-1">Xbox Ultimate</h4>
+<p class="text-white font-bold text-lg mb-4">3 Months Subscription</p>
+<div class="flex justify-between items-center">
+<div>
+<span class="text-primary font-bold text-xl">$35.99</span>
+<span class="text-on-surface-variant/50 line-through text-sm ml-2">$44.99</span>
+</div>
+<button class="w-10 h-10 bg-surface-bright rounded-lg flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trending Games Editorial -->
+<section class="py-24 bg-surface-container-low">
+<div class="container mx-auto px-8">
+<h2 class="font-headline text-4xl font-black text-white tracking-tight uppercase mb-12">Trending Universes</h2>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Game Item 1 -->
+<div class="relative h-[450px] rounded-2xl overflow-hidden group cursor-pointer">
+<img alt="Cyberpunk 2077" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" data-alt="Cinematic cover art for a futuristic action game featuring a character with cybernetic enhancements overlooking a neon city" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEwWRmULns0AUwBNaqTDUKFoGk6qo0GhHVjTCzMNrZOR50NPZBwlAH6k78gQEmvKF3XnJqHFoEOIlYRqTNVWLbp33VzvlPs3exZ_NDp4CUo4DX3YMdJ6hDB8r4kbvTGdwr95jYWdv5wNLizXZxq3wpeQet_Hp7P_MdsYCLKeye30a5LtD90Kuee4dbUjWQaW0CJvPCb-Z0e3GqrWebzNIQPdZhDyUPb9iszNNf8ydQbMRAtoDEY0-zrzOc2AJhWybal1h4L6KdVips"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-8">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">trending_up</span>
+</div>
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Hot Item Movement</span>
+</div>
+<h3 class="text-white font-headline text-3xl font-black italic mb-2">NEO-CALIFORNIA 2099</h3>
+<div class="flex gap-4">
+<div class="text-on-surface-variant text-sm">
+<span class="block font-bold text-white">4.2k</span>
+<span class="uppercase text-[10px]">Active Trades</span>
+</div>
+<div class="w-px h-8 bg-outline-variant/30"></div>
+<div class="text-on-surface-variant text-sm">
+<span class="block font-bold text-white">Verified</span>
+<span class="uppercase text-[10px]">Seller Grade A</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Game Item 2 -->
+<div class="relative h-[450px] rounded-2xl overflow-hidden group cursor-pointer">
+<img alt="Elden Ring" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" data-alt="Dark fantasy landscape with a massive glowing golden tree in the distance under a starry night sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAV5qCpdcrZYmmpUQe3xpUwibqDaVS6kVgDu9ESmZZpyPE5OTqikR8pPhW1oIZqPS3ayc4AZ4OUN2ORQ50wdW-Wo8ePZ9nkLy2CLzttSvEVKCqRKhWW50cokKD9AjVwxaICD98CXdrs4MFBGT_jjl5o99HBJ0MDNQ1MSv1zXiSGFmz5-5pfdWDFgA-xmaZPo19qvwWr4l1vCxcU1Ce5Xxmk7wewZMSUs03fMOurw7UWnrXMOp61QnSNcu--83gypxib9MP5rQPD-8v"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-8">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">auto_awesome</span>
+</div>
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Curated Collection</span>
+</div>
+<h3 class="text-white font-headline text-3xl font-black italic mb-2">TITAN'S FALLEN REALM</h3>
+<div class="flex gap-4">
+<div class="text-on-surface-variant text-sm">
+<span class="block font-bold text-white">1.8k</span>
+<span class="uppercase text-[10px]">Epic Items</span>
+</div>
+<div class="w-px h-8 bg-outline-variant/30"></div>
+<div class="text-on-surface-variant text-sm">
+<span class="block font-bold text-white">99%</span>
+<span class="uppercase text-[10px]">Success Rate</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Game Item 3 -->
+<div class="relative h-[450px] rounded-2xl overflow-hidden group cursor-pointer">
+<img alt="Apex Legends" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" data-alt="High-speed action sequence with multiple futuristic hero characters charging forward into battle with colorful energy effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUjfRfEo-yoFkY_qshCYC00YRjEWgXUwD0zOTjJIae2bQ1lctB9fpI4iWstziJf5iDAsawsb3Xyk4ic197ezWCaqOR_meAn-frbwRAw8RuzeoiEjlvVx2Ze4lj4WvSPNIaQQCzMaawyjxd0SV7XB3sQB6tGABBiYl8-MtNAr6kSaa6J4PeLemErojo4Y6R9FS8IhuR88cYWEkBzxieUHbSSP71mxTpYj5jk4KXmsuJGgrzVXt0tOESSViG2QIAq5wrfbsJjUvLx0IH"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-8">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">workspace_premium</span>
+</div>
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Premium Tiers</span>
+</div>
+<h3 class="text-white font-headline text-3xl font-black italic mb-2">VOID STRIDER ARENA</h3>
+<div class="flex gap-4">
+<div class="text-on-surface-variant text-sm">
+<span class="block font-bold text-white">12k</span>
+<span class="uppercase text-[10px]">Skins Ready</span>
+</div>
+<div class="w-px h-8 bg-outline-variant/30"></div>
+<div class="text-on-surface-variant text-sm">
+<span class="block font-bold text-white">Fast</span>
+<span class="uppercase text-[10px]">Delivery Hub</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / CTA -->
+<section class="py-24 bg-surface relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1/2 h-full bg-primary/5 blur-[120px] rounded-full translate-x-1/2"></div>
+<div class="container mx-auto px-8 relative z-10">
+<div class="bg-surface-container-high rounded-3xl p-12 md:p-20 border border-outline-variant/20 flex flex-col md:flex-row items-center justify-between gap-12">
+<div class="max-w-xl text-center md:text-left">
+<h2 class="font-headline text-4xl md:text-6xl font-black text-white leading-none mb-6">NEVER MISS A <br/><span class="text-primary">DROP.</span></h2>
+<p class="text-on-surface-variant text-lg">Join 2M+ gamers and get notified about the rarest skins and biggest price drops before anyone else.</p>
+</div>
+<div class="w-full max-w-md">
+<div class="flex flex-col gap-4">
+<input class="bg-surface px-6 py-4 rounded-lg border border-outline-variant/30 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-white placeholder-on-surface-variant/50" placeholder="Enter your email" type="email"/>
+<button class="bg-primary text-on-primary font-bold py-4 rounded-lg hover:bg-primary-container transition-colors shadow-lg shadow-primary/20">Subscribe to Intel</button>
+</div>
+<p class="text-[10px] text-on-surface-variant/40 mt-4 text-center">By subscribing, you agree to our Terms of Service and Privacy Policy.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-[#434654]/20 bg-[#0e141c]">
+<div class="flex flex-col md:flex-row justify-between items-start px-12 py-16 gap-12 max-w-[1920px] mx-auto">
+<div class="max-w-sm">
+<div class="text-lg font-black text-white mb-4 uppercase tracking-tighter">Nexus Core</div>
+<p class="text-[#c3c6d6]/60 text-sm leading-relaxed mb-6">High-end editorial gaming marketplace. The definitive destination for elite digital assets and safe transactions.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">terminal</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">videogame_asset</span>
+</a>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4">
+<h4 class="text-white text-sm font-black uppercase tracking-widest">Platform</h4>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Support</a>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Marketplace</a>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Top-ups</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-white text-sm font-black uppercase tracking-widest">Legal</h4>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Privacy Policy</a>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Terms of Service</a>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Refund Policy</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-white text-sm font-black uppercase tracking-widest">Connect</h4>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Contact Us</a>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">FAQ</a>
+<a class="text-[#c3c6d6]/60 text-xs font-['Inter'] tracking-wide uppercase hover:text-[#b4c5ff] transition-colors" href="#">Discord</a>
+</div>
+</div>
+</div>
+<div class="px-12 py-8 border-t border-outline-variant/10 flex justify-between items-center text-[#c3c6d6]/40 text-[10px] uppercase tracking-widest font-black">
+<span>© 2024 Nexus Core. All rights reserved. High-End Editorial Gaming.</span>
+<div class="flex gap-4">
+<span>SYSTEM STATUS: OPERATIONAL</span>
+<span class="text-secondary">ENCRYPTED PROTOCOL</span>
+</div>
+</div>
+</footer>
+</body></html>

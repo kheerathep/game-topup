@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#0e141c",
+                    "tertiary-fixed": "#eddcff",
+                    "on-primary-fixed-variant": "#003daa",
+                    "surface-container-high": "#242a33",
+                    "inverse-on-surface": "#2b3139",
+                    "on-tertiary-fixed": "#290055",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#00daf3",
+                    "tertiary-fixed-dim": "#d8b9ff",
+                    "surface-container": "#1a2028",
+                    "on-secondary": "#00363d",
+                    "outline": "#8d909f",
+                    "on-tertiary-fixed-variant": "#6300bb",
+                    "on-tertiary": "#450086",
+                    "inverse-surface": "#dde3ee",
+                    "on-error": "#690005",
+                    "on-background": "#dde3ee",
+                    "surface-variant": "#2f353e",
+                    "on-surface": "#dde3ee",
+                    "surface-container-low": "#161c24",
+                    "secondary-fixed": "#9cf0ff",
+                    "outline-variant": "#434654",
+                    "tertiary": "#d8b9ff",
+                    "secondary": "#bdf4ff",
+                    "primary-container": "#628aff",
+                    "primary": "#b4c5ff",
+                    "surface-dim": "#0e141c",
+                    "secondary-container": "#00e3fd",
+                    "on-primary": "#002979",
+                    "on-secondary-fixed": "#001f24",
+                    "on-primary-fixed": "#00174c",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-error-container": "#ffdad6",
+                    "surface-tint": "#b4c5ff",
+                    "surface-bright": "#343a42",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-surface-variant": "#c3c6d6",
+                    "inverse-primary": "#1e55cf",
+                    "tertiary-container": "#ae71ff",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#00616d",
+                    "on-tertiary-container": "#3c0076",
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#00236a",
+                    "surface-container-lowest": "#090f16",
+                    "surface-container-highest": "#2f353e",
+                    "background": "#0e141c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-hero-gradient {
+            background: radial-gradient(circle at 20% 30%, rgba(98, 138, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(0, 227, 253, 0.1) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#0e141c]/60 backdrop-blur-xl shadow-2xl shadow-black/40 font-['Space_Grotesk'] tracking-tight">
+<div class="flex justify-between items-center px-8 h-20 max-w-[1920px] mx-auto">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-bold tracking-tighter text-white">Nexus Core</span>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Marketplace</a>
+<a class="text-[#b4c5ff] border-b-2 border-[#4C79F4] pb-1" href="#">Top-ups</a>
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Accounts</a>
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Buy Games</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container-highest rounded-lg px-4 py-2 w-64 group focus-within:ring-1 ring-secondary/40 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm p-0 w-full placeholder:text-on-surface-variant/50" placeholder="Search games..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-[#343a42]/40 transition-all duration-300 p-2 rounded-full active:scale-95 duration-200 relative">
+<span class="material-symbols-outlined text-[#b4c5ff]">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<button class="hover:bg-[#343a42]/40 transition-all duration-300 p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#b4c5ff]">shopping_cart</span>
+</button>
+<div class="h-10 w-10 rounded-full border border-outline-variant/20 overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a modern digital gamer with subtle neon reflections on face and sleek dark clothing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQpCO0iQAqDJZmZJR_c-ta_ELWyfcwvueo-AX7z4GocapMDlevVeE9JslBVXR82b3vRXWDjc2lnMnn3m9jgSENOsKKKdm0ZTPGDX08h-ecJkVdtMs4X6Z8F4rpUrKmte2Cb5NT6WNac9nFcW3Xl2R4OYdXrCuxnrh1IqT0NPUHRzaBjIZafNbR-5MPAvq6HcXe60W-CL_gNKSFPNqXWEaWilvcKcAYhL-pLQVaGYCsW4fgYP59NCiwTk_mM4KZ2JhMI9GxY0xOKNcR"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24 min-h-screen bg-hero-gradient">
+<!-- Hero Section & Quick Recharge -->
+<section class="max-w-[1440px] mx-auto px-8 py-12 grid lg:grid-cols-12 gap-12 items-start">
+<div class="lg:col-span-7 pt-8">
+<h1 class="font-headline text-6xl md:text-7xl font-extrabold tracking-tighter text-white mb-6 leading-[0.9]">
+                    INSTANT <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary-fixed-dim">POWER UP.</span>
+</h1>
+<p class="text-on-surface-variant text-xl max-w-xl font-light leading-relaxed mb-8">
+                    Elevate your gaming experience with zero delay. Nexus Core provides high-speed, secure top-ups for global titles at editorial-grade pricing.
+                </p>
+<div class="flex gap-4">
+<div class="flex flex-col">
+<span class="font-headline text-4xl font-bold text-white">16M+</span>
+<span class="text-on-surface-variant text-xs uppercase tracking-[0.2em]">Credits Delivered</span>
+</div>
+<div class="w-[1px] h-12 bg-outline-variant/30 self-center mx-4"></div>
+<div class="flex flex-col">
+<span class="font-headline text-4xl font-bold text-white">2.4s</span>
+<span class="text-on-surface-variant text-xs uppercase tracking-[0.2em]">Avg. Delivery</span>
+</div>
+</div>
+</div>
+<!-- Quick Recharge Widget -->
+<div class="lg:col-span-5 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10 shadow-2xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<h2 class="font-headline text-2xl font-bold text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container">electric_bolt</span>
+                    Quick Recharge
+                </h2>
+<form class="space-y-6">
+<div>
+<label class="block text-xs uppercase tracking-widest text-on-surface-variant mb-2 ml-1">Game Player ID</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-lg py-4 px-5 text-white placeholder:text-on-surface-variant/40 focus:ring-1 ring-secondary/50 transition-all" placeholder="Enter ID (e.g. #772183)" type="text"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant/40">fingerprint</span>
+</div>
+</div>
+<div>
+<label class="block text-xs uppercase tracking-widest text-on-surface-variant mb-2 ml-1">Select Game</label>
+<div class="grid grid-cols-3 gap-3">
+<button class="bg-surface-container-highest p-2 rounded-lg border border-primary/40 flex flex-col items-center gap-2 group transition-all ring-1 ring-primary/20" type="button">
+<div class="w-10 h-10 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="vibrant fantasy character portrait with magical blue glowing eyes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBSm9oWu4vU-bjKZrw1J56mU-2sXS0pVImb7KttBxqL-rvd3jF_Cri7suLOELsnjHOeZcyoXT1ETrvfYKIUvtsLbcf1JVgn0TT1D529ucUu3tM2gYxocCewdi7EnFvFbWY-RBrme5ZPh4h4vRwhBWzriPbUaOvCuHDY4dXlrWIWavcl-Z7STKJxOnBQzTtXlAAs01NemMiwwU3Eoiw0dagG6NqmW-7T4VL3U5RM2Cln9Il5_ZPwrA7qIRXthDD9q4EgsERHoMNaMgf"/>
+</div>
+<span class="text-[10px] font-bold text-white uppercase tracking-tighter">Genshin</span>
+</button>
+<button class="bg-surface-container-highest p-2 rounded-lg border border-transparent hover:border-outline-variant/40 flex flex-col items-center gap-2 group transition-all" type="button">
+<div class="w-10 h-10 rounded-full overflow-hidden opacity-60 group-hover:opacity-100">
+<img class="w-full h-full object-cover" data-alt="tactical futuristic agent silhouette against a vibrant cyan and magenta digital background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB79qewQbxWeQjX374nNqhOSN1On8_NSrJGIZg1Zy406egQRJ851m3oNb-NFRsgdX4LeDn65wzkqeQOt3xcMpbtA2c0FMKerkhUxjHLcBN0WIiICTbBSTNalkuXHrhn1U9MfPmMMmwixWjM3xE9q-lqSdHhCnkr3s56bd3hvdn2yGhJ7CJf0bEHUsj2K5cJZ1owJp9fmONwR2uUfNdDUl_5iBLTQuXSs4zyc2MiDy0cXUkA5BTkmDSX9s_1Rb_IM7iYGjmqhJ1J1_WG"/>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Valorant</span>
+</button>
+<button class="bg-surface-container-highest p-2 rounded-lg border border-transparent hover:border-outline-variant/40 flex flex-col items-center gap-2 group transition-all" type="button">
+<div class="w-10 h-10 rounded-full overflow-hidden opacity-60 group-hover:opacity-100">
+<img class="w-full h-full object-cover" data-alt="battle royale character in military gear holding a flare gun under a dramatic orange sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9LzvFIKiHQYLsk-X30gvJFvMQAq4oTnldYOw4f63nAn3FpR0016GDORupP1RhTXXDUCS0OimULkYecXRZU8MAHEodpRb2HegZ9MCk5wiF9-hrcuq7rqk8q9wXMkp6lBhDfpT9gdYq8JRiXLStFAMxDqjaXyirWMc0dCW9L5vdb60bkeFYkBh3dJ8qT9-aUcCJ0-IDNlp5Oj6iBYhxGG56skLR5vNMeGuLaOugy03TAvfZ4HTutULLQ-6pgnirqy2Fgg7fS_nH8c9z"/>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">PUBG</span>
+</button>
+</div>
+</div>
+<div>
+<label class="block text-xs uppercase tracking-widest text-on-surface-variant mb-2 ml-1">Choose Amount</label>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container rounded-lg p-3 border border-outline-variant/10 cursor-pointer hover:bg-surface-bright/20 transition-all flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="text-sm font-bold text-white">6480 Crystals</span>
+</div>
+<span class="text-xs font-medium text-secondary-container">$99.99</span>
+</div>
+<div class="bg-surface-container rounded-lg p-3 border border-outline-variant/10 cursor-pointer hover:bg-surface-bright/20 transition-all flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="text-sm font-bold text-white">3280 Crystals</span>
+</div>
+<span class="text-xs font-medium text-secondary-container">$49.99</span>
+</div>
+</div>
+</div>
+<button class="w-full py-4 bg-gradient-to-br from-primary to-primary-container rounded-lg text-on-primary-fixed font-bold text-sm uppercase tracking-widest shadow-xl shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">
+                        RECHARGE NOW
+                    </button>
+<p class="text-[10px] text-center text-on-surface-variant/60">Secure SSL encrypted transaction. Terms apply.</p>
+</form>
+</div>
+</section>
+<!-- Popular Top-ups Bento Grid -->
+<section class="max-w-[1440px] mx-auto px-8 py-20">
+<div class="flex justify-between items-end mb-12">
+<div>
+<span class="text-secondary-fixed font-headline font-semibold text-sm uppercase tracking-[0.3em]">The Collection</span>
+<h2 class="text-4xl font-headline font-black text-white mt-2">TRENDING RECHARGES</h2>
+</div>
+<a class="text-primary hover:text-white transition-colors flex items-center gap-2 text-sm font-bold uppercase tracking-widest" href="#">
+                    View All Games <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Game Card: Genshin -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="cinematic wide shot of a magical anime-style mountain landscape with floating islands and celestial particles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj9uHEG2jvWMerMLfMqQlG4la7p2hKbsZS_JEcJ6mrtV9Sj-fH-3YZg-p3ZnZ5UmkKSqOx4yEqOpcb7gzj0ClhqbqZhZBgKAn6Dwt-sqBTbbg0gBl9MkLKJwCmi4nR-LiFThNsw6Vr-tce4UwVKT2KXWmbQKo8az1DF_DveFS9oHjeycuP_wsOdr-U7o7sFF0UPpiVwsDMyKj3C8dU8QU9hGYOtIJBwgUUgOdCiBWsniP_tJz0iDomC7fYY7OnKyrvxHTz-cD7CwTG"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-black uppercase tracking-widest rounded-full">Best Seller</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline text-2xl font-bold text-white">Genshin Impact</h3>
+<p class="text-on-surface-variant text-sm mt-1">Genesis Crystals &amp; Blessing</p>
+</div>
+<div class="text-right">
+<span class="text-[10px] uppercase text-on-surface-variant/60 block mb-1">Starting from</span>
+<span class="text-xl font-black text-white">$0.99</span>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-highest text-white font-bold text-xs uppercase tracking-widest rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                            Top-up Now
+                        </button>
+</div>
+</div>
+<!-- Game Card: Valorant -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="abstract digital art featuring high-contrast geometric shapes in neon cyan and vibrant purple representing a tactical game arena" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcR_4cj1oGPb-OpikiZd4xGyr3_QSAz4DmDBHt9EXFx5eO5AfuxceV0duJZz8iKnZVuHuqFiXnl2xbRjcq5T6pA-CdVXUrIjrK9Thx0qVQ9d9CFR9nmYPk8-NpKbk3cC7iCI_GzP56j962HhsAruuJ5bWdlFu9BQo4jOXl9bVT07s_99XRzgbuETLSCBtYH_Zbs4_oLmwHAM1i9i5Q1l1vGALsxA3UAUX19hIuTpNP604w3bElSKihjKTbYLu8P5z_NHj3md_vxGbf"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-surface-bright text-white text-[10px] font-black uppercase tracking-widest rounded-full">Instant Delivery</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline text-2xl font-bold text-white">Valorant</h3>
+<p class="text-on-surface-variant text-sm mt-1">VP &amp; Battle Pass</p>
+</div>
+<div class="text-right">
+<span class="text-[10px] uppercase text-on-surface-variant/60 block mb-1">Starting from</span>
+<span class="text-xl font-black text-white">$4.99</span>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-highest text-white font-bold text-xs uppercase tracking-widest rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                            Top-up Now
+                        </button>
+</div>
+</div>
+<!-- Game Card: PUBG Mobile -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="rugged battlefield scene with military equipment and a parachute descending in the background under heavy volumetric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuHkMVbT7ceVh6uRxsbP2wGF_mQjbyI8hmTMEj2q62hz6yvEfKjwy3MuYPI1nRZGFBhe7gd7J1hxGti8xmTqw2URPqD08rgJZ9zBpAXKftNjH9sYb4VB1-FUsZK9oZYA9G2RXD025le6wYpXw1JtjwXIKNZgDnR6dhZG6CNOubCUGh0SzG_2C1GyEiZb2hlD9aR5nHiYW7UemzwlIP3OgVLtVA5FGf9D1Pe3QQaCV8d6yhF2Ifq27_-XzLBE3H0MgD0J9RLTPZ25ra"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-[10px] font-black uppercase tracking-widest rounded-full">Special Offer</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline text-2xl font-bold text-white">PUBG Mobile</h3>
+<p class="text-on-surface-variant text-sm mt-1">Unknown Cash (UC)</p>
+</div>
+<div class="text-right">
+<span class="text-[10px] uppercase text-on-surface-variant/60 block mb-1">Starting from</span>
+<span class="text-xl font-black text-white">$0.85</span>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-highest text-white font-bold text-xs uppercase tracking-widest rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                            Top-up Now
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Call to Action -->
+<section class="max-w-[1440px] mx-auto px-8 mb-24">
+<div class="bg-surface-container rounded-2xl p-12 flex flex-col md:flex-row items-center justify-between border border-outline-variant/10 relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="text-3xl font-headline font-bold text-white mb-4">Wholesale Game Credits?</h2>
+<p class="text-on-surface-variant max-w-md">Nexus Core for Enterprise offers API integration for gaming lounges and digital retailers. Get exclusive volume discounts.</p>
+</div>
+<div class="mt-8 md:mt-0 relative z-10">
+<button class="px-8 py-4 border border-secondary text-secondary hover:bg-secondary hover:text-on-secondary-fixed transition-all font-bold text-sm uppercase tracking-widest rounded-lg">
+                        Contact Sales
+                    </button>
+</div>
+<div class="absolute -right-20 -bottom-20 w-96 h-96 bg-primary/5 blur-[100px] rounded-full"></div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-[#434654]/20 bg-[#0e141c]">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8 max-w-[1920px] mx-auto">
+<div class="flex flex-col items-center md:items-start">
+<span class="text-lg font-black text-white mb-4">Nexus Core</span>
+<p class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 text-center md:text-left">
+                    © 2024 Nexus Core. All rights reserved. <br/>High-End Editorial Gaming.
+                </p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-4">
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Support</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Privacy Policy</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Terms of Service</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Refund Policy</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Contact Us</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">FAQ</a>
+</div>
+<div class="flex gap-4">
+<button class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl">share</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl">account_balance_wallet</span>
+</button>
+</div>
+</div>
+</footer>
+</body></html>

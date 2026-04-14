@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neon Curator - Banner Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#003daa",
+                        "on-tertiary-container": "#3c0076",
+                        "tertiary": "#d8b9ff",
+                        "inverse-surface": "#dde3ee",
+                        "tertiary-fixed-dim": "#d8b9ff",
+                        "surface-container": "#1a2028",
+                        "tertiary-container": "#ae71ff",
+                        "secondary": "#bdf4ff",
+                        "on-surface": "#dde3ee",
+                        "inverse-primary": "#1e55cf",
+                        "surface-dim": "#0e141c",
+                        "on-surface-variant": "#c3c6d6",
+                        "surface-container-high": "#242a33",
+                        "on-secondary-fixed": "#001f24",
+                        "primary": "#b4c5ff",
+                        "surface-container-highest": "#2f353e",
+                        "background": "#0e141c",
+                        "outline": "#8d909f",
+                        "on-tertiary-fixed": "#290055",
+                        "on-secondary": "#00363d",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#450086",
+                        "on-primary": "#002979",
+                        "surface-variant": "#2f353e",
+                        "on-background": "#dde3ee",
+                        "surface-tint": "#b4c5ff",
+                        "on-primary-container": "#00236a",
+                        "error": "#ffb4ab",
+                        "surface": "#0e141c",
+                        "secondary-fixed": "#9cf0ff",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "inverse-on-surface": "#2b3139",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#00174c",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#090f16",
+                        "surface-bright": "#343a42",
+                        "on-secondary-container": "#00616d",
+                        "primary-container": "#628aff",
+                        "secondary-fixed-dim": "#00daf3",
+                        "tertiary-fixed": "#eddcff",
+                        "outline-variant": "#434654",
+                        "surface-container-low": "#161c24",
+                        "secondary-container": "#00e3fd",
+                        "on-tertiary-fixed-variant": "#6300bb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-surface-dim text-on-surface">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-[#0e141c] flex flex-col py-8 px-4">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-black text-[#b4c5ff] tracking-tighter">Neon Curator</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/50 font-bold mt-1">Management Console</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">category</span>
+<span>Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#b4c5ff] bg-gradient-to-r from-[#4C79F4]/20 to-transparent border-l-4 border-[#4C79F4] active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined">ad_units</span>
+<span>Banners</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold rounded-lg shadow-lg shadow-primary/20 hover:brightness-110 transition-all active:scale-95">
+                Create Listing
+            </button>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-30 bg-[#0e141c]/80 backdrop-blur-xl flex justify-between items-center h-16 px-8">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg pl-10 text-sm focus:ring-1 focus:ring-secondary/40 transition-all text-on-surface" placeholder="Search banners, campaigns..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 border-r border-outline-variant/20 pr-6">
+<button class="p-2 text-on-surface-variant hover:text-secondary hover:bg-[#343a42]/40 rounded-lg transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-secondary hover:bg-[#343a42]/40 rounded-lg transition-all">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">Admin User</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Super Admin</p>
+</div>
+<img class="w-8 h-8 rounded-full border border-primary/30 object-cover" data-alt="portrait of a focused professional administrator in a modern office environment with soft tech lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE3WGeo2U8VNe6wurktHqB84QSvRWi4nxCnLAoN-AiGOqI6Og6vIq-FW-VwPeRXADd4owkU5VerExo20iSgXeFVEk3l4JcQlyATAKLompIVRlN863WUq7YzhMpqyN6SZrUOCfHI-1htl5XMH9t3nxaDBZVBRH5aMWFF6NDx44YS9rFtzn3BTNQoQ_2euA9U_9lLd-Ycq5F77G1kGZwxW1_TwNElECbWbIgU3LlMWP2cywzc23Q9sOwTyTk2zD-BLIeXQ8j0HtTK8bh"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 pt-24 px-8 pb-12 min-h-screen">
+<div class="max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="text-4xl font-black font-headline tracking-tighter text-on-surface">BANNER MANAGEMENT</h2>
+<p class="text-on-surface-variant mt-2 max-w-xl">Curate the editorial experience of the Neon Curator storefront. Manage seasonal hero carousels and promotional placements.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-surface-container-highest text-on-surface font-semibold rounded-lg flex items-center gap-2 hover:bg-surface-bright transition-all">
+<span class="material-symbols-outlined text-xl">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-bold rounded-lg flex items-center gap-2 hover:brightness-110 shadow-lg shadow-primary/10 transition-all">
+<span class="material-symbols-outlined text-xl">add_photo_alternate</span>
+<span>New Banner</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left: List View (Bento Style) -->
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container">
+<h3 class="font-headline font-bold uppercase tracking-widest text-sm text-secondary">Active Campaigns</h3>
+<span class="text-xs font-medium text-on-surface-variant">4 Banners Running</span>
+</div>
+<div class="divide-y divide-outline-variant/5">
+<!-- Banner Item 1 -->
+<div class="p-6 flex gap-6 hover:bg-surface-container-high/50 transition-colors group">
+<div class="w-48 h-28 flex-shrink-0 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="cinematic neon gaming scene with vibrant blue and violet lights reflecting on a glass surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-CTi808gFw6tqDsyIQBWvMcXir571zKO8UJZPQbMMr-_6oqfu4Y4jAJ6Abz3640T_zQndsh3Ctt1nFefco3xsC3woRKG2Vq6pfRzPNRrVcWyu9yHNWo980Reay7TT4UxhxbyD6sQxyrB_XZ9rfP-a7-BasOs45cQh60NCgWlDphc6MDZxqcEk-RTFqz0L0gAT3TL-yN1csLpW9tHmK5b2__eyLQG9CPM0B3IrOYBOI7gGuKYhp1Yr9404D2lTo_UiQX3OV7637rp0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded-full uppercase">Hero 1</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors">Summer Cyberfest 2024</h4>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-surface-bright rounded text-on-surface-variant"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-1.5 hover:bg-error-container/20 rounded text-error"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 font-mono">/promotions/cyberfest-july</p>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-[11px] text-on-surface-variant uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>Jul 01 - Jul 31</span>
+</div>
+<div class="flex items-center gap-1.5 text-[11px] text-secondary font-bold uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">visibility</span>
+<span>42.5k Views</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Banner Item 2 -->
+<div class="p-6 flex gap-6 hover:bg-surface-container-high/50 transition-colors group">
+<div class="w-48 h-28 flex-shrink-0 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="futuristic digital marketplace interface with abstract glowing shapes and dark sleek aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKYyW4YqD16x_eo08GU1g4C2e6vn6cI0H1OwsI2frXjChVwkw7zfZNEOxdLUn7CyFiLXfwQ8LlSoGv3_v2QKVxFr2N4dH4NoKhxLbihcwmWpjHpJAdvHodyYDANBKWNiEuGt0rAmCFYDTB8qcjAs6WdNYj2fSpFD2EGHemRtAMvHN337xr-8OKmX0o-cdmsm2K1w697MPhBmngBACrwwUftoeSq8GV9TKZjKPOSg13TO6w6xVNpWWLtJk5CfJQrU-6cC6lTulz34nI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold rounded-full uppercase">Sidebar</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h4 class="font-bold text-on-surface group-hover:text-primary transition-colors">Limited Edition Drops</h4>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-surface-bright rounded text-on-surface-variant"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-1.5 hover:bg-error-container/20 rounded text-error"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 font-mono">/collections/limited-edition</p>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-[11px] text-on-surface-variant uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>Permanent</span>
+</div>
+<div class="flex items-center gap-1.5 text-[11px] text-secondary font-bold uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">visibility</span>
+<span>18.1k Views</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Banner Item 3 -->
+<div class="p-6 flex gap-6 hover:bg-surface-container-high/50 transition-colors group">
+<div class="w-48 h-28 flex-shrink-0 rounded-lg overflow-hidden relative opacity-60">
+<img class="w-full h-full object-cover" data-alt="close up of retro hardware with glowing purple lights and futuristic electronic components" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwlu3ywjkUA-WyZ5xHsAo2j44CIdfiLoBfRI4j2ZBUvj2xr3JTAvUn0SEC7vQ3UZ34LV0D19s82tnqEwgy_xL0brCVYO6ApMxDjAOGnS_77WOZTghrSD8Q2NteQfR73ZooZ5Xa4NmW-9Vy5MTaRxYrA_49I_uxtWi2YM2gS8teAdrKPXYR29QmdYT6u8Px-lAVeFyeIwr8w-KFG-na9Yl9UgfzuhRf8Q6Juyow6H4EsJJhjiRudybEglRPd0UWPjjeKcGxpjpafxy4"/>
+<div class="absolute inset-0 bg-surface-dim/40 backdrop-grayscale"></div>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 bg-outline-variant text-on-surface text-[10px] font-bold rounded-full uppercase">Hero 2</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-on-surface-variant">Winter Sale Flash</h4>
+<span class="px-1.5 py-0.5 bg-surface-container-highest text-[9px] text-on-surface-variant rounded border border-outline-variant/20 uppercase">Expired</span>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-surface-bright rounded text-on-surface-variant"><span class="material-symbols-outlined text-lg">restore</span></button>
+<button class="p-1.5 hover:bg-error-container/20 rounded text-error"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 font-mono">/sale/winter-2023</p>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-[11px] text-on-surface-variant/50 uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>Dec 20 - Jan 05</span>
+</div>
+<div class="flex items-center gap-1.5 text-[11px] text-on-surface-variant/50 font-bold uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm">visibility</span>
+<span>112k Views</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Form Section (Glassmorphism inspired) -->
+<div class="lg:col-span-1">
+<div class="bg-surface-container-high rounded-xl p-8 border border-outline-variant/10 sticky top-24">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">upload_file</span>
+</div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Banner Editor</h3>
+</div>
+<form class="space-y-6">
+<div class="space-y-1.5">
+<label class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Campaign Title</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg text-sm px-4 py-3 text-on-surface focus:ring-1 focus:ring-secondary/40" placeholder="e.g. Black Friday Special" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Destination URL</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg text-sm px-4 py-3 text-on-surface focus:ring-1 focus:ring-secondary/40" placeholder="https://store.neon.com/offers" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Start Date</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg text-sm px-4 py-3 text-on-surface focus:ring-1 focus:ring-secondary/40 [color-scheme:dark]" type="date"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">End Date</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg text-sm px-4 py-3 text-on-surface focus:ring-1 focus:ring-secondary/40 [color-scheme:dark]" type="date"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Placement Slot</label>
+<select class="w-full bg-surface-container-highest border-none rounded-lg text-sm px-4 py-3 text-on-surface focus:ring-1 focus:ring-secondary/40">
+<option>Main Hero Carousel</option>
+<option>Footer Banner</option>
+<option>Category Header</option>
+<option>Sidebar Promo</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Asset Upload</label>
+<div class="border-2 border-dashed border-outline-variant/30 rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/40 hover:bg-primary/5 transition-all group">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary mb-2">image</span>
+<p class="text-xs font-medium text-on-surface-variant">Drop your artwork here or <span class="text-primary">browse</span></p>
+<p class="text-[9px] text-on-surface-variant/50 mt-1 uppercase tracking-tighter">Recommended: 1920x800px (Max 2MB)</p>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-black uppercase tracking-widest text-xs rounded-lg hover:brightness-110 transition-all shadow-xl shadow-primary/10" type="submit">
+                                    Publish Campaign
+                                </button>
+<button class="w-full py-3 mt-3 text-on-surface-variant font-bold text-xs uppercase tracking-widest hover:text-on-surface transition-all" type="button">
+                                    Save as Draft
+                                </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- Dashboard Analytics Quick Look -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-surface-container rounded-xl p-6 border-l-4 border-primary">
+<p class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Total CTR</p>
+<div class="flex items-end gap-2 mt-1">
+<span class="text-2xl font-black font-headline text-on-surface">12.4%</span>
+<span class="text-xs text-secondary font-bold mb-1">+2.1%</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-6 border-l-4 border-secondary">
+<p class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Impressions</p>
+<div class="flex items-end gap-2 mt-1">
+<span class="text-2xl font-black font-headline text-on-surface">892k</span>
+<span class="text-xs text-secondary font-bold mb-1">Weekly</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-6 border-l-4 border-tertiary">
+<p class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Conversions</p>
+<div class="flex items-end gap-2 mt-1">
+<span class="text-2xl font-black font-headline text-on-surface">4.1k</span>
+<span class="text-xs text-on-surface-variant font-bold mb-1">Direct</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-6 border-l-4 border-outline-variant">
+<p class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">Active slots</p>
+<div class="flex items-end gap-2 mt-1">
+<span class="text-2xl font-black font-headline text-on-surface">06/10</span>
+<span class="text-xs text-on-surface-variant font-bold mb-1">Available</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

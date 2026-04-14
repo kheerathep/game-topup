@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#0e141c",
+                        "surface": "#0e141c",
+                        "secondary-fixed-dim": "#00daf3",
+                        "on-primary": "#002979",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "on-background": "#dde3ee",
+                        "on-secondary": "#00363d",
+                        "on-surface-variant": "#c3c6d6",
+                        "inverse-on-surface": "#2b3139",
+                        "tertiary-fixed": "#eddcff",
+                        "surface-container-highest": "#2f353e",
+                        "inverse-primary": "#1e55cf",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#d8b9ff",
+                        "surface-container-lowest": "#090f16",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "on-primary-container": "#00236a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001f24",
+                        "primary-fixed": "#dbe1ff",
+                        "on-tertiary-fixed-variant": "#6300bb",
+                        "surface-bright": "#343a42",
+                        "secondary-fixed": "#9cf0ff",
+                        "surface-container": "#1a2028",
+                        "on-primary-fixed-variant": "#003daa",
+                        "surface-tint": "#b4c5ff",
+                        "on-secondary-container": "#00616d",
+                        "tertiary-container": "#ae71ff",
+                        "on-tertiary-fixed": "#290055",
+                        "primary-container": "#628aff",
+                        "inverse-surface": "#dde3ee",
+                        "surface-container-low": "#161c24",
+                        "on-surface": "#dde3ee",
+                        "secondary": "#bdf4ff",
+                        "tertiary": "#d8b9ff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "outline-variant": "#434654",
+                        "secondary-container": "#00e3fd",
+                        "surface-container-high": "#242a33",
+                        "on-primary-fixed": "#00174c",
+                        "surface-variant": "#2f353e",
+                        "outline": "#8d909f",
+                        "on-tertiary-container": "#3c0076",
+                        "surface-dim": "#0e141c",
+                        "primary": "#b4c5ff",
+                        "on-tertiary": "#450086"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 15px -3px rgba(98, 138, 255, 0.4);
+        }
+        .glass-panel {
+            background: rgba(22, 28, 36, 0.7);
+            backdrop-filter: blur(16px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col">
+<main class="flex-grow flex items-center justify-center p-6 relative overflow-hidden">
+<!-- Ambient Background Decoration -->
+<div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+<div class="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-primary/10 blur-[120px]"></div>
+<div class="absolute -bottom-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-secondary-container/5 blur-[100px]"></div>
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
+</div>
+<!-- Registration Container -->
+<div class="w-full max-w-[480px] z-10">
+<!-- Brand Anchor -->
+<div class="mb-10 text-center">
+<h1 class="text-3xl font-headline font-bold italic tracking-tighter text-white">Nexus Core</h1>
+<p class="text-on-surface-variant font-label text-xs tracking-widest uppercase mt-2">Editorial Gaming Excellence</p>
+</div>
+<!-- Main Card -->
+<div class="surface-container-low rounded-xl border border-outline-variant/10 shadow-2xl overflow-hidden glass-panel">
+<div class="p-8 md:p-10">
+<div class="mb-8">
+<h2 class="text-2xl font-headline font-bold text-white tracking-tight">Create your account</h2>
+<p class="text-on-surface-variant text-sm mt-1">Join the premier destination for digital gaming assets.</p>
+</div>
+<form action="#" class="space-y-5">
+<!-- Full Name -->
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-wider text-on-surface-variant ml-1">Full Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-lg">person</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg py-3.5 pl-12 pr-4 text-on-surface placeholder:text-outline/50 focus:ring-1 focus:ring-secondary/40 transition-all outline-none" placeholder="Hideo Kojima" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-wider text-on-surface-variant ml-1">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-lg">mail</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg py-3.5 pl-12 pr-4 text-on-surface placeholder:text-outline/50 focus:ring-1 focus:ring-secondary/40 transition-all outline-none" placeholder="nexus@core.xyz" type="email"/>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-wider text-on-surface-variant ml-1">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-lg">lock</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg py-3.5 pl-12 pr-12 text-on-surface placeholder:text-outline/50 focus:ring-1 focus:ring-secondary/40 transition-all outline-none" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+</div>
+<!-- Terms of Service -->
+<div class="flex items-start gap-3 py-2">
+<div class="flex items-center h-5">
+<input class="w-4 h-4 rounded bg-surface-container-highest border-outline-variant text-primary focus:ring-primary-container/30" type="checkbox"/>
+</div>
+<label class="text-xs text-on-surface-variant leading-relaxed">
+                                I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and <a class="text-primary hover:underline" href="#">Privacy Policy</a>, including the use of cookies.
+                            </label>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-bold py-4 rounded-lg neon-glow-primary active:scale-[0.98] transition-all duration-200 mt-2" type="submit">
+                            Create Account
+                        </button>
+</form>
+<!-- Divider -->
+<div class="relative my-8">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant/20"></div>
+</div>
+<div class="relative flex justify-center text-xs uppercase tracking-widest">
+<span class="bg-surface-container-low px-4 text-outline font-label">Or connect with</span>
+</div>
+</div>
+<!-- Social Auth -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 py-3 px-4 bg-surface-container-highest border border-outline-variant/10 rounded-lg hover:bg-surface-bright transition-colors text-sm font-medium">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.26.81-.58z" fill="currentColor"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="currentColor"></path>
+</svg>
+                            Google
+                        </button>
+<button class="flex items-center justify-center gap-2 py-3 px-4 bg-surface-container-highest border border-outline-variant/10 rounded-lg hover:bg-surface-bright transition-colors text-sm font-medium">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.791-4.667 4.531-4.667 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"></path>
+</svg>
+                            Facebook
+                        </button>
+</div>
+</div>
+<!-- Footer link inside card with tonal shift -->
+<div class="bg-surface-container-highest/30 py-6 px-8 text-center border-t border-outline-variant/10">
+<p class="text-on-surface-variant text-sm">
+                        Already have an account? 
+                        <a class="text-primary font-bold hover:text-secondary transition-colors ml-1" href="#">Sign In</a>
+</p>
+</div>
+</div>
+<!-- Secondary decoration/Links -->
+<div class="mt-8 flex justify-center gap-6">
+<a class="text-on-surface-variant/60 hover:text-on-surface text-[10px] uppercase tracking-widest font-label transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant/60 hover:text-on-surface text-[10px] uppercase tracking-widest font-label transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant/60 hover:text-on-surface text-[10px] uppercase tracking-widest font-label transition-colors" href="#">Help Center</a>
+</div>
+</div>
+</main>
+<!-- Footer - Shared Component -->
+<footer class="bg-slate-950 border-t border-white/5 py-12 px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col gap-2">
+<span class="text-lg font-black text-slate-200">Nexus Core</span>
+<p class="font-['Inter'] text-xs tracking-widest uppercase text-slate-500">© 2024 Nexus Core. Editorial Gaming Excellence.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs tracking-widest uppercase text-slate-500 hover:text-blue-400 transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-['Inter'] text-xs tracking-widest uppercase text-slate-500 hover:text-blue-400 transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-['Inter'] text-xs tracking-widest uppercase text-slate-500 hover:text-blue-400 transition-colors opacity-80 hover:opacity-100" href="#">Cookie Settings</a>
+</div>
+</div>
+</footer>
+</body></html>

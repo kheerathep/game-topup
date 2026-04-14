@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#0e141c",
+                    "tertiary-fixed": "#eddcff",
+                    "on-primary-fixed-variant": "#003daa",
+                    "surface-container-high": "#242a33",
+                    "inverse-on-surface": "#2b3139",
+                    "on-tertiary-fixed": "#290055",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#00daf3",
+                    "tertiary-fixed-dim": "#d8b9ff",
+                    "surface-container": "#1a2028",
+                    "on-secondary": "#00363d",
+                    "outline": "#8d909f",
+                    "on-tertiary-fixed-variant": "#6300bb",
+                    "on-tertiary": "#450086",
+                    "inverse-surface": "#dde3ee",
+                    "on-error": "#690005",
+                    "on-background": "#dde3ee",
+                    "surface-variant": "#2f353e",
+                    "on-surface": "#dde3ee",
+                    "surface-container-low": "#161c24",
+                    "secondary-fixed": "#9cf0ff",
+                    "outline-variant": "#434654",
+                    "tertiary": "#d8b9ff",
+                    "secondary": "#bdf4ff",
+                    "primary-container": "#628aff",
+                    "primary": "#b4c5ff",
+                    "surface-dim": "#0e141c",
+                    "secondary-container": "#00e3fd",
+                    "on-primary": "#002979",
+                    "on-secondary-fixed": "#001f24",
+                    "on-primary-fixed": "#00174c",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-error-container": "#ffdad6",
+                    "surface-tint": "#b4c5ff",
+                    "surface-bright": "#343a42",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-surface-variant": "#c3c6d6",
+                    "inverse-primary": "#1e55cf",
+                    "tertiary-container": "#ae71ff",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#00616d",
+                    "on-tertiary-container": "#3c0076",
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#00236a",
+                    "surface-container-lowest": "#090f16",
+                    "surface-container-highest": "#2f353e",
+                    "background": "#0e141c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary/30">
+<nav class="fixed top-0 w-full z-50 bg-[#0e141c]/60 backdrop-blur-xl shadow-2xl shadow-black/40">
+<div class="flex justify-between items-center px-8 h-20 max-w-[1920px] mx-auto bg-gradient-to-b from-[#161c24] to-transparent">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-bold tracking-tighter text-white font-headline">Nexus Core</span>
+<div class="hidden lg:flex gap-8 items-center">
+<a class="font-['Space_Grotesk'] tracking-tight text-[#b4c5ff] border-b-2 border-[#4C79F4] pb-1" href="#">Marketplace</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-[#c3c6d6] hover:text-white transition-colors" href="#">Top-ups</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-[#c3c6d6] hover:text-white transition-colors" href="#">Accounts</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-[#c3c6d6] hover:text-white transition-colors" href="#">Buy Games</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<div class="bg-surface-container-highest rounded-lg flex items-center px-4 py-2 w-64 group focus-within:ring-1 ring-secondary/40 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-on-surface-variant/50" placeholder="Search assets..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:bg-[#343a42]/40 p-2 rounded-full transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-[#343a42]/40 p-2 rounded-full transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant/20">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a young man with a neutral expression and high-end cinematic lighting on his face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDutJbof63Yyu-z7xCD5dM4OSLb6hvvC6vE3meCqNJKhqpyai9C7KkQTNqnctqQq5q77fpyJwVXNrrPU83Htq6-0RXX3EhBBt0mOZRaVfui5RBX4qleXoFixCqRMKHlyrBddqIOOcV2Xkgsi64DFgNFR4HPOnQAw_9xSNM2oNXQdTr_Chs9FCwri66_JP1YA3C32WfffrX-vKFsOZ_VXFpXZcvGKeTHi9C4V61do22Hcyb9GsNlD-9w7ZhW0e7fm1WX0FOZwR3hJsdU"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-[1440px] mx-auto">
+<div class="flex flex-col lg:flex-row gap-12 items-start">
+<div class="w-full lg:w-3/5 space-y-6">
+<div class="relative rounded-xl overflow-hidden bg-surface-container-low aspect-[16/10] group">
+<img alt="Cyberpunk Game Asset" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Futuristic neon city street at night with glowing blue and violet holographic signs and wet pavement reflecting lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhc2gDHaTTwEeOM7u5TJfL5gcPFYsxcXd2nJJ8vp4SEiGm3XzMGltfl7RFQIi_V-WLp4D1uBbjMiF2zUc8eyihGmjFEE5FFD3TbVnfug_a9g_SljO3iPc_YnUK6XV4idb6OroWIrCg5ccK4sWazxtIPo1tWeZ3jQok2YbOW4CNzWk1C67QkJCkUwFOKIQUc8r72z6bZTXzE0KOYZuV0nPXD3TwVvKj0aLK7fiDFJbrioYqeDmGz5ofewLTSMLlFmHjVj8w7f4tTF2b"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-6 left-6 flex gap-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-label">Official Partner</span>
+<span class="bg-primary/20 backdrop-blur-md text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-label">Global Activation</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<div class="rounded-lg overflow-hidden border border-primary/40 ring-2 ring-primary/20 cursor-pointer">
+<img class="w-full h-24 object-cover" data-alt="Cyberpunk character portrait with neon highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBERiIZiKx9Tvz1MTRioXWUx32tHKiuffTjVf3Znx7N-31XWHzQPEkDkPRzQ5NLcfqj9q43a_EP5vkK36ODYYpluu0XwjoHzigDwSQhiGml_aJpquuwrzSFRKTpyyyKS5gI6FMzBRCcK0NuLZfh4X9dA3adsC51hj1axNkZzUVeswGeiFccG5j5NK9W4fzKC1jHB3J4QbiNEx7WeZYhOtqhrRO14OIgfAinvWqUZ6O0NKvrHShSX2NQDSJxApe2oEHsVH3GeCd1o7C7"/>
+</div>
+<div class="rounded-lg overflow-hidden opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+<img class="w-full h-24 object-cover" data-alt="Close up of a futuristic gaming console with blue LEDs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKwCeAA97vCeGKFvh_2aP0qjrGQJ9Z0Fl7ZnoywuZP0eWHkULHTu9sW0uGUmCy3BVek-qYGZp2mkgr_uVAqqBsQEf6pQbJ8wxdp03inilFQmDpce9rxL33HnkNSekwVElSD6FP0RvIYLChMsUAmGXPfvfIQRD_lTmIEc0WwNwL4-xIDGKsS5d2ujPl7HmsMwKsh-OuOgFwdmaHtSmG3ZkPY5MGY48D_qRkVi4siI9PDXQpI3UuR2ZI8poCGSlfgGmPcIvfGX1FdkiB"/>
+</div>
+<div class="rounded-lg overflow-hidden opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+<img class="w-full h-24 object-cover" data-alt="Aerial view of a sci-fi battlefield with energy beams" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTKQDdI4VKzw3FGzrb6tP7bELO0tp5m49fWR-WVvBFi-vTmjCVPKODw1lq3X39yFxi58WXPkylK71d1QkRo6jp5o6v1lax8gJ1WoXbmD5dmZ8i57ac_WtAFljgOHIk9f0gUoR47y0fvX72BORX5-UepqdmGP3BjTf_grXJvjGLW9PS1aribcBkh4I7mPQVg7pnGzA5u1vWL2nlGvYeuXB7je6LPymMMYZnEcAQADVZSMv49a5-1AbT1yfrBzDnQkSfkKkeUlSRT4tD"/>
+</div>
+<div class="rounded-lg overflow-hidden opacity-60 hover:opacity-100 transition-opacity cursor-pointer bg-surface-container-high flex items-center justify-center">
+<span class="text-on-surface-variant font-headline text-lg">+12</span>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-2/5 flex flex-col gap-8">
+<div class="space-y-4">
+<nav class="flex items-center gap-2 text-on-surface-variant text-xs uppercase tracking-widest font-label">
+<a class="hover:text-primary transition-colors" href="#">Marketplace</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Credits</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary">Neon Shards</span>
+</nav>
+<h1 class="text-4xl md:text-5xl font-black font-headline tracking-tighter text-white">6,480 Neon Shards <br/> <span class="text-primary">+ 1,200 Bonus</span></h1>
+<div class="flex items-center gap-4">
+<div class="bg-error-container/20 text-error px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest flex items-center gap-2 border border-error/20">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            Flash Sale
+                        </div>
+<span class="text-on-surface-variant line-through text-lg font-light">$129.99</span>
+</div>
+<div class="text-4xl font-black text-white font-headline tracking-tight">
+                        $79.49 <span class="text-primary-container text-base font-normal tracking-normal align-middle ml-2">(-38%)</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-primary space-y-6">
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant font-label">Select Region</label>
+<select class="w-full bg-surface-container-highest border-none rounded-lg text-sm text-on-surface py-3 px-4 focus:ring-1 ring-primary/40 appearance-none cursor-pointer">
+<option>North America</option>
+<option>Europe (EUW)</option>
+<option>Asia-Pacific</option>
+<option>Brazil</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant font-label">Server</label>
+<select class="w-full bg-surface-container-highest border-none rounded-lg text-sm text-on-surface py-3 px-4 focus:ring-1 ring-primary/40 appearance-none cursor-pointer">
+<option>Nexus Prime</option>
+<option>Oasis 7</option>
+<option>Crystal Coast</option>
+</select>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant font-label">Player ID / UID</label>
+<div class="relative">
+<input class="w-full bg-surface-container-highest border-none rounded-lg text-sm text-on-surface py-3 px-4 focus:ring-1 ring-primary/40 placeholder:text-on-surface-variant/40" placeholder="Enter your unique ID..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant/40">help_outline</span>
+</div>
+<p class="text-[10px] text-on-surface-variant/60 italic leading-relaxed">Please ensure your ID is correct. Mistakes cannot be refunded due to immediate automated processing.</p>
+</div>
+<div class="flex flex-col gap-3 pt-2">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-black uppercase tracking-widest py-4 rounded-lg shadow-lg shadow-primary/20 active:scale-95 transition-all font-label">
+                            Buy Now
+                        </button>
+<button class="w-full bg-surface-container-highest text-on-surface font-bold uppercase tracking-widest py-4 rounded-lg border border-outline-variant/20 hover:bg-surface-bright transition-colors active:scale-95 font-label flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">shopping_cart</span>
+                            Add to Cart
+                        </button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex items-center gap-3 p-4 bg-surface-container rounded-xl border border-outline-variant/10">
+<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<p class="text-[10px] font-black uppercase text-white font-label">Secure AES-256</p>
+<p class="text-[9px] text-on-surface-variant">Encrypted Checkout</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-4 bg-surface-container rounded-xl border border-outline-variant/10">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handshake</span>
+</div>
+<div>
+<p class="text-[10px] font-black uppercase text-white font-label">Official Partner</p>
+<p class="text-[9px] text-on-surface-variant">100% Legit Source</p>
+</div>
+</div>
+</div>
+<div class="space-y-4 pt-4">
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-lg">bolt</span>
+<span class="text-xs">Instant Delivery within 60 seconds</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">support_agent</span>
+<span class="text-xs">24/7 Premium Editorial Support</span>
+</div>
+</div>
+</div>
+</div>
+<section class="mt-24 space-y-12">
+<div class="flex justify-between items-end border-b border-outline-variant/10 pb-6">
+<div class="space-y-2">
+<span class="text-primary font-bold uppercase tracking-[0.3em] text-[10px] font-label">The Details</span>
+<h2 class="text-3xl font-black font-headline text-white tracking-tighter">Product Intelligence</h2>
+</div>
+<div class="flex gap-4">
+<button class="bg-surface-container-high px-6 py-2 rounded-full text-xs font-bold text-white hover:bg-surface-bright transition-colors">Overview</button>
+<button class="px-6 py-2 rounded-full text-xs font-bold text-on-surface-variant hover:text-white transition-colors">How it works</button>
+<button class="px-6 py-2 rounded-full text-xs font-bold text-on-surface-variant hover:text-white transition-colors">Reviews (1.2k)</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-low p-8 rounded-2xl space-y-4">
+<div class="text-primary-container opacity-40">
+<span class="material-symbols-outlined text-4xl">inventory_2</span>
+</div>
+<h3 class="text-xl font-bold font-headline text-white">Item Inventory</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Neon Shards are the premium currency used for unlocking limited edition weapon skins, holographic avatars, and seasonal battle passes within the Nexus ecosystem.</p>
+</div>
+<div class="bg-surface-container-low p-8 rounded-2xl space-y-4">
+<div class="text-secondary opacity-40">
+<span class="material-symbols-outlined text-4xl">history_edu</span>
+</div>
+<h3 class="text-xl font-bold font-headline text-white">Transaction Logs</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Every purchase is recorded on our private ledger, ensuring complete transparency and the ability to track your top-up history across all linked accounts instantly.</p>
+</div>
+<div class="bg-surface-container-low p-8 rounded-2xl space-y-4">
+<div class="text-tertiary opacity-40">
+<span class="material-symbols-outlined text-4xl">shield</span>
+</div>
+<h3 class="text-xl font-bold font-headline text-white">Safe Injection</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Our proprietary 'Ghost Injection' protocol ensures that currency top-ups are indistinguishable from official store purchases, maintaining 100% account safety.</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full bg-[#0e141c] border-t border-[#434654]/20">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8 max-w-[1920px] mx-auto">
+<div class="flex flex-col items-center md:items-start">
+<span class="text-lg font-black text-white mb-4 font-headline uppercase tracking-tighter">Nexus Core</span>
+<p class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 text-center md:text-left max-w-sm">
+                    © 2024 Nexus Core. All rights reserved. High-End Editorial Gaming.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-4">
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Support</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Privacy Policy</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Terms of Service</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Refund Policy</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">Contact Us</a>
+<a class="font-['Inter'] text-sm tracking-wide uppercase text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors" href="#">FAQ</a>
+</div>
+</div>
+</footer>
+</body></html>

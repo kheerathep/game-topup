@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Management | Neon Curator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#003daa",
+                        "on-tertiary-container": "#3c0076",
+                        "tertiary": "#d8b9ff",
+                        "inverse-surface": "#dde3ee",
+                        "tertiary-fixed-dim": "#d8b9ff",
+                        "surface-container": "#1a2028",
+                        "tertiary-container": "#ae71ff",
+                        "secondary": "#bdf4ff",
+                        "on-surface": "#dde3ee",
+                        "inverse-primary": "#1e55cf",
+                        "surface-dim": "#0e141c",
+                        "on-surface-variant": "#c3c6d6",
+                        "surface-container-high": "#242a33",
+                        "on-secondary-fixed": "#001f24",
+                        "primary": "#b4c5ff",
+                        "surface-container-highest": "#2f353e",
+                        "background": "#0e141c",
+                        "outline": "#8d909f",
+                        "on-tertiary-fixed": "#290055",
+                        "on-secondary": "#00363d",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#450086",
+                        "on-primary": "#002979",
+                        "surface-variant": "#2f353e",
+                        "on-background": "#dde3ee",
+                        "surface-tint": "#b4c5ff",
+                        "on-primary-container": "#00236a",
+                        "error": "#ffb4ab",
+                        "surface": "#0e141c",
+                        "secondary-fixed": "#9cf0ff",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "inverse-on-surface": "#2b3139",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#00174c",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#090f16",
+                        "surface-bright": "#343a42",
+                        "on-secondary-container": "#00616d",
+                        "primary-container": "#628aff",
+                        "secondary-fixed-dim": "#00daf3",
+                        "tertiary-fixed": "#eddcff",
+                        "outline-variant": "#434654",
+                        "surface-container-low": "#161c24",
+                        "secondary-container": "#00e3fd",
+                        "on-tertiary-fixed-variant": "#6300bb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0e141c; }
+        ::-webkit-scrollbar-thumb { background: #2f353e; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-[#0e141c] flex flex-col h-full py-8 px-4 border-r border-outline-variant/10">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-black text-[#b4c5ff] tracking-tighter uppercase">Neon Curator</h1>
+<p class="font-['Space_Grotesk'] uppercase tracking-wider text-[10px] font-bold text-on-surface-variant mt-1">Management Console</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-4 py-3 gap-3 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#b4c5ff] bg-gradient-to-r from-[#4C79F4]/20 to-transparent border-l-4 border-[#4C79F4] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Products</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">category</span>
+<span>Categories</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">ad_units</span>
+<span>Banners</span>
+</a>
+<a class="flex items-center px-4 py-3 gap-3 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-bold text-[#c3c6d6] opacity-70 hover:bg-[#242a33] hover:text-[#b4c5ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full py-4 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-headline font-bold uppercase tracking-widest text-xs rounded-lg shadow-lg hover:brightness-110 active:scale-[0.98] transition-all duration-300">
+                Create Listing
+            </button>
+</div>
+</aside>
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-30 bg-[#0e141c]/80 backdrop-blur-xl flex justify-between items-center h-16 px-8 ml-64">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-highest/50 border-none rounded-lg py-2 pl-10 pr-4 text-sm w-full focus:ring-1 focus:ring-secondary/40 transition-all placeholder:text-on-surface-variant/50" placeholder="Search listing ID, game title, or sku..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-secondary cursor-pointer">notifications</span>
+<div class="h-8 w-8 rounded-full bg-surface-container-high border border-outline-variant/20 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close-up portrait of a professional male administrator with clean studio lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvu7FxOM95BFx7SBsrCCMEsFeaJVogdzjtNlYFFwQYdzTffZuqsJf7yjwj8-YrFNayymBuyrNj9577p0cC4IPRKQ9YqZBPchp8WqazSNVw8j0SH1O38d5HMorWwezAxTIJpGV_TPHGIrlMZZAaLFadNFkHJAeyT7Te07Q15-cI8MTAJZ82WYyeIetLZVpubqf-GuyvmO9Rdk4zNjvk9X3kE4iEGASOVvmklN_CyIBdLc2Sd8SMUT4rJXeeLZhxp1xfdr_4MZwXEvUP"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 px-8 pb-12 min-h-screen">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="font-headline text-4xl font-black text-on-surface tracking-tight">INVENTORY <span class="text-primary">VAULT</span></h2>
+<p class="text-on-surface-variant text-sm mt-1 max-w-md opacity-80 uppercase tracking-widest font-medium">Curating 1,248 active digital assets across 12 platforms</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-high text-on-surface-variant rounded hover:text-primary transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="p-2 bg-surface-container-high text-primary rounded">
+<span class="material-symbols-outlined">view_list</span>
+</button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-container-low rounded-xl p-4 mb-8 flex flex-wrap items-center gap-6 border-b border-outline-variant/5">
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-tighter text-on-surface-variant/60 ml-1">Platform</span>
+<select class="bg-surface-container-highest border-none text-xs rounded-lg px-3 py-2 min-w-[140px] focus:ring-1 focus:ring-secondary/40">
+<option>All Platforms</option>
+<option>Steam</option>
+<option>Battle.net</option>
+<option>Riot Games</option>
+<option>Epic Games</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-tighter text-on-surface-variant/60 ml-1">Category</span>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-primary/10 text-primary text-[11px] font-bold uppercase rounded-full border border-primary/20 transition-all">All Items</button>
+<button class="px-4 py-2 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase rounded-full hover:bg-surface-bright transition-all">Skins</button>
+<button class="px-4 py-2 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase rounded-full hover:bg-surface-bright transition-all">Top-ups</button>
+<button class="px-4 py-2 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase rounded-full hover:bg-surface-bright transition-all">Accounts</button>
+</div>
+</div>
+<div class="ml-auto flex flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-tighter text-on-surface-variant/60 ml-1 text-right">Stock Status</span>
+<div class="flex items-center gap-4">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded bg-surface-container-highest border-none text-primary focus:ring-0" type="checkbox"/>
+<span class="text-xs text-on-surface-variant uppercase font-medium">In Stock</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded bg-surface-container-highest border-none text-primary focus:ring-0" type="checkbox"/>
+<span class="text-xs text-on-surface-variant uppercase font-medium">Low Inventory</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Product Grid (Editorial Bento Style) -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Featured Large Item -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-2xl overflow-hidden group border border-outline-variant/5">
+<div class="flex h-full flex-col md:flex-row">
+<div class="w-full md:w-1/2 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="stylized digital neon sword floating in a dark cyberpunk environment with vibrant purple and cyan lighting and particle effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQsVEc-cv_aD4OlmpLRave7HV7ANNRNeUZFCXcRXA0yfv2koaiPSgfQgHm9V_VCJ9JUJeD_hMwgttb6X5OGGviP9uVxXSUkQwyeUc-DzeUfv2BWzKRCNZzVzMeOuxqvIAk9-bsHn2teF4-s7SrWwITBNkm-ayMWw9YAnpOqK29KTxYoomVPqVw4qU5KxfnYnsYy8ziegtkZ36GlQ1xQebsnei7rFJ6W5EfsdJCQEuv9nVoYMn0pnGGovoKI4bTLE5iH3wgZjhUlKNB"/>
+<div class="absolute top-4 left-4 bg-secondary-container/90 backdrop-blur text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Premium Asset</div>
+</div>
+<div class="w-full md:w-1/2 p-8 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold text-primary uppercase tracking-widest">Valorant • Skin Bundle</span>
+<span class="text-xs font-bold text-on-surface-variant">ID: #99421-VX</span>
+</div>
+<h3 class="font-headline text-3xl font-bold leading-tight mb-2">NEON DRAKE <br/>EVOLUTION PACK</h3>
+<p class="text-on-surface-variant text-sm line-clamp-3 opacity-70">Complete cosmetic overhaul for high-tier weaponry. Includes unique reload animations, custom kill effects, and atmospheric visual audio cues.</p>
+</div>
+<div class="mt-6 flex items-center justify-between border-t border-outline-variant/10 pt-6">
+<div>
+<span class="block text-[10px] uppercase font-bold text-on-surface-variant/50">Base Price</span>
+<span class="text-2xl font-black text-secondary">$149.00</span>
+</div>
+<div class="flex gap-2">
+<button class="h-10 w-10 flex items-center justify-center bg-surface-container-highest rounded hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+<button class="h-10 px-6 bg-surface-container-highest rounded text-[11px] font-bold uppercase tracking-widest hover:bg-surface-bright transition-colors">Manage Stock</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Inventory Metric Card -->
+<div class="col-span-12 lg:col-span-4 bg-gradient-to-br from-surface-container-low to-surface-dim rounded-2xl p-8 border border-outline-variant/10 flex flex-col justify-between">
+<div>
+<h4 class="font-headline text-xl font-bold mb-6">QUICK STATS</h4>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<span class="text-sm text-on-surface-variant">Top-up Speed</span>
+<span class="text-sm font-black text-secondary">0.4s AVG</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-[92%] bg-secondary rounded-full"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-on-surface-variant">Account Security</span>
+<span class="text-sm font-black text-tertiary">99.9% VETTED</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-[99%] bg-tertiary rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container/50 rounded-xl p-4 border border-outline-variant/5 mt-8">
+<p class="text-[11px] text-on-surface-variant uppercase tracking-wider mb-2">Demand Forecast</p>
+<div class="flex items-end gap-1 h-12">
+<div class="w-full bg-primary/20 h-[40%] rounded-t-sm"></div>
+<div class="w-full bg-primary/20 h-[60%] rounded-t-sm"></div>
+<div class="w-full bg-primary/20 h-[50%] rounded-t-sm"></div>
+<div class="w-full bg-primary/40 h-[80%] rounded-t-sm"></div>
+<div class="w-full bg-primary h-[100%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Product Card 1 -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-low rounded-xl p-0 overflow-hidden border border-outline-variant/5 hover:border-primary/20 transition-all duration-300">
+<div class="h-40 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="vibrant blue fantasy mountain landscape with floating islands and magical glowing crystals in high-end game art style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOfAqOEbLWlJIDlc43l-L0Vii44izoE6zi2KvKFt33rIaz_6CmHlPJGy2G--giMrlDx9aRA_G5kXEYjG4tuOqHTCbe5YD0mmfHiSbdH5-RCn1lfJgY3Ij3hHxQbYPxzFujEpXc1TEOxEvw8cBKXcJnOoYIMuV650EDKEhkxh5Clpr-SFVplVBh-syW_FZhCQplcBsSDvATf46qWrCSg0lKaxXFhAQ9YippNMds-aquTGAXMwthjkPDLlCrUQIqi74FcRBzwYCqSEk2"/>
+<div class="absolute bottom-3 left-3 bg-surface-dim/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest text-on-surface">League of Legends</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-base">5000 RP Top-up</h4>
+<span class="text-[10px] font-bold text-secondary uppercase">Stock: 412</span>
+</div>
+<p class="text-xs text-on-surface-variant opacity-60 mb-6">Instant global region delivery via voucher code.</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-black">$45.00</span>
+<div class="flex gap-1">
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">visibility</span></button>
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">settings</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-low rounded-xl p-0 overflow-hidden border border-outline-variant/5 hover:border-primary/20 transition-all duration-300">
+<div class="h-40 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover opacity-80" data-alt="close-up of futuristic gaming keyboard with rainbow RGB backlighting in a dark room with atmospheric smoke" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEu_a8-7DQ_84--INelqVUpkiMHFEfmjI7OG9MoKZeZB-G8Dau4l5idChiVUhwGj522zgf0p5blELDS9d_UOkhpfJTmhz9OcZmEZoJwELxh8MbrAI-7H6HwAQZbKwF7GZJPNmkFNEpWlH-NqAs4wMlKxfMDGbthNC-NE5EXq3yjcf19FntpjrBv2EXtTsSuEdyGheZf9pa_SxHyCs6hzB0q5MHTVmwdeLkBD7334WJmm5TUwet83aBI7tMoVvfWhfEaN2B3T6_YKos"/>
+<div class="absolute bottom-3 left-3 bg-surface-dim/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest text-on-surface">Overwatch 2</div>
+<div class="absolute top-3 right-3 h-2 w-2 rounded-full bg-error animate-pulse"></div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-base">Grandmaster Acc</h4>
+<span class="text-[10px] font-bold text-error uppercase">Stock: 2</span>
+</div>
+<p class="text-xs text-on-surface-variant opacity-60 mb-6">Verified SMS, 50+ Skins, Unranked Season Start.</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-black">$280.00</span>
+<div class="flex gap-1">
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">visibility</span></button>
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">settings</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-low rounded-xl p-0 overflow-hidden border border-outline-variant/5 hover:border-primary/20 transition-all duration-300">
+<div class="h-40 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="top down view of retro gaming cartridges and modern controllers on a minimalist grey surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIhcrEsZ8pgTFCi7FrGzeMTdktcaaTz8iP26P9KlUj37g3U7tas3Dn9NNd2jcsBpkeU6XQ46wLKNR46FevZdS8fE0ZacTDsLTI93DY367WlxMYYqV9gzLCVuvSipcMgCFs2WlolCyMw63ln3FH8OT2Pocy1QHNjbIGkQJjzq4FleZaTvkqzRwAayVVQBGVZdxT4qYeOPa66QnDokKbxWiCpuiAfej3_4WvSSFB2VArjsQz3vzyQ5irBaobw7bmZT6MZQhIb1xDOIeJ"/>
+<div class="absolute bottom-3 left-3 bg-surface-dim/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest text-on-surface">Steam</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-base">$100 Steam Gift</h4>
+<span class="text-[10px] font-bold text-secondary uppercase">Stock: 1,020</span>
+</div>
+<p class="text-xs text-on-surface-variant opacity-60 mb-6">Global activation. Guaranteed non-revocable.</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-black">$98.50</span>
+<div class="flex gap-1">
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">visibility</span></button>
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">settings</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-low rounded-xl p-0 overflow-hidden border border-outline-variant/5 hover:border-primary/20 transition-all duration-300">
+<div class="h-40 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover grayscale brightness-50" data-alt="abstract architectural geometry with sharp lines and dark blue shadows creating a modern tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDPuXeNU5Se3hmpSW3cKGw72C5zdZRjxWAMPqFlUE29Z26aTHtVnldEy05y2SlCl_ID693aBPsi-uxp5R2SiKmfUnJSpJgtg4s55S7exytzI-8o_qjsUWrkw73uzGXN-NXXbwannaK61DOeEelIYfBUNZXrILPV6BVQ8r0ph59q0cww-F-3zUxtsJzR-vuh753ojIIcRmWwevK6dE9ahwlyZIYIWe0XlRqvmyXVyzCC_tbtsR7p2mSCa9_58MljyGTkMVFsmno-MBb"/>
+<div class="absolute bottom-3 left-3 bg-surface-dim/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest text-on-surface">CS2</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-bold text-base">Dragon Lore Skin</h4>
+<span class="text-[10px] font-bold text-secondary uppercase">Stock: 1</span>
+</div>
+<p class="text-xs text-on-surface-variant opacity-60 mb-6">Factory New, Float 0.002. High rarity collectible.</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-black">$12,400</span>
+<div class="flex gap-1">
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">visibility</span></button>
+<button class="p-1.5 bg-surface-container-highest rounded text-on-surface-variant hover:text-white"><span class="material-symbols-outlined text-xs">settings</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination Section -->
+<div class="mt-12 flex items-center justify-between bg-surface-container-low px-8 py-4 rounded-xl border border-outline-variant/5">
+<span class="text-xs text-on-surface-variant uppercase tracking-widest font-medium">Showing 1-12 of 1,248 items</span>
+<div class="flex items-center gap-1">
+<button class="h-8 w-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="h-8 w-8 flex items-center justify-center rounded bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="h-8 w-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant font-bold text-xs">2</button>
+<button class="h-8 w-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant font-bold text-xs">3</button>
+<span class="px-2 text-on-surface-variant opacity-40">...</span>
+<button class="h-8 w-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant font-bold text-xs">104</button>
+<button class="h-8 w-8 flex items-center justify-center rounded hover:bg-surface-container-highest text-on-surface-variant"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</main>
+</body></html>

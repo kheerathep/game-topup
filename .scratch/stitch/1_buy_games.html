@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#0e141c",
+                    "tertiary-fixed": "#eddcff",
+                    "on-primary-fixed-variant": "#003daa",
+                    "surface-container-high": "#242a33",
+                    "inverse-on-surface": "#2b3139",
+                    "on-tertiary-fixed": "#290055",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#00daf3",
+                    "tertiary-fixed-dim": "#d8b9ff",
+                    "surface-container": "#1a2028",
+                    "on-secondary": "#00363d",
+                    "outline": "#8d909f",
+                    "on-tertiary-fixed-variant": "#6300bb",
+                    "on-tertiary": "#450086",
+                    "inverse-surface": "#dde3ee",
+                    "on-error": "#690005",
+                    "on-background": "#dde3ee",
+                    "surface-variant": "#2f353e",
+                    "on-surface": "#dde3ee",
+                    "surface-container-low": "#161c24",
+                    "secondary-fixed": "#9cf0ff",
+                    "outline-variant": "#434654",
+                    "tertiary": "#d8b9ff",
+                    "secondary": "#bdf4ff",
+                    "primary-container": "#628aff",
+                    "primary": "#b4c5ff",
+                    "surface-dim": "#0e141c",
+                    "secondary-container": "#00e3fd",
+                    "on-primary": "#002979",
+                    "on-secondary-fixed": "#001f24",
+                    "on-primary-fixed": "#00174c",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-error-container": "#ffdad6",
+                    "surface-tint": "#b4c5ff",
+                    "surface-bright": "#343a42",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-surface-variant": "#c3c6d6",
+                    "inverse-primary": "#1e55cf",
+                    "tertiary-container": "#ae71ff",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#00616d",
+                    "on-tertiary-container": "#3c0076",
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#00236a",
+                    "surface-container-lowest": "#090f16",
+                    "surface-container-highest": "#2f353e",
+                    "background": "#0e141c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-mask {
+            mask-image: linear-gradient(to right, black 60%, transparent 100%);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(52, 58, 66, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e141c]/60 backdrop-blur-xl shadow-2xl shadow-black/40">
+<div class="flex justify-between items-center px-8 h-20 max-w-[1920px] mx-auto font-['Space_Grotesk'] tracking-tight">
+<div class="text-2xl font-bold tracking-tighter text-white">Nexus Core</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Marketplace</a>
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Top-ups</a>
+<a class="text-[#c3c6d6] hover:text-white transition-colors" href="#">Accounts</a>
+<a class="text-[#b4c5ff] border-b-2 border-[#4C79F4] pb-1" href="#">Buy Games</a>
+</nav>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-surface-container-highest rounded-lg pl-10 pr-4 py-2 text-sm border-none focus:ring-1 focus:ring-secondary/40 w-64 transition-all" placeholder="Search the armory..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-[#343a42]/40 p-2 rounded-full transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined text-[#b4c5ff]" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-[#343a42]/40 p-2 rounded-full transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined text-[#b4c5ff]" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-outline-variant/20">
+<img alt="User Profile Avatar" data-alt="close-up portrait of a futuristic gamer with neon lighting accents on their face and headset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOth1d8V-QvzphVbBiXqEmP30z9Qvzc_E6-YKYdb4jhLdmHnKpkXOC_Vrvsnb9sMH8gWE02MzrJXrdf9ml0NXRFoVN--jc3lD-pbdfR0788bgapYDPWdE7XuyhxOfjUhe9sb2FWgwSx_HrVa7EyNoc4DYOOJ6VH9tAdoMUzrDImXjoTKH0LjfWFuLI67EcCvNC-BGf32HbTQF-4Sbdcn3DtvmzCxIHLR-CVfs7sji11WtXWG-f7kNLpS03JeTh-1acXURPIyZ4NBlP"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-20">
+<!-- Hero Editorial Section -->
+<section class="relative h-[870px] w-full overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60" data-alt="cinematic wide shot of a high-fantasy landscape with floating islands and glowing magical ruins at twilight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg2Iq88MMtPkd1Cov3f-2aeBhZT_gghAvAvkEDvHkj_moiXuR9nlA2B-s_40xh_3F-KkZWo9MNtb6KjYKQdUjj4Bkob2_RVEMyeW9hPdMGDejSZUy5TSushFmyzwRg05eoKhhYE5lTbhSh1KwdJYxCeu485uc7zXL6qK_53tFu9ZYF6W1P3n-YNjDUXkQipZ4hx-itlNcRQg_BlpiA3a5c-dWA8X16keAJAq3jMpasqnuTdeus3RsVPaKcCmmb4GH0N9OtPX4wd3PP"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 h-full max-w-[1920px] mx-auto px-12 flex flex-col justify-center items-start">
+<span class="bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full text-xs font-black tracking-widest uppercase mb-6">New Release</span>
+<h1 class="font-headline text-7xl md:text-8xl font-bold tracking-tighter text-white mb-4 leading-none">ETHEREAL<br/>REVENANT</h1>
+<p class="max-w-xl text-on-surface-variant text-lg font-light leading-relaxed mb-10">Experience the critically acclaimed masterpiece. Traverse the shattered realms of Aethelgard in a stunning editorial-style soulslike journey.</p>
+<div class="flex items-center gap-6">
+<button class="px-8 py-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold text-lg active:scale-95 transition-all shadow-xl shadow-primary/20">
+                        Pre-order Now — $69.99
+                    </button>
+<button class="px-8 py-4 rounded-lg bg-surface-bright/60 backdrop-blur-xl border border-outline-variant/20 text-white font-medium hover:bg-surface-bright transition-all">
+                        View Gameplay
+                    </button>
+</div>
+<!-- Carousel Indicators -->
+<div class="absolute bottom-12 left-12 flex gap-3">
+<div class="h-1 w-12 bg-primary rounded-full"></div>
+<div class="h-1 w-12 bg-outline-variant/30 rounded-full hover:bg-outline-variant/60 cursor-pointer transition-colors"></div>
+<div class="h-1 w-12 bg-outline-variant/30 rounded-full hover:bg-outline-variant/60 cursor-pointer transition-colors"></div>
+</div>
+</div>
+</section>
+<!-- Platform Filters -->
+<section class="py-12 px-12 max-w-[1920px] mx-auto">
+<div class="flex flex-wrap items-center justify-between gap-8 border-b border-outline-variant/10 pb-8">
+<div class="flex items-center gap-4">
+<h2 class="font-headline text-2xl font-bold text-white mr-8">Platforms</h2>
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-bold text-sm tracking-wide flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="desktop_windows">desktop_windows</span> PC
+                    </button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high text-on-surface-variant hover:text-white font-bold text-sm tracking-wide transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="sports_esports">sports_esports</span> PlayStation
+                    </button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high text-on-surface-variant hover:text-white font-bold text-sm tracking-wide transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="videogame_asset">videogame_asset</span> Xbox
+                    </button>
+<button class="px-6 py-2 rounded-full bg-surface-container-high text-on-surface-variant hover:text-white font-bold text-sm tracking-wide transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="tablet_mac">tablet_mac</span> Switch
+                    </button>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="text-sm font-label uppercase tracking-widest">Sort By:</span>
+<select class="bg-transparent border-none text-white font-bold text-sm focus:ring-0 cursor-pointer">
+<option>Popularity</option>
+<option>Newest</option>
+<option>Price: Low to High</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Deals & Discounts - Bento Style -->
+<section class="py-12 px-12 max-w-[1920px] mx-auto">
+<div class="flex items-end justify-between mb-10">
+<div>
+<h2 class="font-headline text-4xl font-extrabold text-white tracking-tighter">Deals &amp; Discounts</h2>
+<p class="text-secondary font-label uppercase tracking-widest mt-2">Limited time weapon cache upgrades</p>
+</div>
+<a class="text-primary font-bold hover:underline" href="#">View All Deals</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Large Feature Card -->
+<div class="md:col-span-2 row-span-2 relative rounded-xl overflow-hidden group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="dramatic action shot of a cybernetic warrior in a rain-slicked futuristic city at night with neon reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO_PTpQaNkIqplYGcQmyiN7TiSe7cEM-O_fi_ZI2TjZUtC5QAHTz2wONaSBiVCt-u0rA1gJkqFwbHRrUZKNIVZ0JkYVKdmoH1eetDxuuQ8p6r2iMkhENnsyZUi0GNcXzxlEubYyktKuFNksiRFWS-y2CBPKsYlT40ko0vCrIlQmAdaf2lMj7J6UIkj0icNnOd74JaYjy5bKvmvcYoh_Jp07VJxV8lclTSqMPy-loVgChRYV6VB2ZYVrngaxt23H4Ve3KGnG9moBM-v"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+<div class="absolute top-6 left-6">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-lg text-sm font-black">-75%</span>
+</div>
+<div class="absolute bottom-8 left-8 right-8">
+<h3 class="font-headline text-3xl font-bold text-white mb-2">CYBER-PROTOCOL: REDUX</h3>
+<p class="text-on-surface-variant mb-6 line-clamp-2">The ultimate neon-noir tactical shooter. Now with the "Insurrection" expansion pack included.</p>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-on-surface-variant line-through text-sm">$59.99</span>
+<span class="text-white text-2xl font-black">$14.99</span>
+</div>
+<button class="bg-white text-black p-4 rounded-lg flex items-center gap-2 font-bold hover:bg-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+                                Add to Cart
+                            </button>
+</div>
+</div>
+</div>
+<!-- Small Deal Cards -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden group flex flex-col">
+<div class="h-48 relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="abstract cosmic art with purple and blue nebulae and sharp geometric crystal structures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8EP9YNSEA97XIzey8ARkrT8r48ygzE9MlNk6TSk2IN4UJJZDasSVF3-_2IHjRFLt_9w0V5SEVa4oBBr0lJtLQeSAJWAIiD83mO2rsUbuEBkWrmo_52gy5gS5kuRZV6DRIDS2lm4vRZSP5SofLXq-UlimliHEiEer0UCnRzt1snByAQ_Tnr43z1345_IA3SgYpLnLEossI_6B_HoX_xE-onuWA6-S0kXTpIcDAW0SiUidiYl2kRzglt_uHFkv2B5OqRlm7DTe_ida_"/>
+<span class="absolute top-3 right-3 bg-error-container text-on-error-container px-2 py-0.5 rounded text-xs font-bold">-40%</span>
+</div>
+<div class="p-5 flex-grow flex flex-col">
+<h4 class="font-headline font-bold text-white mb-1">ASTRO-KINETICS</h4>
+<p class="text-on-surface-variant text-xs font-label uppercase mb-4 tracking-wider">Sci-Fi Simulator</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-white font-black">$23.99</span>
+<button class="bg-surface-container-highest p-2 rounded-lg hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl overflow-hidden group flex flex-col">
+<div class="h-48 relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="dark gothic cathedral interior with shafts of golden light hitting a stone altar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8iPgLKy7307vXeySvcOkkZdR28xHiN5H-lIFHQN4xevajpX3e3PDrUcqCONTmIXWE84hO9YkVn--UpqTXlMaxSzqhH3gX9jqni0KT0Uqh9vWoWH6BE0SgVbf45WjJ6beYSd2F-387f4x2homyrMY9JASU_Vu_-PBmBaTh76m4AIheltIjZAqVR5DWciW7fvQTq9KF6DmVCDsViI3f6xvY0KTlR39KHI8L6TpV0z2RPZSjXOr6ZHIJnDyG39nNH9_Di7qdLgo6GiR-"/>
+<span class="absolute top-3 right-3 bg-error-container text-on-error-container px-2 py-0.5 rounded text-xs font-bold">-50%</span>
+</div>
+<div class="p-5 flex-grow flex flex-col">
+<h4 class="font-headline font-bold text-white mb-1">VOID RUNNER</h4>
+<p class="text-on-surface-variant text-xs font-label uppercase mb-4 tracking-wider">Action RPG</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-white font-black">$19.99</span>
+<button class="bg-surface-container-highest p-2 rounded-lg hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl overflow-hidden group flex flex-col">
+<div class="h-48 relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="vibrant low poly landscape with orange trees and a stylized blue river under a purple sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU9YEwcytBFG4wmOlzWqRpGWqwHYFiifpmv62dxntRtCoNX1xK3SDmXR_ghIkPfL4IPwxqGnvVCpOrcSLej6Ts2CBOgkrlmclTHNch0M6GX7HCQDfHl4gwEucgi2f15LkrkT9ZD6Hv6qBmxXf_woOlvCMaNpF_BmcHUNIHXUhrNVx1lP2RbZ8zvb-Dh8-fJJEfsOODUaYyd6_YJ81uGFBLoJKiylWax9cTmcFsSgZOTaaLAj0b_BNvnc0Xn1GdulAATaQiT_3P_roq"/>
+<span class="absolute top-3 right-3 bg-error-container text-on-error-container px-2 py-0.5 rounded text-xs font-bold">-20%</span>
+</div>
+<div class="p-5 flex-grow flex flex-col">
+<h4 class="font-headline font-bold text-white mb-1">NEXUS LANDS</h4>
+<p class="text-on-surface-variant text-xs font-label uppercase mb-4 tracking-wider">Open World Indie</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-white font-black">$31.99</span>
+<button class="bg-surface-container-highest p-2 rounded-lg hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl overflow-hidden group flex flex-col">
+<div class="h-48 relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="macro close-up of a high-tech mechanical engine with glowing blue coolant lines and intricate gears" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhyQFokIhtgizcInpUKevTs9G-JrauCdWvJqPmHZcy3GgJuMzsBm3MhkN7JlVerESZP4QxIttH8NjykjKRtAVmgQ2Ltuq49kaX_ArCKFbd7TcWk9VstzKQTVCpYGkWENMHoJ0xwY9keS-w45Y1NqkHuuztGCW-02_5992xh-9AxkPqrhMFW2sxYTZphvAaKuw2xYNvlzApZE9yKb37fvp8CEGtv8tHsAiPjbqBVArIG4UDeBysl4BGwFOBgq5I4LT9rVqrE6G5vk8_"/>
+<span class="absolute top-3 right-3 bg-error-container text-on-error-container px-2 py-0.5 rounded text-xs font-bold">-15%</span>
+</div>
+<div class="p-5 flex-grow flex flex-col">
+<h4 class="font-headline font-bold text-white mb-1">CORE BREAKER</h4>
+<p class="text-on-surface-variant text-xs font-label uppercase mb-4 tracking-wider">Tactical RTS</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-white font-black">$42.49</span>
+<button class="bg-surface-container-highest p-2 rounded-lg hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- All Collections -->
+<section class="py-24 px-12 bg-surface-container-low mt-12">
+<div class="max-w-[1920px] mx-auto">
+<div class="flex items-center justify-between mb-12">
+<h2 class="font-headline text-5xl font-black text-white italic tracking-tighter">ALL COLLECTIONS</h2>
+<div class="flex gap-2">
+<button class="p-3 bg-surface-container rounded-full border border-outline-variant/10 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="p-3 bg-surface-container rounded-full border border-outline-variant/10 hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-6 gap-6">
+<!-- Collection Items -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[3/4] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="minimalist collection of vintage computer parts and retro gaming consoles on a dark surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm48KcKbN91mRMvq3bgFlw9QBuoNZt_Ks3ug-FauVP23NNFSU0i7f8zKOb9vZ8fyhCPxgcDEMfMwFOY0TgjoUq7IRiTh1gkNkByo8rA9rACXrO9ozSbNhptM-T__QGO4I_SrDPFGEdvkQpJ99vpdSajy5jCBfS4y_Qs7icTJfhtt5exmwKTJ6IRqW0T90DOpEdyPRzWkkjPTb2Zidqi4ipoeA9qYoPCqNn5P2sCv4Nja09FmnEVvqW778U41dTkaL1Vz_OSONs9mss"/>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-headline font-bold text-lg text-white">RETRO CLASSICS</span>
+<span class="text-on-surface-variant text-sm font-label uppercase tracking-widest">128 Titles</span>
+</div>
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[3/4] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="overhead view of high-end gaming keyboard and mouse with neon RGB backlighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAywLYPY8fe2Tw8AhxgU9rDcz87B6-poA3LX5kAD5CA_h3Cs-9lZpXmOmCJCHgg0jukt6YiGRn7N_lK5NQqhfa2m4de-AvyZSEGaYbJmoU8P4OB-3i8kFz1X9okiIDPvOxlh8Lm_PivcURq5Bxu7XOZ0S7F9cyAzIRD8bTsNm8l2nR3XQOa7BkXpnpNz7OnuUPeBYcNL9LnUXXlPt7xBFDj3UvlBwOYMBMT5NKE3sjfPzsiZcoUK4pPAAo4NfCS65tv2I7PoDH_uzPE"/>
+<div class="absolute inset-0 bg-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-headline font-bold text-lg text-white">COMPETITIVE PC</span>
+<span class="text-on-surface-variant text-sm font-label uppercase tracking-widest">45 Titles</span>
+</div>
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[3/4] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="stylized 3D render of a futuristic sword glowing with blue energy lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSRABy7plGNNwicFhpeBlDyssF71SGhwoweYGGTt6Pp77lHInlqW3rj-0ZCG2K_yH2IKeqLl5-AdXuh3LfcNT4zUbeN9mvW4jzmODIbI5Qx-xUFzmeJVCOysxnaOcgKTBb7ZU_PTFUeNa_Vy8IkTuz55qfkx4OGiQeluO_OWvxLOZxqQpcv0b_zO_giE6mr5NMlR0JkBSv59mXz7T_pnpZRQ86sAAgYIJHuyKsSqDO96jBBJWRHGKb852wTAt-HX3PDtKB_LQgTTyj"/>
+<div class="absolute inset-0 bg-tertiary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-headline font-bold text-lg text-white">FANTASY ARPG</span>
+<span class="text-on-surface-variant text-sm font-label uppercase tracking-widest">89 Titles</span>
+</div>
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[3/4] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="vibrant flat lay of various gaming accessories including a colorful controller and handheld console" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcW0SJIAgOXNBx5UH-COtcBeRFtxwSMBJqPfEo_hkwExqfLOh3rK-DVTg2zUtSUz78LWuMXT-_vUelwFJ3MB_a4x0LS5wQfjO_OaigUDyBeqVuN7JckTHhlNj12JxmCmPdXzhrgZJSzKkOoQWkX4u_5wntiIu32TEBMjOeDynnL3XIensKSYfmXp8rdDbcIq-ChUQtWWZ6kKT6l2x6g7qaYl83pmkDxiCPfB5jmPF7CzMxWLwu09XCc2w4X8n6TXInrawsPOePcXW6"/>
+<div class="absolute inset-0 bg-primary-container/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-headline font-bold text-lg text-white">FAMILY &amp; CO-OP</span>
+<span class="text-on-surface-variant text-sm font-label uppercase tracking-widest">210 Titles</span>
+</div>
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[3/4] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="low-angle shot of a towering brutalist skyscraper reaching into a rainy grey sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAPL1wQs6tbEGFU7Q5puOwNxKmjI4OjMLSaH9Inx3tdxIhZ1XVUx4fECyeqDtiqg1nO_Jqd8VjDfip0MQHwjBydz8HkReXmQdaYPFxTtlm4vN608UceYg9Y9537105taUNpTIYI_sy4YNpYZxcbtixZWEjAGUwyxad8-ROsE4PWyKYvdd4VSI7BuEJMp3KHx5y-JfCRpH5LfaaKUM99tyA-SLlEZ28uX5R_H496R--KzRKLbJzQw0I9HfEODMSB27Do74k3HoUd9Ag"/>
+<div class="absolute inset-0 bg-secondary-container/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-headline font-bold text-lg text-white">HORROR &amp; THRILL</span>
+<span class="text-on-surface-variant text-sm font-label uppercase tracking-widest">34 Titles</span>
+</div>
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[3/4] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="close-up of digital code and complex algorithms displayed on a glowing computer screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw0wBdXBHyYPKF_XyrsP5WNTUAUUXqTFJMEX40c6IEbaP7Zc5M6aQy4o7lMa7RtTLHOBoNC0TM5XMIe7x1ZWSJVv1c7cT52lJDHXnuWozVK9K3WZhd-ZyGJ2U9mXXdojKrxiDr2aeiPmeZqR1Td8ZGh4ED8Chuu-lwUPV8FHStlDRpY1CaM76GFkxVR3S3GC6ndmXDk_6uiNx2jHtWBGQ7sb__ATZVYMRBy2xMRFuCaQM3KWCUvnpg-KdiQec4xZKtIpw8UYMeXP3r"/>
+<div class="absolute inset-0 bg-tertiary-container/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-headline font-bold text-lg text-white">SIMULATION</span>
+<span class="text-on-surface-variant text-sm font-label uppercase tracking-widest">67 Titles</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / CTA -->
+<section class="py-32 px-12 relative overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(98,138,255,0.08),transparent_70%)] pointer-events-none"></div>
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<h2 class="font-headline text-6xl font-black text-white mb-6">NEVER MISS A DROP.</h2>
+<p class="text-on-surface-variant text-xl mb-12">Join 2M+ gamers and get exclusive early access to seasonal sales and rare key drops directly in your inbox.</p>
+<form class="flex flex-col md:flex-row gap-4">
+<input class="flex-grow bg-surface-container border border-outline-variant/20 rounded-lg px-6 py-4 text-white focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all outline-none" placeholder="Your military-grade email address" type="email"/>
+<button class="bg-white text-black font-black uppercase tracking-widest px-10 py-4 rounded-lg hover:bg-primary transition-all active:scale-95">Subscribe</button>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-[#434654]/20 bg-[#0e141c]">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8 max-w-[1920px] mx-auto">
+<div class="flex flex-col items-center md:items-start">
+<div class="text-lg font-black text-white mb-4">Nexus Core</div>
+<p class="text-[#c3c6d6]/60 font-['Inter'] text-sm tracking-wide uppercase max-w-sm text-center md:text-left">© 2024 Nexus Core. All rights reserved. High-End Editorial Gaming.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-4">
+<a class="text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors font-['Inter'] text-sm tracking-wide uppercase" href="#">Support</a>
+<a class="text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors font-['Inter'] text-sm tracking-wide uppercase" href="#">Privacy Policy</a>
+<a class="text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors font-['Inter'] text-sm tracking-wide uppercase" href="#">Terms of Service</a>
+<a class="text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors font-['Inter'] text-sm tracking-wide uppercase" href="#">Refund Policy</a>
+<a class="text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors font-['Inter'] text-sm tracking-wide uppercase" href="#">Contact Us</a>
+<a class="text-[#c3c6d6]/60 hover:text-[#b4c5ff] transition-colors font-['Inter'] text-sm tracking-wide uppercase" href="#">FAQ</a>
+</div>
+<div class="flex gap-6">
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white transition-colors">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white transition-colors">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.43 13.91c0 2.59-1.677 3.056-4.481 3.056-2.805 0-4.48-1.554-4.48-3.056 0-1.332.714-2.134 1.206-2.134.462 0 .604.285.604.703 0 .495-.246 1.554-.246 1.554 0 1.254.954 1.402 1.508 1.402 1.372 0 1.89-1.554 1.89-2.394 0-1.706-1.127-2.61-2.481-2.61-2.01 0-3.321 1.284-3.321 3.195 0 2.316 2.046 2.355 2.046 3.65 0 .61-.312.839-.741.839-1.218 0-2.325-1.144-2.325-2.65 0-3.153 2.502-4.463 5.342-4.463 2.801 0 4.47 1.394 4.47 3.058z"></path></svg>
+</button>
+</div>
+</div>
+</footer>
+</body></html>
