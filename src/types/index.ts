@@ -66,6 +66,10 @@ export interface Product {
   genre_id?: string | null;
   /** false = ไม่พร้อมขาย (ซ่อนจากกรอง "พร้อมขาย" / ปิดปุ่มตะกร้า) */
   in_stock?: boolean;
+  /** จำนวนคงคลัง — ใช้เมื่อ track_inventory เป็น true */
+  stock_quantity?: number;
+  /** true = หักสต็อกเมื่อออเดอร์ paid; false = ไม่จำกัดจำนวน (เติมเกม/ดิจิทัล) */
+  track_inventory?: boolean;
   created_at?: string;
 }
 
@@ -74,7 +78,10 @@ export interface Order {
   user_id: string;
   total_price: number;
   status: 'pending' | 'paid' | 'cancelled';
-  payment_method: 'qr' | 'credit_card';
+  payment_method: 'qr' | 'credit_card' | 'bank_transfer';
+  stripe_payment_intent_id?: string | null;
+  /** ลิงก์รูปสลิปโอน (bank transfer) หลังอัปโหลด Storage */
+  payment_slip_url?: string | null;
   created_at: string;
 }
 

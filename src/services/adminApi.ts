@@ -1,3 +1,4 @@
+import { normalizeOrderStatusForDb } from '../lib/orderStatus';
 import { supabase } from './supabase';
 import { getMyProfile } from './profile';
 import { createProduct, deleteProduct, getProducts, updateProduct, type ProductInsert } from './api';
@@ -75,6 +76,183 @@ export async function getAdminDashboardStats(): Promise<AdminDashboardStats | nu
   };
 }
 
+/** แท่งกราฟรายได้จากออเดอร์ status=paid ต่อวัน (UTC) */
+export type RevenueDayBucket = {
+  dateKey: string;
+  label: string;
+  revenue: number;
+  /** ความสูงแท่ง 0–100 เปรียบเทียบกับวันที่มากสุดในช่วง */
+  barHeightPct: number;
+};
+
+export async function getPaidRevenueChartBuckets(days: 7 | 30): Promise<RevenueDayBucket[]> {
+  if (!supabase) return [];
+
+  const end = new Date();
+  end.setUTCHours(0, 0, 0, 0);
+  const keys: string[] = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(end);
+    d.setUTCDate(d.getUTCDate() - i);
+    keys.push(d.toISOString().slice(0, 10));
+  }
+
+  const startIso = keys[0] + 'T00:00:00.000Z';
+
+  const { data, error } = await supabase
+    .from('orders')
+    .select('created_at, total_price')
+    .eq('status', 'paid')
+    .gte('created_at', startIso);
+
+  if (error) {
+    console.error('admin revenue chart', error);
+    return [];
+  }
+
+  const sums = new Map<string, number>();
+  for (const k of keys) sums.set(k, 0);
+  for (const row of data ?? []) {
+    const k = new Date(row.created_at as string).toISOString().slice(0, 10);
+    if (sums.has(k)) {
+      sums.set(k, (sums.get(k) ?? 0) + Number(row.total_price));
+    }
+  }
+
+  const revenues = keys.map((k) => sums.get(k) ?? 0);
+  const max = Math.max(...revenues, 0);
+
+  return keys.map((dateKey, i) => {
+    const revenue = revenues[i];
+    const d = new Date(dateKey + 'T12:00:00Z');
+    const label =
+      days === 7
+        ? d.toLocaleDateString('en', { weekday: 'short' })
+        : `${d.getUTCMonth() + 1}/${d.getUTCDate()}`;
+    let barHeightPct: number;
+    if (max === 0) {
+      barHeightPct = 4;
+    } else if (revenue <= 0) {
+      barHeightPct = 4;
+    } else {
+      barHeightPct = Math.max(12, Math.round((revenue / max) * 100));
+    }
+    return { dateKey, label, revenue, barHeightPct };
+  });
+}
+
+/** แถวตารางแดชบอร์ด — ออเดอร์ล่าสุด + ชื่อสินค้าจาก order_items */
+export type DashboardRecentTx = {
+  orderId: string;
+  productLabel: string;
+  buyer: string;
+  status: Order['status'];
+  amount: number;
+  createdAt: string;
+};
+
+export async function getRecentOrdersForDashboard(limit = 8): Promise<DashboardRecentTx[]> {
+  if (!supabase) return [];
+
+  type Row = {
+    id: string;
+    created_at: string;
+    total_price: number;
+    status: Order['status'];
+    user_id: string;
+    order_items?: {
+      quantity: number;
+      products: { name: string } | null;
+    }[];
+  };
+
+  let list: Row[] = [];
+
+  const nested = await supabase
+    .from('orders')
+    .select(
+      `
+      id,
+      created_at,
+      total_price,
+      status,
+      user_id,
+      order_items (
+        quantity,
+        products ( name )
+      )
+    `,
+    )
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (nested.error) {
+    console.warn('admin recent orders (nested)', nested.error);
+    const simple = await supabase
+      .from('orders')
+      .select('id, created_at, total_price, status, user_id')
+      .order('created_at', { ascending: false })
+      .limit(limit);
+    if (simple.error || !simple.data?.length) {
+      console.error('admin recent orders', simple.error);
+      return [];
+    }
+    const ids = simple.data.map((r) => r.id);
+    const { data: lines } = await supabase
+      .from('order_items')
+      .select('order_id, product_id, products(name)')
+      .in('order_id', ids);
+    const namesByOrder = new Map<string, string[]>();
+    for (const line of lines ?? []) {
+      const oid = (line as { order_id: string; products?: { name?: string } | null }).order_id;
+      const nm = (line as { products?: { name?: string } | null }).products?.name;
+      if (!namesByOrder.has(oid)) namesByOrder.set(oid, []);
+      if (nm) namesByOrder.get(oid)!.push(nm);
+    }
+    list = simple.data.map((r) => ({
+      ...r,
+      order_items: (namesByOrder.get(r.id) ?? []).map((name) => ({
+        quantity: 1,
+        products: { name },
+      })),
+    })) as unknown as Row[];
+  } else {
+    list = (nested.data ?? []) as unknown as Row[];
+  }
+
+  const userIds = [...new Set(list.map((r) => r.user_id))];
+  const nameMap = new Map<string, string>();
+  if (userIds.length > 0) {
+    const { data: profs } = await supabase.from('profiles').select('id, display_name').in('id', userIds);
+    for (const p of profs ?? []) {
+      nameMap.set(p.id, (p as { id: string; display_name: string }).display_name ?? '');
+    }
+  }
+
+  return list.map((row) => {
+    const items = row.order_items ?? [];
+    let productLabel = '—';
+    if (items.length > 0) {
+      const names = items
+        .map((it) => it.products?.name)
+        .filter((n): n is string => typeof n === 'string' && n.length > 0);
+      if (names.length > 0) {
+        productLabel =
+          names.slice(0, 2).join(', ') + (names.length > 2 ? ` (+${names.length - 2})` : '');
+      }
+    }
+    const buyer = nameMap.get(row.user_id)?.trim() || `${row.user_id.slice(0, 8)}…`;
+    return {
+      orderId: row.id,
+      productLabel,
+      buyer,
+      status: normalizeOrderStatusForDb(row.status as string),
+      amount: Number(row.total_price),
+      createdAt: row.created_at,
+    };
+  });
+}
+
 const ORDERS_PAGE = 30;
 
 export async function listOrdersAdmin(page = 0): Promise<{
@@ -112,6 +290,7 @@ export async function listOrdersAdmin(page = 0): Promise<{
 
   const enriched: AdminOrderRow[] = orders.map((o) => ({
     ...o,
+    status: normalizeOrderStatusForDb(o.status as string),
     customer_display_name: nameByUser.get(o.user_id) ?? null,
   }));
 
@@ -133,21 +312,58 @@ export async function getOrderWithItemsAdmin(orderId: string): Promise<{
   const { data: items, error: ie } = await supabase.from('order_items').select('*').eq('order_id', orderId);
   if (ie) {
     console.error('admin order_items', ie);
-    return { order: order as Order, items: [] };
+    return {
+      order: { ...order, status: normalizeOrderStatusForDb(order.status as string) } as Order,
+      items: [],
+    };
   }
 
-  return { order: order as Order, items: (items ?? []) as OrderItem[] };
+  return {
+    order: { ...order, status: normalizeOrderStatusForDb(order.status as string) } as Order,
+    items: (items ?? []) as OrderItem[],
+  };
 }
 
 export async function updateOrderStatus(
   orderId: string,
-  status: Order['status'],
+  status: Order['status'] | string,
 ): Promise<{ ok: boolean; error: Error | null }> {
   if (!supabase) {
     return { ok: false, error: supabaseRequired() };
   }
-  const { error } = await supabase.from('orders').update({ status }).eq('id', orderId);
-  return { ok: !error, error: error ? new Error(error.message) : null };
+  
+  /** ห้ามส่งค่า legacy เช่น "completed" ลง Supabase — แปลงเป็น enum จริงก่อนเสมอ */
+  // Rigid enforcement to guarantee no "completed" slips to DB
+  let normalized: string = 'pending';
+  const s = String(status).trim().toLowerCase();
+  if (s === 'paid' || s === 'completed' || s === 'success' || s === 'done') {
+    normalized = 'paid';
+  } else if (s === 'cancelled' || s === 'canceled') {
+    normalized = 'cancelled';
+  }
+
+  console.log('[DEBUG] updateOrderStatus -> sending to Supabase:', { orderId, originalStatus: status, normalized });
+
+  const { error: rpcError } = await supabase.rpc('set_order_status_safe', {
+    p_order_id: orderId,
+    p_status: normalized,
+  });
+
+  if (!rpcError) {
+    return { ok: true, error: null };
+  }
+  
+  console.log('[DEBUG] RPC error fallback to REST:', rpcError);
+
+  const { error: restError } = await supabase.from('orders').update({ status: normalized }).eq('id', orderId);
+  if (!restError) {
+    return { ok: true, error: null };
+  }
+
+  console.log('[DEBUG] REST update error:', restError);
+
+  const msg = restError.message || rpcError.message || 'Update failed';
+  return { ok: false, error: new Error(msg) };
 }
 
 /** หมวดแนวเกม — รวมที่ปิดใช้ */
@@ -304,4 +520,64 @@ export async function updateSiteSettingsAdmin(
     .select()
     .single();
   return { data: (data as SiteSettings) ?? null, error: error ? new Error(error.message) : null };
+}
+
+/** Stripe dashboard snapshot (Edge Function — requires admin JWT + server STRIPE_SECRET_KEY). */
+export type StripeAdminSummary = {
+  balanceAvailableThb: number;
+  balancePendingThb: number;
+  succeededCount30d: number;
+  recent: Array<{
+    id: string;
+    amountThb: number;
+    status: string;
+    createdUnix: number;
+    orderId: string | null;
+  }>;
+};
+
+export async function fetchStripeAdminSummary(): Promise<{
+  data: StripeAdminSummary | null;
+  error: string | null;
+}> {
+  if (!supabase) {
+    return { data: null, error: supabaseRequired().message };
+  }
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+  const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+  if (!supabaseUrl || !anon) {
+    return { data: null, error: 'Missing Supabase env' };
+  }
+  const { data: sessionData } = await supabase.auth.getSession();
+  const token = sessionData.session?.access_token;
+  if (!token) {
+    return { data: null, error: 'Not signed in' };
+  }
+  try {
+    const res = await fetch(`${supabaseUrl}/functions/v1/stripe-admin-summary`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        apikey: anon,
+      },
+    });
+    const json = (await res.json()) as StripeAdminSummary & { error?: string };
+    if (!res.ok) {
+      return { data: null, error: json.error ?? `HTTP ${res.status}` };
+    }
+    if (json.error) {
+      return { data: null, error: json.error };
+    }
+    return {
+      data: {
+        balanceAvailableThb: json.balanceAvailableThb,
+        balancePendingThb: json.balancePendingThb,
+        succeededCount30d: json.succeededCount30d,
+        recent: json.recent ?? [],
+      },
+      error: null,
+    };
+  } catch (e) {
+    return { data: null, error: e instanceof Error ? e.message : 'Network error' };
+  }
 }

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { CatalogImageUrlInput } from '../../components/CatalogImageUrlInput';
 import { FALLBACK_HOME_HERO, type HomeHeroRow, type HomePlatformRow } from '../../services/home';
 import {
   deleteHomePlatform,
@@ -93,16 +94,6 @@ export function AdminBanners() {
             {t('adminBannersIntro')}
           </p>
         </div>
-        <div className="flex gap-2">
-          <button className="nc-btn-ghost">
-            <span className="material-symbols-outlined text-sm">filter_list</span>
-            Filter
-          </button>
-          <button className="nc-btn-primary">
-            <span className="material-symbols-outlined text-sm">add</span>
-            New Banner
-          </button>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -119,7 +110,7 @@ export function AdminBanners() {
                 </h3>
               </div>
               <p className="text-xs" style={{ color: 'var(--nc-on-surface-variant)' }}>
-                Main hero banner configuration
+                {t('adminHeroConfigDesc')}
               </p>
             </div>
 
@@ -134,10 +125,6 @@ export function AdminBanners() {
                     {hero.eyebrow_en}
                   </p>
                   <p className="text-lg font-headline font-bold mt-1">{hero.headline_en}</p>
-                </div>
-                <div className="absolute top-3 left-3 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest"
-                  style={{ backgroundColor: 'rgba(0,227,253,0.9)', color: 'var(--nc-on-primary)' }}>
-                  LIVE
                 </div>
               </div>
             )}
@@ -155,11 +142,16 @@ export function AdminBanners() {
                   <FragmentRow key={a} a={a} b={b} hero={hero}
                     onChange={(patch) => setHero((h) => ({ ...h, ...patch }))} />
                 ))}
-                <label className="text-xs sm:col-span-2" style={{ color: 'var(--nc-on-surface-variant)' }}>
-                  image_url
-                  <input className="nc-input mt-1" value={hero.image_url}
-                    onChange={(e) => setHero((h) => ({ ...h, image_url: e.target.value }))} />
-                </label>
+                <div className="sm:col-span-2">
+                  <CatalogImageUrlInput
+                    label={t('adminHeroImageLabel')}
+                    value={hero.image_url}
+                    onChange={(url) => setHero((h) => ({ ...h, image_url: url }))}
+                    uploadFolder="home"
+                    disabled={savingHero}
+                    className="[&_label]:text-xs [&_label]:font-normal [&_label]:text-[var(--nc-on-surface-variant)]"
+                  />
+                </div>
                 <label className="text-xs" style={{ color: 'var(--nc-on-surface-variant)' }}>
                   primary_href
                   <input className="nc-input mt-1" value={hero.primary_href}
@@ -174,9 +166,8 @@ export function AdminBanners() {
               <div className="flex gap-3 pt-2">
                 <button type="button" disabled={savingHero} onClick={() => void saveHero()}
                   className="nc-btn-primary">
-                  {savingHero ? 'Saving...' : t('adminSaveHero')}
+                  {savingHero ? t('adminSaving') : t('adminSaveHero')}
                 </button>
-                <button className="nc-btn-ghost">Save as Draft</button>
               </div>
             </div>
           </section>
@@ -193,7 +184,9 @@ export function AdminBanners() {
                 </h3>
               </div>
               <span className="text-xs" style={{ color: 'var(--nc-on-surface-variant)' }}>
-                {platforms.length} Active
+                {t('adminPlatformsSummary')
+                  .replace('{active}', String(platforms.filter((p) => p.is_active).length))
+                  .replace('{total}', String(platforms.length))}
               </span>
             </div>
 
@@ -201,11 +194,11 @@ export function AdminBanners() {
               <table className="nc-table">
                 <thead>
                   <tr>
-                    <th>Label</th>
-                    <th>Href</th>
-                    <th>Sort</th>
-                    <th>Status</th>
-                    <th />
+                    <th>{t('adminBannerColLabel')}</th>
+                    <th>{t('adminBannerColHref')}</th>
+                    <th>{t('adminBannerColSort')}</th>
+                    <th>{t('adminBannerColStatus')}</th>
+                    <th>{t('adminActions')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -216,21 +209,32 @@ export function AdminBanners() {
                       <td>{p.sort_order}</td>
                       <td>
                         <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${p.is_active ? 'badge-completed' : 'badge-cancelled'}`}>
-                          {p.is_active ? 'Active' : 'Inactive'}
+                          {p.is_active ? t('adminActive') : t('adminInactive')}
                         </span>
                       </td>
-                      <td className="space-x-2">
-                        <button type="button" onClick={() => editPlat(p)}
-                          className="p-1.5 rounded transition-colors inline-flex"
-                          style={{ backgroundColor: 'var(--nc-surface-highest)', color: 'var(--nc-on-surface-variant)' }}>
-                          <span className="material-symbols-outlined text-xs">edit</span>
-                        </button>
-                        <button type="button"
-                          onClick={() => { if (window.confirm(t('adminConfirmDelete'))) void deleteHomePlatform(p.id).then(() => load()); }}
-                          className="p-1.5 rounded transition-colors inline-flex"
-                          style={{ backgroundColor: 'var(--nc-surface-highest)', color: 'var(--nc-error)' }}>
-                          <span className="material-symbols-outlined text-xs">delete</span>
-                        </button>
+                      <td>
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => editPlat(p)}
+                            className="nc-btn-ghost nc-btn-row"
+                            aria-label={t('adminEdit')}
+                          >
+                            <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>edit</span>
+                            {t('adminEdit')}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (window.confirm(t('adminConfirmDelete'))) void deleteHomePlatform(p.id).then(() => load());
+                            }}
+                            className="nc-btn-danger nc-btn-row"
+                            aria-label={t('adminDelete')}
+                          >
+                            <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>delete</span>
+                            {t('adminDelete')}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -249,7 +253,7 @@ export function AdminBanners() {
                 {platEditId ? 'edit' : 'add_circle'}
               </span>
               <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color: 'var(--nc-primary)' }}>
-                {platEditId ? 'Edit Platform' : 'Add Platform'}
+                {platEditId ? t('adminEditPlatform') : t('adminAddPlatform')}
               </h3>
             </div>
 
@@ -263,6 +267,9 @@ export function AdminBanners() {
               <input className="nc-input mt-1" value={platDraft.icon_name}
                 onChange={(e) => setPlatDraft((d) => ({ ...d, icon_name: e.target.value }))} />
             </label>
+            <p className="text-[11px] leading-snug" style={{ color: 'var(--nc-on-surface-variant)' }}>
+              {t('adminPlatformIconHint')}
+            </p>
             <label className="block text-xs" style={{ color: 'var(--nc-on-surface-variant)' }}>
               Href
               <input className="nc-input mt-1" value={platDraft.href}
@@ -281,20 +288,6 @@ export function AdminBanners() {
               {t('adminActive')}
             </label>
 
-            {/* Asset Upload Area (visual only) */}
-            <div className="rounded-xl p-6 text-center"
-              style={{ border: '2px dashed var(--nc-outline-variant)', backgroundColor: 'var(--nc-surface-high)' }}>
-              <span className="material-symbols-outlined text-3xl mb-2 block" style={{ color: 'var(--nc-outline-variant)' }}>
-                cloud_upload
-              </span>
-              <p className="text-xs" style={{ color: 'var(--nc-on-surface-variant)' }}>
-                Drag your artwork here or<br />browse
-              </p>
-              <p className="text-[9px] mt-1" style={{ color: 'rgba(195,198,214,0.4)' }}>
-                Recommended: 1920×600 PNG/JPG
-              </p>
-            </div>
-
             <div className="flex flex-col gap-2 pt-2">
               <button type="button" onClick={() => void savePlatform()} className="nc-btn-primary w-full py-3">
                 {platEditId ? t('adminSave') : t('adminCreate')}
@@ -310,24 +303,6 @@ export function AdminBanners() {
           </div>
         </div>
       </div>
-
-      {/* Performance Stats Footer */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { label: 'Total CTR', value: '12.4%', sub: '+2.1%', color: 'var(--nc-secondary-dim)' },
-          { label: 'Impressions', value: '892k', sub: 'Weekly', color: 'var(--nc-on-surface)' },
-          { label: 'Conversions', value: '4.1k', sub: 'Direct', color: 'var(--nc-on-surface)' },
-          { label: 'Active Slots', value: `${platforms.filter(p => p.is_active).length}/${platforms.length}`, sub: 'Available', color: 'var(--nc-on-surface)' },
-        ].map((stat) => (
-          <div key={stat.label} className="rounded-xl p-6 text-center"
-            style={{ backgroundColor: 'var(--nc-surface-low)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-            <p className="text-[10px] uppercase font-bold tracking-widest mb-2"
-              style={{ color: 'var(--nc-on-surface-variant)' }}>{stat.label}</p>
-            <p className="text-2xl font-headline font-black" style={{ color: stat.color }}>{stat.value}</p>
-            <p className="text-xs mt-1" style={{ color: 'var(--nc-on-surface-variant)' }}>{stat.sub}</p>
-          </div>
-        ))}
-      </section>
     </div>
   );
 }

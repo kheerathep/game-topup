@@ -6,7 +6,6 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { listOrdersAdmin, listAllProductsAdmin } from '../../services/adminApi';
 import { supabase } from '../../services/supabase';
 import type { AdminOrderRow, Product } from '../../types';
-import './admin.css';
 
 /* ── Nav items ─────────────────────────────────────────────────── */
 const nav = [
@@ -61,6 +60,8 @@ export function AdminLayout() {
   /* ── User menu state ─────────────────── */
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   /* ── Load notifications (pending orders) ─ */
   const loadNotifs = useCallback(async () => {
@@ -156,6 +157,7 @@ export function AdminLayout() {
         setSearchOpen(false);
         setNotifOpen(false);
         setUserMenuOpen(false);
+        setMobileSidebarOpen(false);
       }
     }
     document.addEventListener('keydown', onKey);
@@ -179,32 +181,41 @@ export function AdminLayout() {
   const pendingCount = notifs.length;
 
   return (
-    <div className="admin-root min-h-screen flex">
-      {/* Neon Glow Overlays */}
-      <div className="neon-glow-1" />
-      <div className="neon-glow-2" />
+    <div className="admin-root relative min-h-screen">
+      {/* Neon Glow Overlays — fixed; keep out of flex layout */}
+      <div className="neon-glow-1 pointer-events-none" aria-hidden />
+      <div className="neon-glow-2 pointer-events-none" aria-hidden />
+
+      {mobileSidebarOpen && (
+        <div
+          role="presentation"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
 
       {/* ── Sidebar ─────────────────────────────────── */}
       <aside
-        className="h-screen w-64 fixed left-0 top-0 z-40 flex flex-col py-8 px-4"
-        style={{
-          backgroundColor: 'var(--nc-bg)',
-          borderRight: '1px solid rgba(67,70,84,0.15)',
-        }}
+        className={cn(
+          'h-screen w-[min(100vw,16rem)] max-w-[85vw] fixed left-0 top-0 z-50 flex flex-col py-6 sm:py-8 px-3 sm:px-4',
+          'border-r border-[rgba(67,70,84,0.15)] bg-[var(--nc-bg)]',
+          'transition-transform duration-200 ease-out md:translate-x-0',
+          mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
+        )}
       >
         {/* Brand */}
         <div className="mb-10 px-4">
           <h1
-            className="text-2xl font-black tracking-tighter uppercase font-headline"
+            className="text-2xl font-black tracking-tighter font-headline"
             style={{ color: 'var(--nc-primary)' }}
           >
-            Neon Curator
+            {t('brandName')}
           </h1>
           <p
             className="text-[10px] uppercase tracking-[0.2em] font-bold mt-1"
             style={{ color: 'rgba(195,198,214,0.5)' }}
           >
-            Management Console
+            {t('adminConsoleSubtitle')}
           </p>
         </div>
 
@@ -214,6 +225,7 @@ export function AdminLayout() {
             <NavLink
               key={to}
               to={to}
+              onClick={() => setMobileSidebarOpen(false)}
               className={({ isActive }) =>
                 cn(
                   'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200',
@@ -241,25 +253,9 @@ export function AdminLayout() {
 
         {/* Bottom */}
         <div className="mt-auto space-y-2 px-2">
-          <NavLink
-            to="/admin/catalog-upload"
-            className={({ isActive }) =>
-              cn(
-                'flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm transition-all',
-                isActive ? 'opacity-100' : 'opacity-50 hover:opacity-80',
-              )
-            }
-            style={{ color: 'var(--nc-on-surface-variant)' }}
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
-              upload
-            </span>
-            <span className="font-headline uppercase tracking-wider text-xs font-bold">
-              {t('adminNavCatalogUpload')}
-            </span>
-          </NavLink>
           <Link
             to="/"
+            onClick={() => setMobileSidebarOpen(false)}
             className="nc-btn-primary w-full text-center py-3 block"
           >
             <span className="material-symbols-outlined" style={{ fontSize: '16px', verticalAlign: 'middle', marginRight: '6px' }}>
@@ -271,24 +267,31 @@ export function AdminLayout() {
       </aside>
 
       {/* ── Main shell ──────────────────────────────── */}
-      <main className="ml-64 min-h-screen flex-1 relative z-10">
+      <main className="relative z-10 min-h-screen w-full min-w-0 md:ml-64">
 
         {/* Top App Bar */}
         <header
-          className="fixed top-0 right-0 z-30 h-16 px-6 flex items-center gap-4 backdrop-blur-xl"
-          style={{
-            width: 'calc(100% - 16rem)',
-            backgroundColor: 'rgba(14,20,28,0.85)',
-            borderBottom: '1px solid rgba(67,70,84,0.12)',
-          }}
+          className="fixed top-0 left-0 right-0 md:left-64 z-30 h-16 px-4 sm:px-6 md:px-10 lg:px-12 flex items-center gap-3 sm:gap-4 backdrop-blur-xl border-b border-[rgba(67,70,84,0.12)] bg-[rgba(14,20,28,0.85)]"
         >
+          <button
+            type="button"
+            className="md:hidden shrink-0 flex h-10 w-10 items-center justify-center rounded-lg text-[var(--nc-on-surface-variant)] hover:bg-white/5"
+            aria-label="Open menu"
+            aria-expanded={mobileSidebarOpen}
+            onClick={() => setMobileSidebarOpen((o) => !o)}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>
+              {mobileSidebarOpen ? 'close' : 'menu'}
+            </span>
+          </button>
           {/* ── Search ── */}
-          <div ref={searchRef} className="relative flex-1 max-w-lg">
+          <div ref={searchRef} className="relative flex-1 max-w-lg min-w-0">
             <div className="relative flex items-center">
               {/* Search icon — fixed size via style, not text-sm */}
               <span
-                className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 select-none"
+                className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 z-[1] -translate-y-1/2 select-none"
                 style={{ fontSize: '18px', color: 'var(--nc-on-surface-variant)', lineHeight: 1 }}
+                aria-hidden
               >
                 search
               </span>
@@ -299,7 +302,7 @@ export function AdminLayout() {
                 onChange={(e) => setSearchQ(e.target.value)}
                 onFocus={() => searchQ.trim().length >= 2 && setSearchOpen(true)}
                 placeholder="Search products, orders, sections… (⌘K)"
-                className="nc-input pl-10 pr-4 w-full"
+                className="nc-input nc-input--leading-icon w-full rounded-lg"
                 style={{
                   backgroundColor: 'var(--nc-surface-highest)',
                   border: 'none',
@@ -640,7 +643,7 @@ export function AdminLayout() {
         </header>
 
         {/* Page Content */}
-        <div className="pt-24 pb-12 px-8 max-w-7xl mx-auto">
+        <div className="pt-20 sm:pt-24 pb-10 sm:pb-16 px-4 sm:px-6 md:px-10 lg:px-12 max-w-7xl mx-auto w-full min-w-0">
           <Outlet />
         </div>
       </main>

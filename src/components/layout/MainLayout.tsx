@@ -136,6 +136,11 @@ export function MainLayout() {
     { to: '/buy-games', icon: ShoppingBag, label: t('buyGames') },
   ] as const;
 
+  const brandFull = t('brandName');
+  const brandSpaceIdx = brandFull.indexOf(' ');
+  const brandHead = brandSpaceIdx === -1 ? brandFull : brandFull.slice(0, brandSpaceIdx);
+  const brandTail = brandSpaceIdx === -1 ? '' : brandFull.slice(brandSpaceIdx + 1);
+
   return (
     <div className="min-h-screen bg-[--color-background] text-on-background flex flex-col font-sans">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[--color-surface]/85 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
@@ -143,13 +148,19 @@ export function MainLayout() {
           <Link
             to="/"
             className="flex shrink-0 items-center gap-2 rounded-xl px-2 py-1.5 -ml-1 hover:bg-white/5 transition-colors"
-            title="GameMart"
+            title={t('brandName')}
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[--color-primary]/20 border border-[--color-primary]/35">
               <Gamepad2 className="w-6 h-6 text-[--color-primary]" strokeWidth={2} />
             </span>
-            <span className="hidden text-lg font-black tracking-tight text-white uppercase sm:inline">
-              GAME<span className="text-[--color-primary]">MART</span>
+            <span className="hidden text-lg font-black tracking-tight text-white sm:inline">
+              {brandHead}
+              {brandTail ? (
+                <>
+                  {' '}
+                  <span className="text-[--color-primary]">{brandTail}</span>
+                </>
+              ) : null}
             </span>
           </Link>
 
@@ -288,7 +299,9 @@ export function MainLayout() {
       </main>
       <footer className="bg-[--color-surface] border-t border-[--color-surface-container] py-8 mt-auto">
         <div className="max-w-7xl mx-auto px-4 text-center text-on-surface-variant text-sm flex flex-col items-center gap-4">
-          <p>© 2026 GameMart Top-up. All Rights Reserved.</p>
+          <p>
+            © 2026 {t('brandName')}. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>

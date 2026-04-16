@@ -7,7 +7,7 @@ interface CartState {
   items: OrderItem[];
 }
 
-type CartAction =
+export type CartAction =
   | { type: 'ADD_ITEM'; payload: OrderItem }
   /** ซื้อเลย: รวมแถวเดิมถ้า key เดียวกัน แล้วติ๊กชำระเฉพาะแถวนี้ (ปิดติ๊กแถวอื่น) */
   | { type: 'ADD_ITEM_PAY_SOLO'; payload: OrderItem }

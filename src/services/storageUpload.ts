@@ -1,6 +1,7 @@
 import { supabase } from './supabase';
 
 const BUCKET = 'catalog';
+const PAYMENT_SLIPS_BUCKET = 'payment_slips';
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const ALLOWED_PREFIX = /^image\/(jpeg|png|webp|gif)$/i;
@@ -37,5 +38,32 @@ export async function uploadCatalogImage(file: File, folder: CatalogUploadFolder
   if (error) throw new Error(error.message);
 
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+  return data.publicUrl;
+}
+
+/**
+ * อัปโหลดสลิปโอนไป bucket `payment_slips` — path `{userId}/{orderId}/{uuid}-{name}`
+ * ต้องรัน supabase/patch_payment_slip_storage.sql
+ */
+export async function uploadPaymentSlip(file: File, userId: string, orderId: string): Promise<string> {
+  if (!supabase) throw supabaseRequired();
+  if (!ALLOWED_PREFIX.test(file.type)) {
+    throw new Error('Use JPEG, PNG, WebP, or GIF.');
+  }
+  if (file.size > MAX_BYTES) {
+    throw new Error('Image must be 5 MB or smaller.');
+  }
+
+  const safeBase = file.name.replace(/[^\w.\-]/g, '_').slice(0, 80);
+  const path = `${userId}/${orderId}/${crypto.randomUUID()}-${safeBase}`;
+
+  const { error } = await supabase.storage.from(PAYMENT_SLIPS_BUCKET).upload(path, file, {
+    cacheControl: '3600',
+    upsert: false,
+    contentType: file.type || undefined,
+  });
+  if (error) throw new Error(error.message);
+
+  const { data } = supabase.storage.from(PAYMENT_SLIPS_BUCKET).getPublicUrl(path);
   return data.publicUrl;
 }

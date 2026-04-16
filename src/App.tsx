@@ -12,7 +12,6 @@ import { GameTopupHub } from './pages/GameTopupHub';
 import { Topups } from './pages/Topups';
 import { BuyGames } from './pages/BuyGames';
 import { BuyGameId } from './pages/BuyGameId';
-import { AdminCatalogUpload } from './pages/AdminCatalogUpload';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminOrders } from './pages/admin/AdminOrders';
@@ -54,7 +53,6 @@ function App() {
             <Route path="products" element={<AdminProducts />} />
             <Route path="banners" element={<AdminBanners />} />
             <Route path="settings" element={<AdminSettings />} />
-            <Route path="catalog-upload" element={<AdminCatalogUpload />} />
           </Route>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />

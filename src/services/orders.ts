@@ -1,3 +1,4 @@
+import { normalizeOrderStatusForDb } from '../lib/orderStatus';
 import { supabase } from './supabase';
 import type { Order, OrderItem } from '../types';
 
@@ -8,7 +9,40 @@ function cartItemsUseDbProductIds(items: OrderItem[]): boolean {
   return items.length > 0 && items.every((i) => UUID_RE.test(i.product_id));
 }
 
-export type PaymentMethodDb = 'qr' | 'credit_card';
+type StockRow = { id: string; stock_quantity: number; track_inventory: boolean };
+
+/** ตรวจว่าสต็อกพอสำหรับตะกร้า (สินค้าที่เปิด track_inventory) */
+export async function validateOrderItemsStock(
+  items: OrderItem[],
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  if (!supabase || !cartItemsUseDbProductIds(items)) {
+    return { ok: true };
+  }
+  const ids = [...new Set(items.map((i) => i.product_id))];
+  const { data: products, error } = await supabase
+    .from('products')
+    .select('id, stock_quantity, track_inventory')
+    .in('id', ids);
+  if (error) {
+    return { ok: false, message: error.message };
+  }
+  const rows = (products ?? []) as StockRow[];
+  const needByProduct = new Map<string, number>();
+  for (const it of items) {
+    const pid = it.product_id;
+    needByProduct.set(pid, (needByProduct.get(pid) ?? 0) + it.quantity);
+  }
+  for (const [productId, need] of needByProduct) {
+    const p = rows.find((r) => r.id === productId);
+    if (!p) continue;
+    if (p.track_inventory && p.stock_quantity < need) {
+      return { ok: false, message: 'INSUFFICIENT_STOCK' };
+    }
+  }
+  return { ok: true };
+}
+
+export type PaymentMethodDb = 'qr' | 'credit_card' | 'bank_transfer';
 
 /**
  * Inserts order + order_items when Supabase is configured and cart lines use real product UUIDs.
@@ -22,6 +56,11 @@ export async function createOrder(
 ): Promise<{ orderId: string; persisted: boolean; error: Error | null }> {
   if (!supabase || !cartItemsUseDbProductIds(items)) {
     return { orderId: crypto.randomUUID(), persisted: false, error: null };
+  }
+
+  const stockCheck = await validateOrderItemsStock(items);
+  if (!stockCheck.ok) {
+    return { orderId: crypto.randomUUID(), persisted: false, error: new Error(stockCheck.message) };
   }
 
   const { data: orderRow, error: orderError } = await supabase
@@ -64,11 +103,30 @@ export async function createOrder(
   return { orderId, persisted: true, error: null };
 }
 
+/** บันทึก URL รูปสลิปหลังอัปโหลด Storage (bank transfer) — ต้องมี RLS orders_update_own_pending */
+export async function setOrderPaymentSlipUrl(
+  orderId: string,
+  paymentSlipUrl: string,
+): Promise<{ error: Error | null }> {
+  if (!supabase) {
+    return { error: new Error('Supabase is not configured.') };
+  }
+  const { error } = await supabase
+    .from('orders')
+    .update({ payment_slip_url: paymentSlipUrl })
+    .eq('id', orderId);
+  return { error: error ? new Error(error.message) : null };
+}
+
 export async function getOrderById(orderId: string): Promise<{ data: Order | null; error: Error | null }> {
   if (!supabase) {
     return { data: null, error: new Error('Supabase is not configured.') };
   }
   const { data, error } = await supabase.from('orders').select('*').eq('id', orderId).maybeSingle();
   if (error) return { data: null, error: new Error(error.message) };
-  return { data: data as Order | null, error: null };
+  if (!data) return { data: null, error: null };
+  return {
+    data: { ...data, status: normalizeOrderStatusForDb(data.status as string) } as Order,
+    error: null,
+  };
 }

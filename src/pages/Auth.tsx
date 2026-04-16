@@ -6,6 +6,7 @@ import { signInWithOAuthProvider } from '../services/oauth';
 import type { OAuthProvider } from '../services/oauth';
 import { supabase } from '../services/supabase';
 import { resolvePostLoginPath } from '../services/profile';
+import { useLanguage } from '../context/LanguageContext';
 
 function PostLoginNavigate({ fallback }: { fallback: string }) {
   const [to, setTo] = useState<string | undefined>(undefined);
@@ -25,6 +26,7 @@ function PostLoginNavigate({ fallback }: { fallback: string }) {
 }
 
 export function Auth({ mode }: { mode: 'login' | 'register' }) {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const redirectTo = (location.state as { from?: string } | null)?.from ?? '/';
@@ -117,8 +119,8 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
           {/* Brand Anchor */}
           <div className="text-center mb-10 flex flex-col items-center">
             <Gamepad2 className="w-12 h-12 text-[--color-primary] mb-2" />
-            <h1 className="font-headline text-4xl font-bold italic tracking-tighter text-white mb-2">GameMart</h1>
-            <p className="font-label text-on-surface-variant tracking-widest uppercase text-[10px]">Gaming Excellence Marketplace</p>
+            <h1 className="font-headline text-4xl font-bold italic tracking-tighter text-white mb-2">{t('brandName')}</h1>
+            <p className="font-label text-on-surface-variant tracking-widest uppercase text-[10px]">{t('brandTagline')}</p>
           </div>
 
           {/* Main Auth Card */}
@@ -149,7 +151,7 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
               <div className="space-y-1.5">
                 <label className="font-label text-xs uppercase tracking-wider text-on-surface-variant px-1" htmlFor="email">Email Address</label>
                 <div className="relative group">
-                  <input required value={email} onChange={(e) => setEmail(e.target.value)} id="email" type="email" className="w-full bg-[--color-surface-container-highest] border-none text-white px-4 py-3.5 rounded-lg focus:ring-1 focus:ring-[--color-secondary]/40 placeholder-[--color-outline-variant] transition-all outline-none" placeholder="commander@gamemart.store" />
+                  <input required value={email} onChange={(e) => setEmail(e.target.value)} id="email" type="email" className="w-full bg-[--color-surface-container-highest] border-none text-white px-4 py-3.5 rounded-lg focus:ring-1 focus:ring-[--color-secondary]/40 placeholder-[--color-outline-variant] transition-all outline-none" placeholder="you@example.com" />
                 </div>
               </div>
 

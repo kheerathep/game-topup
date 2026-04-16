@@ -25,7 +25,7 @@ exception when duplicate_object then null;
 end $$;
 
 do $$ begin
-  create type public.payment_method as enum ('qr', 'credit_card');
+  create type public.payment_method as enum ('qr', 'credit_card', 'bank_transfer');
 exception when duplicate_object then null;
 end $$;
 

@@ -89,7 +89,25 @@ export function GameDetail() {
     !needsPlayerId ||
     (playerId.trim().length > 0 && (hasTierOptions ? selectedOption != null : true));
 
-  const canAddToCart = product != null && topupReady && qty >= 1;
+  const maxOrderQty = useMemo(() => {
+    if (!product) return 99;
+    if (!product.track_inventory) return 99;
+    return Math.min(99, Math.max(0, product.stock_quantity ?? 0));
+  }, [product]);
+
+  const hasSellableStock =
+    product != null &&
+    product.in_stock !== false &&
+    (!product.track_inventory || (product.stock_quantity ?? 0) >= qty);
+
+  const canAddToCart = product != null && topupReady && qty >= 1 && hasSellableStock;
+
+  useEffect(() => {
+    if (!product?.track_inventory) return;
+    const cap = Math.min(99, Math.max(0, product.stock_quantity ?? 0));
+    if (cap === 0) return;
+    setQty((q) => Math.min(q, cap));
+  }, [product?.id, product?.track_inventory, product?.stock_quantity]);
 
   if (isLoading) {
     return (
@@ -182,7 +200,7 @@ export function GameDetail() {
                       : 'border-transparent opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <img src={src} alt="" className="h-full w-full object-cover" />
+                  <img src={src} alt="" className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
@@ -192,6 +210,20 @@ export function GameDetail() {
             <p className="text-sm text-[--color-secondary] font-mono tracking-wider">
               {t(categoryLabelKey)} • {typeLine}
             </p>
+            {product.track_inventory && (
+              <p
+                className={`mt-2 text-sm ${(product.stock_quantity ?? 0) <= 0 ? 'text-[--color-error] font-semibold' : 'text-[--color-secondary]'}`}
+              >
+                {(product.stock_quantity ?? 0) <= 0 ? (
+                  t('storeStockOut')
+                ) : (
+                  <>
+                    {t('adminStockRemaining')}{' '}
+                    <strong className="text-white tabular-nums">{product.stock_quantity}</strong> {t('adminStockPieces')}
+                  </>
+                )}
+              </p>
+            )}
             <p className="mt-4 text-sm text-on-surface-variant leading-relaxed">
               {product.description ||
                 t('gameDetailDefaultDescription').replace(/\{name\}/g, product.name)}
@@ -274,8 +306,8 @@ export function GameDetail() {
             <button
               type="button"
               aria-label={t('checkoutQtyInc')}
-              disabled={qty >= 99}
-              onClick={() => setQty((q) => Math.min(99, q + 1))}
+              disabled={qty >= maxOrderQty || maxOrderQty === 0}
+              onClick={() => setQty((q) => Math.min(maxOrderQty, q + 1))}
               className="flex h-10 w-10 items-center justify-center rounded-lg text-on-surface-variant transition-colors hover:bg-white/10 hover:text-white disabled:opacity-40"
             >
               <Plus className="h-4 w-4" />
