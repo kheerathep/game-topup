@@ -66,11 +66,11 @@ function IconAction({
     <button
       type="button"
       className={cn(
-        'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-200',
-        'border-white/15 bg-[--color-surface-container-high]/95 text-white shadow-md',
-        'hover:border-[--color-primary]/45 hover:bg-[--color-primary]/15 hover:text-[--color-secondary]',
+        'cursor-pointer inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-300',
+        'border-white/10 bg-[--color-surface-container-high]/95 text-white shadow-sm',
+        'hover:-translate-y-0.5 hover:scale-105 hover:border-[--color-primary]/60 hover:bg-[--color-primary]/25 hover:text-white hover:shadow-[0_4px_12px_rgba(98,138,255,0.4)]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-primary] focus-visible:ring-offset-2 focus-visible:ring-offset-[--color-background]',
-        'active:scale-[0.96]',
+        'active:scale-95 active:translate-y-0',
         className,
       )}
       {...props}
@@ -96,11 +96,11 @@ function IconLink({
       to={to}
       title={title}
       className={cn(
-        'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-200',
-        'border-white/15 bg-[--color-surface-container-high]/95 text-white shadow-md',
-        'hover:border-[--color-primary]/45 hover:bg-[--color-primary]/15 hover:text-[--color-secondary]',
+        'cursor-pointer inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-all duration-300',
+        'border-white/10 bg-[--color-surface-container-high]/95 text-white shadow-sm',
+        'hover:-translate-y-0.5 hover:scale-105 hover:border-[--color-primary]/60 hover:bg-[--color-primary]/25 hover:text-white hover:shadow-[0_4px_12px_rgba(98,138,255,0.4)]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-primary] focus-visible:ring-offset-2 focus-visible:ring-offset-[--color-background]',
-        'active:scale-[0.96]',
+        'active:scale-95 active:translate-y-0',
         className,
       )}
     >
@@ -209,15 +209,26 @@ export function MainLayout() {
 
             {auth.user ? (
               <div className="hidden sm:flex items-center gap-1.5 rounded-xl border border-white/12 bg-[--color-surface-container-high]/80 p-1 pl-2 shadow-md">
-                <div
-                  className="flex max-w-[140px] items-center gap-2 lg:max-w-[180px]"
+                <Link
+                  to="/profile"
+                  className="flex max-w-[140px] items-center gap-2 lg:max-w-[180px] hover:opacity-80 transition-opacity"
                   title={auth.user.email}
                 >
-                  <UserCircle className="h-9 w-9 shrink-0 text-[--color-primary]" strokeWidth={1.75} />
+                  <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-[--color-primary]/20">
+                    {auth.user.avatar_url ? (
+                      <img
+                        src={auth.user.avatar_url}
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <UserCircle className="h-full w-full text-[--color-primary]" strokeWidth={1.75} />
+                    )}
+                  </div>
                   <span className="hidden lg:inline truncate text-sm font-semibold text-white">
-                    {auth.user.email.split('@')[0]}
+                    {auth.user.display_name || auth.user.email?.split('@')[0]}
                   </span>
-                </div>
+                </Link>
                 <IconAction
                   onClick={() => void handleLogout()}
                   title={t('logout')}
@@ -269,12 +280,18 @@ export function MainLayout() {
             </div>
             {auth.user ? (
               <div className="mt-4 flex items-center justify-center gap-3 sm:hidden">
-                <div className="flex items-center gap-2 rounded-xl border border-white/12 px-3 py-2">
-                  <UserCircle className="h-8 w-8 text-[--color-primary]" />
+                <Link to="/profile" className="flex items-center gap-2 rounded-xl border border-white/12 px-3 py-2 hover:bg-white/5 transition-colors">
+                  <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full ring-2 ring-[--color-primary]/20">
+                    {auth.user.avatar_url ? (
+                      <img src={auth.user.avatar_url} alt="" className="h-full w-full object-cover" />
+                    ) : (
+                      <UserCircle className="h-full w-full text-[--color-primary]" />
+                    )}
+                  </div>
                   <span className="max-w-[200px] truncate text-sm font-medium text-white">
-                    {auth.user.email.split('@')[0]}
+                    {auth.user.display_name || auth.user.email?.split('@')[0]}
                   </span>
-                </div>
+                </Link>
                 <IconAction onClick={() => void handleLogout()} title={t('logout')} aria-label={t('logout')}>
                   <LogOut className="w-5 h-5 text-[--color-error]" />
                 </IconAction>

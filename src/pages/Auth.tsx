@@ -34,6 +34,7 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [formError, setFormError] = useState('');
   const [oauthBusy, setOauthBusy] = useState<OAuthProvider | null>(null);
@@ -61,9 +62,28 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
-    if (password.length < 6) {
-      setFormError('Password must be at least 6 characters.');
-      return;
+
+    if (mode === 'register') {
+      const errors: string[] = [];
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!emailRegex.test(email)) errors.push('• รูปแบบอีเมลไม่ถูกต้อง');
+      if (password.length < 8) errors.push('• รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร');
+      if (!/(?=.*[a-z])/.test(password)) errors.push('• รหัสผ่านต้องมีตัวอักษรพิมพ์เล็ก (a-z) อย่างน้อย 1 ตัว');
+      if (!/(?=.*[A-Z])/.test(password)) errors.push('• รหัสผ่านต้องมีตัวอักษรพิมพ์ใหญ่ (A-Z) อย่างน้อย 1 ตัว');
+      if (!/(?=.*\d)/.test(password)) errors.push('• รหัสผ่านต้องมีตัวเลข (0-9) อย่างน้อย 1 ตัว');
+      if (!/(?=.*[\W_])/.test(password)) errors.push('• รหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัว');
+      if (password !== confirmPassword) errors.push('• รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน');
+
+      if (errors.length > 0) {
+        setFormError(errors.join('\n'));
+        return;
+      }
+    } else {
+      if (password.length < 6) {
+        setFormError('รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร');
+        return;
+      }
     }
 
     if (!supabase) {
@@ -165,7 +185,16 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
                 </div>
               </div>
 
-              {formError && <p className="text-sm text-[--color-error] text-center">{formError}</p>}
+              {mode === 'register' && (
+                <div className="space-y-1.5">
+                  <label className="font-label text-xs uppercase tracking-wider text-on-surface-variant px-1" htmlFor="confirmPassword">Confirm Password</label>
+                  <div className="relative group">
+                    <input required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmPassword" type="password" className="w-full bg-[--color-surface-container-highest] border-none text-white px-4 py-3.5 rounded-lg focus:ring-1 focus:ring-[--color-secondary]/40 placeholder-[--color-outline-variant] transition-all outline-none" placeholder="••••••••" />
+                  </div>
+                </div>
+              )}
+
+              {formError && <p className="text-sm text-[--color-error] text-left whitespace-pre-line bg-error/10 p-3 rounded-lg border border-error/20">{formError}</p>}
 
               <button
                 type="submit"

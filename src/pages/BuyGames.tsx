@@ -355,7 +355,7 @@ export function BuyGames() {
                   },
                 })
               }
-              className="rounded-xl bg-[--color-primary]/20 p-2.5 text-[--color-primary] transition-all hover:bg-[--color-primary] hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[--color-primary]/20"
+              className="cursor-pointer rounded-xl bg-[--color-primary]/20 p-2.5 text-[--color-primary] transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-[--color-primary] hover:text-white hover:shadow-[0_4px_12px_rgba(98,138,255,0.4)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[--color-primary]/20 disabled:hover:scale-100 disabled:hover:translate-y-0"
               title={available ? t('addToCart') : t('buyGamesAddDisabled')}
             >
               <ShoppingCart className="h-4 w-4" />

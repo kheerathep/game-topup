@@ -130,3 +130,46 @@ export async function getOrderById(orderId: string): Promise<{ data: Order | nul
     error: null,
   };
 }
+
+export type OrderHistoryItem = Order & {
+  order_items: (OrderItem & {
+    products: {
+      name: string;
+      image_url: string;
+    };
+  })[];
+};
+
+/** Fetch full order history for a user, including product details */
+export async function getUserOrderHistory(userId: string): Promise<{ data: OrderHistoryItem[]; error: Error | null }> {
+  if (!supabase) {
+    return { data: [], error: new Error('Supabase is not configured.') };
+  }
+
+  const { data, error } = await supabase
+    .from('orders')
+    .select(`
+      *,
+      order_items (
+        *,
+        products (
+          name,
+          image_url
+        )
+      )
+    `)
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching user order history:', error);
+    return { data: [], error: new Error(error.message) };
+  }
+
+  const typedData = (data as any[]).map((row) => ({
+    ...row,
+    status: normalizeOrderStatusForDb(row.status),
+  })) as OrderHistoryItem[];
+
+  return { data: typedData, error: null };
+}

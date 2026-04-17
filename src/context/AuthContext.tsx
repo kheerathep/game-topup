@@ -56,7 +56,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (session?.user) {
         dispatch({
           type: 'LOGIN',
-          payload: { id: session.user.id, email: session.user.email || '' },
+          payload: { 
+            id: session.user.id, 
+            email: session.user.email || '',
+            display_name: session.user.user_metadata.full_name || session.user.user_metadata.name || session.user.email?.split('@')[0],
+            avatar_url: session.user.user_metadata.avatar_url || session.user.user_metadata.picture
+          },
         });
       } else {
         dispatch({ type: 'SET_LOADING', payload: false });
@@ -68,7 +73,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (sess?.user) {
           dispatch({
             type: 'LOGIN',
-            payload: { id: sess.user.id, email: sess.user.email || '' },
+            payload: { 
+              id: sess.user.id, 
+              email: sess.user.email || '',
+              display_name: sess.user.user_metadata.full_name || sess.user.user_metadata.name || sess.user.email?.split('@')[0],
+              avatar_url: sess.user.user_metadata.avatar_url || sess.user.user_metadata.picture
+            },
           });
         } else {
           dispatch({ type: 'LOGOUT' });

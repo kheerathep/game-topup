@@ -142,7 +142,7 @@ export function BuyGameId() {
                             },
                           })
                         }
-                        className="rounded-lg bg-[--color-primary]/20 p-2 text-[--color-primary] transition-colors hover:bg-[--color-primary] hover:text-white"
+                        className="cursor-pointer rounded-lg bg-[--color-primary]/20 p-2 text-[--color-primary] transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-[--color-primary] hover:text-white hover:shadow-[0_4px_12px_rgba(98,138,255,0.4)] active:scale-95"
                         title={t('addToCart')}
                       >
                         <ShoppingCart className="h-4 w-4" />

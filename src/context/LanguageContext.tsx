@@ -466,6 +466,9 @@ const translations: Translations = {
   adminBankName: { en: 'Bank name', th: 'ชื่อธนาคาร' },
   adminAccountName: { en: 'Account name', th: 'ชื่อบัญชี' },
   adminAccountNo: { en: 'Account number', th: 'เลขบัญชี' },
+  profileNameLabel: { en: 'Hello,', th: 'สวัสดี,' },
+  statusActive: { en: 'Active Account', th: 'บัญชีใช้งานปกติ' },
+  support: { en: 'Support', th: 'แจ้งปัญหา' },
 };
 
 interface LanguageContextType {

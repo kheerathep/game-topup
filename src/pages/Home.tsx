@@ -174,7 +174,7 @@ export function Home() {
                     </span>
                     <Link
                       to={`/product/${product.id}`}
-                      className="p-2 rounded-lg bg-[--color-surface-container-highest] text-[--color-primary] hover:bg-[--color-primary] hover:text-white transition-all"
+                      className="cursor-pointer p-2 rounded-lg bg-[--color-surface-container-highest] text-[--color-primary] hover:-translate-y-0.5 hover:scale-105 hover:bg-[--color-primary] hover:text-white active:scale-95 transition-all duration-300 shadow-sm hover:shadow-[0_4px_12px_rgba(98,138,255,0.4)]"
                       title={t('addToCart')}
                     >
                       <span className="material-symbols-outlined" aria-hidden>

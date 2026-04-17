@@ -12,6 +12,7 @@ import { GameTopupHub } from './pages/GameTopupHub';
 import { Topups } from './pages/Topups';
 import { BuyGames } from './pages/BuyGames';
 import { BuyGameId } from './pages/BuyGameId';
+import { UserProfile } from './pages/UserProfile';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminOrders } from './pages/admin/AdminOrders';
@@ -19,6 +20,7 @@ import { AdminCategories } from './pages/admin/AdminCategories';
 import { AdminProducts } from './pages/admin/AdminProducts';
 import { AdminBanners } from './pages/admin/AdminBanners';
 import { AdminSettings } from './pages/admin/AdminSettings';
+import { SupportConsole } from './pages/admin/SupportConsole';
 import { AdminRoute } from './components/admin/AdminRoute';
 import { useAuth } from './hooks/useAuth.tsx';
 
@@ -52,6 +54,7 @@ function App() {
             <Route path="categories" element={<AdminCategories />} />
             <Route path="products" element={<AdminProducts />} />
             <Route path="banners" element={<AdminBanners />} />
+            <Route path="support" element={<SupportConsole />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
           <Route element={<MainLayout />}>
@@ -60,6 +63,11 @@ function App() {
             <Route path="/checkout" element={
               <ProtectedRoute>
                  <Checkout />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                 <UserProfile />
               </ProtectedRoute>
             } />
             <Route path="/checkout/payment" element={

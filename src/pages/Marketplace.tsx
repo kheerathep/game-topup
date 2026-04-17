@@ -90,7 +90,7 @@ export function Marketplace() {
                 <Link
                   key={game.id}
                   to={`/marketplace/${game.slug}${hubSearch}`}
-                  className="group relative overflow-hidden rounded-2xl border border-[--color-ghost-border] bg-[--color-surface-container] transition-all hover:border-[--color-primary]/50 hover:shadow-[0_0_32px_rgba(98,138,255,0.15)]"
+                  className="group relative overflow-hidden rounded-2xl border border-[--color-ghost-border] bg-[--color-surface-container] transition-all duration-300 hover:-translate-y-1 hover:border-[--color-primary]/70 hover:shadow-[0_8px_32px_rgba(98,138,255,0.25)]"
                 >
                   <div className="aspect-[16/10] overflow-hidden">
                     <img

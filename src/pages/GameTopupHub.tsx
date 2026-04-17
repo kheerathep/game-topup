@@ -191,7 +191,7 @@ export function GameTopupHub() {
                                 },
                               })
                             }
-                            className="p-2 rounded-lg bg-[--color-primary]/20 text-[--color-primary] hover:bg-[--color-primary] hover:text-white transition-colors"
+                            className="cursor-pointer p-2 rounded-lg bg-[--color-primary]/20 text-[--color-primary] transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-[--color-primary] hover:text-white hover:shadow-[0_4px_12px_rgba(98,138,255,0.4)] active:scale-95"
                           >
                             <ShoppingCart className="w-4 h-4" />
                           </button>
