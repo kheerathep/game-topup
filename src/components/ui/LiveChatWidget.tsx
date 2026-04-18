@@ -25,10 +25,12 @@ export function LiveChatWidget() {
   }, []);
 
   useEffect(() => {
-    if (isOpen && auth.user) {
-      fetchMessages();
-      
-      const channel = supabase
+    if (!isOpen || !auth.user || !supabase) return;
+
+    const client = supabase;
+    fetchMessages();
+
+    const channel = client
         .channel(`public:messages:${auth.user.id}`)
         .on(
           'postgres_changes',
@@ -47,10 +49,9 @@ export function LiveChatWidget() {
         )
         .subscribe();
 
-      return () => {
-        supabase.removeChannel(channel);
-      };
-    }
+    return () => {
+      client.removeChannel(channel);
+    };
   }, [isOpen, auth.user, activeOrderId]);
 
   useEffect(() => {
@@ -60,8 +61,8 @@ export function LiveChatWidget() {
   }, [messages]);
 
   const fetchMessages = async () => {
-    if (!auth.user) return;
-    
+    if (!auth.user || !supabase) return;
+
     let query = supabase
       .from('messages')
       .select('*')
@@ -80,7 +81,7 @@ export function LiveChatWidget() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMessage.trim() || !auth.user || isLoading) return;
+    if (!newMessage.trim() || !auth.user || isLoading || !supabase) return;
 
     setIsLoading(true);
     const text = newMessage;

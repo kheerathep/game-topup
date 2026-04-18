@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5b21b6"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="spark" x1="200" y1="120" x2="320" y2="400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f5f3ff"/>
+      <stop offset="1" stop-color="#c4b5fd"/>
+    </linearGradient>
+  </defs>
+  <!-- Safe area: outer ~20% padding for maskable / iOS rounded rect -->
+  <rect width="512" height="512" rx="112" fill="#0f0f1a"/>
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#bg)"/>
+  <!-- Lightning / instant top-up mark -->
+  <path
+    fill="url(#spark)"
+    d="M286 116h-60l-96 158h72l-44 142 164-186h-68l32-114z"
+  />
+</svg>

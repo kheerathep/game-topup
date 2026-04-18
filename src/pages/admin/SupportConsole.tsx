@@ -1,22 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../services/supabase';
-import { useAuth } from '../../hooks/useAuth';
 import {
   Search,
-  MoreVertical,
   Send,
-  Paperclip,
-  CheckCircle2,
-  AlertCircle,
   Monitor,
-  Globe,
-  History,
   X
 } from 'lucide-react';
 import { format } from 'date-fns';
 
 export function SupportConsole() {
-  const { state: auth } = useAuth();
   const [activeQueues, setActiveQueues] = useState<any[]>([]);
   const [selectedQueue, setSelectedQueue] = useState<any | null>(null);
   const [chatMessages, setChatMessages] = useState<any[]>([]);
@@ -25,10 +17,12 @@ export function SupportConsole() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!supabase) return;
+
+    const client = supabase;
     fetchActiveQueues();
-    
-    // Subscribe to any new message
-    const channel = supabase
+
+    const channel = client
       .channel('public:messages_admin')
       .on(
         'postgres_changes',
@@ -44,9 +38,9 @@ export function SupportConsole() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      client.removeChannel(channel);
     };
-  }, [selectedQueue]); // Refresh subscription or handler closure if needed
+  }, [selectedQueue]);
 
   useEffect(() => {
     if (selectedQueue) {
@@ -63,6 +57,7 @@ export function SupportConsole() {
   }, [chatMessages]);
 
   const fetchActiveQueues = async () => {
+    if (!supabase) return;
     // For MVP: Fetch latest 200 messages and group them by user_id and order_id in JS
     const { data: msgs, error } = await supabase
       .from('messages')
@@ -114,6 +109,7 @@ export function SupportConsole() {
   };
 
   const fetchChatMessages = async (userId: string, orderId: string | null) => {
+    if (!supabase) return;
     let query = supabase
       .from('messages')
       .select('*')
@@ -131,7 +127,7 @@ export function SupportConsole() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMessage.trim() || !selectedQueue || isLoading) return;
+    if (!newMessage.trim() || !selectedQueue || isLoading || !supabase) return;
 
     setIsLoading(true);
     const text = newMessage;

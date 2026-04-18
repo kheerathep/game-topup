@@ -1,6 +1,6 @@
 import { normalizeOrderStatusForDb } from '../lib/orderStatus';
 import { supabase } from './supabase';
-import type { Order, OrderItem } from '../types';
+import type { Order, OrderItem, ProductCategory } from '../types';
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -136,6 +136,10 @@ export type OrderHistoryItem = Order & {
     products: {
       name: string;
       image_url: string;
+      category: ProductCategory;
+      type?: 'topup' | 'account' | null;
+      /** null/empty = สินค้าหน้า Buy Games; มีค่า = ผูกเกม (เติมเกมจากหน้าเกม) */
+      game_id?: string | null;
     };
   })[];
 };
@@ -154,7 +158,10 @@ export async function getUserOrderHistory(userId: string): Promise<{ data: Order
         *,
         products (
           name,
-          image_url
+          image_url,
+          category,
+          type,
+          game_id
         )
       )
     `)

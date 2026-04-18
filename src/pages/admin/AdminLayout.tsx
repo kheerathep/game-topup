@@ -1,10 +1,9 @@
-import { NavLink, Outlet, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../hooks/useAuth';
 import { cn } from '../../lib/utils';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { listOrdersAdmin, listAllProductsAdmin } from '../../services/adminApi';
-import { supabase } from '../../services/supabase';
 import type { AdminOrderRow, Product } from '../../types';
 
 /* ── Nav items ─────────────────────────────────────────────────── */
@@ -39,8 +38,7 @@ type SearchResult = {
 /* ── Admin Layout ────────────────────────────────────────────────── */
 export function AdminLayout() {
   const { t, language, setLanguage } = useLanguage();
-  const { state: auth, dispatch: authDispatch } = useAuth();
-  const navigate = useNavigate();
+  const { state: auth } = useAuth();
 
   const userName = auth.user?.email?.split('@')[0] ?? 'Admin';
 
@@ -50,13 +48,13 @@ export function AdminLayout() {
   const notifRef = useRef<HTMLDivElement>(null);
 
   const [searchQ, setSearchQ]           = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [searchOpen, setSearchOpen]     = useState(false);
+  const [, setSearchResults] = useState<SearchResult[]>([]);
+  const [, setSearchLoading] = useState(false);
+  const [, setSearchOpen]     = useState(false);
   const searchRef  = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -154,18 +152,6 @@ export function AdminLayout() {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, []);
-
-  const handleLogout = async () => {
-    if (supabase) await supabase.auth.signOut();
-    else authDispatch({ type: 'LOGOUT' });
-    navigate('/login');
-  };
-
-  const onSelectResult = (href: string) => {
-    setSearchQ('');
-    setSearchOpen(false);
-    navigate(href);
-  };
 
   const pendingCount = notifs.length;
 
