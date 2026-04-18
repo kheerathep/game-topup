@@ -27,7 +27,7 @@ export async function uploadCatalogImage(file: File, folder: CatalogUploadFolder
     throw new Error('Image must be 5 MB or smaller.');
   }
 
-  const safeBase = file.name.replace(/[^\w.\-]/g, '_').slice(0, 120);
+  const safeBase = file.name.replace(/[^\w.-]/g, '_').slice(0, 120);
   const path = `${folder}/${crypto.randomUUID()}-${safeBase}`;
 
   const { error } = await supabase.storage.from(BUCKET).upload(path, file, {
@@ -54,7 +54,7 @@ export async function uploadPaymentSlip(file: File, userId: string, orderId: str
     throw new Error('Image must be 5 MB or smaller.');
   }
 
-  const safeBase = file.name.replace(/[^\w.\-]/g, '_').slice(0, 80);
+  const safeBase = file.name.replace(/[^\w.-]/g, '_').slice(0, 80);
   const path = `${userId}/${orderId}/${crypto.randomUUID()}-${safeBase}`;
 
   const { error } = await supabase.storage.from(PAYMENT_SLIPS_BUCKET).upload(path, file, {

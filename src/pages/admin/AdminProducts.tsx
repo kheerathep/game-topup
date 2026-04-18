@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import type { Product, ProductCategory } from '../../types';
+import type { ProductInsert } from '../../services/api';
 import { adminDeleteProduct, listAllProductsAdmin, adminCreateProduct, adminUpdateProduct } from '../../services/adminApi';
 import { uploadCatalogImage } from '../../services/storageUpload';
 import { useLanguage } from '../../context/LanguageContext';
@@ -193,13 +194,13 @@ export function AdminProducts() {
         const { error } = await adminUpdateProduct(editingId, payload);
         if (error) throw error;
       } else {
-        const { error } = await adminCreateProduct(payload as any);
+        const { error } = await adminCreateProduct(payload as ProductInsert);
         if (error) throw error;
       }
       closeEditor();
       void load();
-    } catch (err: any) {
-      alert(err.message || 'Error saving product');
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Error saving product');
     } finally {
       setSaving(false);
     }
@@ -212,8 +213,8 @@ export function AdminProducts() {
     try {
       const url = await uploadCatalogImage(file, 'products');
       setDraft((d) => ({ ...d, image_url: url }));
-    } catch (error: any) {
-      alert(error.message || 'Failed to upload image');
+    } catch (error: unknown) {
+      alert(error instanceof Error ? error.message : 'Failed to upload image');
     } finally {
       setUploadingMain(false);
       if (mainImageInputRef.current) mainImageInputRef.current.value = '';
@@ -232,8 +233,8 @@ export function AdminProducts() {
         ...d,
         gallery_urls: [...(d.gallery_urls || []), ...urls]
       }));
-    } catch (error: any) {
-      alert(error.message || 'Failed to upload gallery images');
+    } catch (error: unknown) {
+      alert(error instanceof Error ? error.message : 'Failed to upload gallery images');
     } finally {
       setUploadingGallery(false);
       if (galleryInputRef.current) galleryInputRef.current.value = '';

@@ -173,9 +173,13 @@ export async function getUserOrderHistory(userId: string): Promise<{ data: Order
     return { data: [], error: new Error(error.message) };
   }
 
-  const typedData = (data as any[]).map((row) => ({
-    ...row,
-    status: normalizeOrderStatusForDb(row.status),
+  const rows = data as unknown;
+  if (!Array.isArray(rows)) {
+    return { data: [], error: null };
+  }
+  const typedData = rows.map((row) => ({
+    ...(row as Record<string, unknown>),
+    status: normalizeOrderStatusForDb(String((row as { status: unknown }).status)),
   })) as OrderHistoryItem[];
 
   return { data: typedData, error: null };

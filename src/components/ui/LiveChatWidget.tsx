@@ -2,33 +2,58 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, MessageSquare } from 'lucide-react';
 import { supabase } from '../../services/supabase';
 import { useAuth } from '../../hooks/useAuth';
+import type { Message } from '../../types';
+
+type MessageRow = Message & { order_id?: string | null };
+
+const OPEN_LIVE_CHAT = 'openLiveChat';
 
 export function LiveChatWidget() {
   const { state: auth } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<MessageRow[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  async function fetchMessages() {
+    if (!auth.user || !supabase) return;
+
+    let query = supabase
+      .from('messages')
+      .select('*')
+      .eq('user_id', auth.user.id);
+
+    if (activeOrderId) {
+      query = query.eq('order_id', activeOrderId);
+    } else {
+      query = query.is('order_id', null);
+    }
+
+    const { data } = await query.order('created_at', { ascending: true });
+
+    if (data) setMessages(data as MessageRow[]);
+  }
+
   useEffect(() => {
-    const handleOpenChat = (e: CustomEvent) => {
+    function handleOpenChatEvent(e: Event) {
+      const ce = e as CustomEvent<{ orderId?: string }>;
       setIsOpen(true);
-      if (e.detail?.orderId) {
-        setActiveOrderId(e.detail.orderId);
+      if (ce.detail?.orderId) {
+        setActiveOrderId(ce.detail.orderId);
       }
-    };
-    
-    window.addEventListener('openLiveChat' as any, handleOpenChat);
-    return () => window.removeEventListener('openLiveChat' as any, handleOpenChat);
+    }
+
+    window.addEventListener(OPEN_LIVE_CHAT, handleOpenChatEvent);
+    return () => window.removeEventListener(OPEN_LIVE_CHAT, handleOpenChatEvent);
   }, []);
 
   useEffect(() => {
     if (!isOpen || !auth.user || !supabase) return;
 
     const client = supabase;
-    fetchMessages();
+    void fetchMessages();
 
     const channel = client
         .channel(`public:messages:${auth.user.id}`)
@@ -41,9 +66,10 @@ export function LiveChatWidget() {
             filter: `user_id=eq.${auth.user.id}`
           },
           (payload) => {
-            const isSameOrder = (payload.new.order_id || null) === (activeOrderId || null);
+            const row = payload.new as MessageRow;
+            const isSameOrder = (row.order_id || null) === (activeOrderId || null);
             if (isSameOrder) {
-              setMessages((prev) => [...prev, payload.new]);
+              setMessages((prev) => [...prev, row]);
             }
           }
         )
@@ -59,25 +85,6 @@ export function LiveChatWidget() {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
-
-  const fetchMessages = async () => {
-    if (!auth.user || !supabase) return;
-
-    let query = supabase
-      .from('messages')
-      .select('*')
-      .eq('user_id', auth.user.id);
-      
-    if (activeOrderId) {
-      query = query.eq('order_id', activeOrderId);
-    } else {
-      query = query.is('order_id', null);
-    }
-      
-    const { data } = await query.order('created_at', { ascending: true });
-    
-    if (data) setMessages(data);
-  };
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();

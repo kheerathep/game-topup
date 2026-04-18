@@ -166,20 +166,22 @@ function PromptPayForm({
   useEffect(() => {
     if (!polling || !stripe || !clientSecret) return;
 
-    let intervalId: ReturnType<typeof setInterval> | undefined;
+    const intervalRef: { current: ReturnType<typeof setInterval> | undefined } = {
+      current: undefined,
+    };
     const check = () => {
       void stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
         if (paymentIntent?.status === 'succeeded') {
-          if (intervalId != null) clearInterval(intervalId);
+          if (intervalRef.current != null) clearInterval(intervalRef.current);
           setPolling(false);
           onSuccess(paymentIntent.id);
         }
       });
     };
     check();
-    intervalId = setInterval(check, 3000);
+    intervalRef.current = setInterval(check, 3000);
     return () => {
-      if (intervalId != null) clearInterval(intervalId);
+      if (intervalRef.current != null) clearInterval(intervalRef.current);
     };
   }, [polling, stripe, clientSecret, onSuccess]);
 
@@ -224,7 +226,11 @@ function PromptPayForm({
    Helper
    ───────────────────────────────────────────── */
 function stripCheckoutMeta(items: OrderItem[]): OrderItem[] {
-  return items.map(({ checkout_selected: _c, ...rest }) => rest);
+  return items.map((item) => {
+    const { checkout_selected, ...rest } = item;
+    void checkout_selected;
+    return rest;
+  });
 }
 
 type CheckoutPaymentLocationState = {
@@ -486,7 +492,8 @@ export function CheckoutPayment() {
 
   /* ── Finalize: clear cart and redirect to /order/:id ── */
   const handlePaymentSuccess = useCallback(
-    async (_piId: string) => {
+    async (paymentIntentId: string) => {
+      void paymentIntentId;
       const rawLines = sessionStorage.getItem(SESSION_STRIPE_LINE_IDS);
       const sidOrder = sessionStorage.getItem(SESSION_STRIPE_ORDER);
       sessionStorage.removeItem(SESSION_STRIPE_ORDER);

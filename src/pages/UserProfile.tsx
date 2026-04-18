@@ -26,19 +26,19 @@ export function UserProfile() {
   const [orders, setOrders] = useState<OrderHistoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (auth.user) {
-      loadOrders();
-    }
-  }, [auth.user]);
-
-  const loadOrders = async () => {
+  async function loadOrders() {
     if (!auth.user) return;
     setIsLoading(true);
     const { data } = await getUserOrderHistory(auth.user.id);
     setOrders(data);
     setIsLoading(false);
-  };
+  }
+
+  useEffect(() => {
+    if (auth.user) {
+      void loadOrders();
+    }
+  }, [auth.user]);
 
   const getStatusConfig = (status: string) => {
     switch (status) {

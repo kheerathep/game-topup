@@ -8,19 +8,104 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 
+type ProfileRow = { id: string; display_name: string | null };
+
+export type SupportQueue = {
+  user_id: string;
+  order_id: string | null;
+  profile?: ProfileRow;
+  lastMessage: string;
+  lastMessageTime: string;
+  unread: boolean;
+};
+
+type MessageRow = {
+  id: string;
+  user_id: string;
+  message: string;
+  is_admin: boolean;
+  created_at: string;
+  order_id?: string | null;
+};
+
 export function SupportConsole() {
-  const [activeQueues, setActiveQueues] = useState<any[]>([]);
-  const [selectedQueue, setSelectedQueue] = useState<any | null>(null);
-  const [chatMessages, setChatMessages] = useState<any[]>([]);
+  const [activeQueues, setActiveQueues] = useState<SupportQueue[]>([]);
+  const [selectedQueue, setSelectedQueue] = useState<SupportQueue | null>(null);
+  const [chatMessages, setChatMessages] = useState<MessageRow[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  async function fetchActiveQueues() {
+    if (!supabase) return;
+    const { data: msgs, error } = await supabase
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(200);
+
+    if (error || !msgs) return;
+
+    const userIds = [...new Set(msgs.map((m) => String((m as { user_id: string }).user_id)))];
+    const { data: profilesData } = await supabase
+      .from('profiles')
+      .select('id, display_name')
+      .in('id', userIds);
+
+    const profileMap = new Map<string, ProfileRow>();
+    if (profilesData) {
+      profilesData.forEach((p) => profileMap.set(p.id, p as ProfileRow));
+    }
+
+    const queuesMap = new Map<string, SupportQueue>();
+    msgs.forEach((raw) => {
+      const msg = raw as MessageRow;
+      const key = `${msg.user_id}-${msg.order_id || 'general'}`;
+      if (!queuesMap.has(key)) {
+        queuesMap.set(key, {
+          user_id: msg.user_id,
+          order_id: msg.order_id ?? null,
+          profile: profileMap.get(msg.user_id),
+          lastMessage: msg.message,
+          lastMessageTime: msg.created_at,
+          unread: !msg.is_admin,
+        });
+      }
+    });
+
+    setActiveQueues(Array.from(queuesMap.values()));
+  }
+
+  async function fetchChatMessages(userId: string, orderId: string | null) {
+    if (!supabase) return;
+    let query = supabase.from('messages').select('*').eq('user_id', userId);
+
+    if (orderId) {
+      query = query.eq('order_id', orderId);
+    } else {
+      query = query.is('order_id', null);
+    }
+
+    const { data } = await query.order('created_at', { ascending: true });
+    if (data) setChatMessages(data as MessageRow[]);
+  }
+
+  function handleIncomingMessage(newMsg: MessageRow) {
+    void fetchActiveQueues();
+    if (selectedQueue) {
+      const isSameUser = newMsg.user_id === selectedQueue.user_id;
+      const isSameOrder = (newMsg.order_id || null) === (selectedQueue.order_id || null);
+      if (isSameUser && isSameOrder) {
+        setChatMessages((prev) => [...prev, newMsg]);
+      }
+    }
+  }
 
   useEffect(() => {
     if (!supabase) return;
 
     const client = supabase;
-    fetchActiveQueues();
+    void fetchActiveQueues();
 
     const channel = client
       .channel('public:messages_admin')
@@ -32,7 +117,7 @@ export function SupportConsole() {
           table: 'messages',
         },
         (payload) => {
-          handleIncomingMessage(payload.new);
+          handleIncomingMessage(payload.new as MessageRow);
         }
       )
       .subscribe();
@@ -44,7 +129,7 @@ export function SupportConsole() {
 
   useEffect(() => {
     if (selectedQueue) {
-      fetchChatMessages(selectedQueue.user_id, selectedQueue.order_id);
+      void fetchChatMessages(selectedQueue.user_id, selectedQueue.order_id);
     } else {
       setChatMessages([]);
     }
@@ -55,75 +140,6 @@ export function SupportConsole() {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [chatMessages]);
-
-  const fetchActiveQueues = async () => {
-    if (!supabase) return;
-    // For MVP: Fetch latest 200 messages and group them by user_id and order_id in JS
-    const { data: msgs, error } = await supabase
-      .from('messages')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(200);
-
-    if (error || !msgs) return;
-
-    // Fetch profiles manually to avoid foreign key Join errors (Status 400)
-    const userIds = [...new Set(msgs.map(m => m.user_id))];
-    const { data: profilesData } = await supabase
-      .from('profiles')
-      .select('id, display_name')
-      .in('id', userIds);
-
-    const profileMap = new Map();
-    if (profilesData) {
-      profilesData.forEach(p => profileMap.set(p.id, p));
-    }
-
-    const queuesMap = new Map();
-    msgs.forEach((msg) => {
-      const key = `${msg.user_id}-${msg.order_id || 'general'}`;
-      if (!queuesMap.has(key)) {
-        queuesMap.set(key, {
-          user_id: msg.user_id,
-          order_id: msg.order_id,
-          profile: profileMap.get(msg.user_id),
-          lastMessage: msg.message,
-          lastMessageTime: msg.created_at,
-          unread: !msg.is_admin
-        });
-      }
-    });
-
-    setActiveQueues(Array.from(queuesMap.values()));
-  };
-
-  const handleIncomingMessage = (newMsg: any) => {
-    fetchActiveQueues();
-    if (selectedQueue) {
-      const isSameUser = newMsg.user_id === selectedQueue.user_id;
-      const isSameOrder = (newMsg.order_id || null) === (selectedQueue.order_id || null);
-      if (isSameUser && isSameOrder) {
-        setChatMessages(prev => [...prev, newMsg]);
-      }
-    }
-  };
-
-  const fetchChatMessages = async (userId: string, orderId: string | null) => {
-    if (!supabase) return;
-    let query = supabase
-      .from('messages')
-      .select('*')
-      .eq('user_id', userId);
-      
-    if (orderId) {
-      query = query.eq('order_id', orderId);
-    } else {
-      query = query.is('order_id', null);
-    }
-
-    const { data } = await query.order('created_at', { ascending: true });
-    if (data) setChatMessages(data);
-  };
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
