@@ -54,41 +54,62 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } = await supabase.auth.getSession();
       if (cancelled) return;
       if (session?.user) {
+        const { data: profile, error: profileErr } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        if (cancelled) return;
+        if (profileErr) {
+          console.warn('[auth] profiles lookup after getSession:', profileErr.message);
+        }
         dispatch({
           type: 'LOGIN',
           payload: { 
             id: session.user.id, 
             email: session.user.email || '',
             display_name: session.user.user_metadata.full_name || session.user.user_metadata.name || session.user.email?.split('@')[0],
-            avatar_url: session.user.user_metadata.avatar_url || session.user.user_metadata.picture
+            avatar_url: session.user.user_metadata.avatar_url || session.user.user_metadata.picture,
+            role: profile?.role as 'admin' | 'user' | undefined
           },
         });
       } else {
         dispatch({ type: 'SET_LOADING', payload: false });
       }
 
-      const {
-        data: { subscription: sub },
-      } = supabase.auth.onAuthStateChange((_event, sess) => {
-        if (sess?.user) {
-          dispatch({
-            type: 'LOGIN',
-            payload: { 
-              id: sess.user.id, 
-              email: sess.user.email || '',
-              display_name: sess.user.user_metadata.full_name || sess.user.user_metadata.name || sess.user.email?.split('@')[0],
-              avatar_url: sess.user.user_metadata.avatar_url || sess.user.user_metadata.picture
-            },
-          });
-        } else {
-          dispatch({ type: 'LOGOUT' });
+      if (supabase) {
+        const {
+          data: { subscription: sub },
+        } = supabase.auth.onAuthStateChange(async (_event, sess) => {
+          if (sess?.user) {
+            const { data: profile, error: profileErr } = await supabase!
+              .from('profiles')
+              .select('role')
+              .eq('id', sess.user.id)
+              .maybeSingle();
+            if (profileErr) {
+              console.warn('[auth] profiles lookup onAuthStateChange:', profileErr.message);
+            }
+            dispatch({
+              type: 'LOGIN',
+              payload: { 
+                id: sess.user.id, 
+                email: sess.user.email || '',
+                display_name: sess.user.user_metadata.full_name || sess.user.user_metadata.name || sess.user.email?.split('@')[0],
+                avatar_url: sess.user.user_metadata.avatar_url || sess.user.user_metadata.picture,
+                role: profile?.role as 'admin' | 'user' | undefined
+              },
+            });
+          } else {
+            dispatch({ type: 'LOGOUT' });
+          }
+        });
+        if (cancelled) {
+          sub.unsubscribe();
+          return;
         }
-      });
-      if (cancelled) {
-        sub.unsubscribe();
-        return;
+        subscription = sub;
       }
-      subscription = sub;
     })();
 
     return () => {

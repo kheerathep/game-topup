@@ -10,7 +10,7 @@ interface Translations {
 }
 
 const translations: Translations = {
-  brandName: { en: 'Game Marketplace', th: 'Game Marketplace' },
+  brandName: { en: 'GameTopup', th: 'GameTopup' },
   brandTagline: { en: 'Games, top-ups & digital goods', th: 'เกม เติมเงิน และสินค้าดิจิทัล' },
   adminConsoleSubtitle: { en: 'Admin console', th: 'ระบบแอดมิน' },
   adminDashboardLiveStatus: { en: 'Live Status', th: 'สถานะล่าสุด' },
@@ -21,8 +21,8 @@ const translations: Translations = {
   gameTopupNav: { en: 'Game top-up', th: 'เติมเกม' },
   gameTopupTitle: { en: 'Choose your game', th: 'เลือกเกมที่ต้องการเติม' },
   gameTopupSubtitle: {
-    en: 'Top up currency, buy items, in-game goods, or game packages — data from your catalog.',
-    th: 'เติมเงิน ซื้อของ ไอเทมในเกม หรือแพ็กเกจ — ข้อมูลจากฐานข้อมูลของคุณ',
+    en: 'Top up currency, buy items, in-game goods, or game packages',
+    th: 'เติมเงิน ซื้อของ ไอเทมในเกม หรือแพ็กเกจ ',
   },
   gameTopupSearchPlaceholder: { en: 'Search game name…', th: 'ค้นหาชื่อเกม…' },
   gameTopupEmpty: { en: 'No games listed yet.', th: 'ยังไม่มีเกมในระบบ' },
@@ -30,6 +30,15 @@ const translations: Translations = {
     en: 'Run supabase/patch_games_topup.sql and add rows in the games table.',
     th: 'รัน supabase/patch_games_topup.sql แล้วเพิ่มเกมในตาราง games',
   },
+  gameTopupLoadError: {
+    en: 'Could not load games. Check your connection and Supabase configuration, then try again.',
+    th: 'โหลดรายการเกมไม่สำเร็จ ตรวจสอบการเชื่อมต่อและค่า Supabase แล้วลองใหม่',
+  },
+  gameTopupLoadTimeout: {
+    en: 'The catalog is taking too long to respond. You can retry or continue browsing an empty list.',
+    th: 'รายการเกมตอบช้าเกินไป ลองโหลดใหม่ได้ หรือดูหน้าเปล่าไปก่อน',
+  },
+  gameTopupRetry: { en: 'Try again', th: 'ลองอีกครั้ง' },
   gameTopupEnter: { en: 'Enter', th: 'เข้าสู่หน้าเกม' },
   gameTopupNotFound: { en: 'Game not found.', th: 'ไม่พบเกมนี้' },
   gameTopupItems: { en: 'items', th: 'รายการ' },

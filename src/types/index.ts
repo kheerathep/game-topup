@@ -3,6 +3,7 @@ export interface User {
   email: string;
   display_name?: string;
   avatar_url?: string;
+  role?: 'admin' | 'user';
   /** Present when mapped from Supabase Auth (OAuth provider, etc.) */
   app_metadata?: { provider?: string };
 }

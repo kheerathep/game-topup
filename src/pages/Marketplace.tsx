@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -8,6 +8,9 @@ import { TOPUP_PLATFORM_FILTER_OPTIONS, catalogFilterFromSearch, catalogLabelKey
 import { readCatalogQ } from '../utils/catalogUrl';
 import { gameLocalizedDescription } from '../utils/gameCopy';
 import { CatalogSidebar } from '../components/catalog/CatalogSidebar';
+import { withTimeout } from '../utils/withTimeout';
+
+const GAMES_FETCH_TIMEOUT_MS = 15_000;
 
 export function Marketplace() {
   const { t, language } = useLanguage();
@@ -22,21 +25,39 @@ export function Marketplace() {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadToken, setReloadToken] = useState(0);
+
+  const refetch = useCallback(() => {
+    setReloadToken((n) => n + 1);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
     void (async () => {
       setLoading(true);
       setError(null);
-      const list = await getGames(platformFilter);
-      if (cancelled) return;
-      setGames(list);
-      setLoading(false);
+      try {
+        const { games: list, error: queryError } = await withTimeout(
+          getGames(platformFilter),
+          GAMES_FETCH_TIMEOUT_MS,
+        );
+        if (cancelled) return;
+        setGames(list);
+        if (queryError) setError(queryError);
+      } catch (e) {
+        if (cancelled) return;
+        setGames([]);
+        const timedOut = e instanceof Error && e.message === 'TIMEOUT';
+        setError(timedOut ? t('gameTopupLoadTimeout') : t('gameTopupLoadError'));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     })();
     return () => {
       cancelled = true;
     };
-  }, [platformFilter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- `t` is not stable; `language` triggers refetch when copy should change.
+  }, [platformFilter, reloadToken, language]);
 
   const topupPlatformOptions = useMemo(
     () => [
@@ -72,49 +93,79 @@ export function Marketplace() {
         <CatalogSidebar section="topup" platformOptions={topupPlatformOptions} />
 
         <main className="min-w-0 flex-1">
-          {loading && <p className="text-on-surface-variant">{t('loading')}</p>}
-          {error && <p className="text-[--color-error]">{error}</p>}
-          {!loading && filtered.length === 0 && (
+          {error && (
+            <div
+              role="alert"
+              className="mb-6 rounded-2xl border border-[--color-error]/40 bg-[--color-error]/10 px-4 py-4 text-sm text-[--color-on-surface]"
+            >
+              <p className="text-[--color-error]">{error}</p>
+              <button
+                type="button"
+                onClick={refetch}
+                className="mt-3 rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-white/10"
+              >
+                {t('gameTopupRetry')}
+              </button>
+            </div>
+          )}
+
+          {loading && (
+            <p className="mb-4 text-sm text-[--color-on-surface-variant]" aria-live="polite">
+              {t('loading')}
+            </p>
+          )}
+
+          {!loading && !error && filtered.length === 0 && (
             <div className="space-y-4 py-20 text-center">
               <p className="text-on-surface-variant">{t('gameTopupEmpty')}</p>
               <p className="mx-auto max-w-md text-sm text-[--color-outline-variant]">{t('gameTopupEmptyHint')}</p>
             </div>
           )}
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-            {filtered.map((game) => {
-              const title = language === 'th' && game.name_th ? game.name_th : game.name;
-              const plat = game.platform ?? 'mobile';
-              const desc = gameLocalizedDescription(game, language);
-              return (
-                <Link
-                  key={game.id}
-                  to={`/marketplace/${game.slug}${hubSearch}`}
-                  className="group relative overflow-hidden rounded-2xl border border-[--color-ghost-border] bg-[--color-surface-container] transition-all duration-300 hover:-translate-y-1 hover:border-[--color-primary]/70 hover:shadow-[0_8px_32px_rgba(98,138,255,0.25)]"
-                >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={game.image_url}
-                      alt=""
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                    <span className="absolute left-3 top-3 rounded-lg border border-white/10 bg-black/55 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-sm">
-                      {t(catalogLabelKeyForCategory(plat))}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h2 className="text-xl font-black uppercase tracking-tight text-white transition-colors group-hover:text-[--color-primary]">
-                      {title}
-                    </h2>
-                    {desc && <p className="mt-1 line-clamp-2 text-sm text-[--color-on-surface-variant]">{desc}</p>}
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-[--color-primary]">
-                      {t('gameTopupEnter')} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
+          <div
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
+            aria-busy={loading}
+          >
+            {loading
+              ? Array.from({ length: 6 }, (_, i) => (
+                  <div
+                    key={`marketplace-skel-${i}`}
+                    className="aspect-[16/10] animate-pulse rounded-2xl bg-[--color-surface-container] ring-1 ring-inset ring-white/5"
+                  />
+                ))
+              : filtered.map((game) => {
+                  const title = language === 'th' && game.name_th ? game.name_th : game.name;
+                  const plat = game.platform ?? 'mobile';
+                  const desc = gameLocalizedDescription(game, language);
+                  return (
+                    <Link
+                      key={game.id}
+                      to={`/marketplace/${game.slug}${hubSearch}`}
+                      className="group relative overflow-hidden rounded-2xl border border-[--color-ghost-border] bg-[--color-surface-container] transition-all duration-300 hover:-translate-y-1 hover:border-[--color-primary]/70 hover:shadow-[0_8px_32px_rgba(98,138,255,0.25)]"
+                    >
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={game.image_url}
+                          alt=""
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                        <span className="absolute left-3 top-3 rounded-lg border border-white/10 bg-black/55 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-sm">
+                          {t(catalogLabelKeyForCategory(plat))}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 p-5">
+                        <h2 className="text-xl font-black uppercase tracking-tight text-white transition-colors group-hover:text-[--color-primary]">
+                          {title}
+                        </h2>
+                        {desc && <p className="mt-1 line-clamp-2 text-sm text-[--color-on-surface-variant]">{desc}</p>}
+                        <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-[--color-primary]">
+                          {t('gameTopupEnter')} <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
           </div>
         </main>
       </div>

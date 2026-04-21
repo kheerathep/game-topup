@@ -110,7 +110,7 @@ export function LiveChatWidget() {
     setIsLoading(false);
   };
 
-  if (!auth.user) return null;
+  if (!auth.user || window.location.pathname.startsWith('/admin')) return null;
 
   return (
     <>

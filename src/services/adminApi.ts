@@ -5,15 +5,74 @@ import { createProduct, deleteProduct, getProducts, updateProduct, type ProductI
 import type { AdminOrderRow, Game, GameGenre, Order, OrderItem, Product, SiteSettings } from '../types';
 import type { HomeHeroRow, HomePlatformRow } from './home';
 
+// ─── Service-layer auth guard ────────────────────────────────────────────────
+// Defence-in-depth: even if the route guard is bypassed, mutating admin
+// operations verify the caller's role before touching the database.
+// The actual data-level enforcement is Supabase RLS (patch_rls_is_admin.sql).
+
+export class AuthorizationError extends Error {
+  constructor(
+    message: string,
+    /** HTTP status semantics: 401 = not authenticated, 403 = not admin */
+    public readonly status: 401 | 403,
+  ) {
+    super(message);
+    this.name = 'AuthorizationError';
+  }
+}
+
+/**
+ * requireAdmin — verifies the calling user is authenticated and has role='admin'.
+ *
+ * Uses supabase.auth.getUser() (not getSession()) so the JWT is re-validated
+ * server-side on every call, preventing stale or tampered tokens.
+ *
+ * @throws AuthorizationError(401) if not signed in
+ * @throws AuthorizationError(403) if signed in but not admin
+ */
+export async function requireAdmin(): Promise<void> {
+  if (!supabase) throw new AuthorizationError('Supabase not configured', 401);
+
+  // Re-validate JWT via network call — not from local cache
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    throw new AuthorizationError('Not authenticated — please sign in', 401);
+  }
+
+  const { data: profile, error: profErr } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  if (profErr) {
+    console.error('[adminApi] requireAdmin profiles error:', profErr.message);
+    throw new AuthorizationError('Unable to verify admin role', 403);
+  }
+
+  if (profile?.role !== 'admin') {
+    throw new AuthorizationError('Forbidden — admin role required', 403);
+  }
+}
+
 function supabaseRequired(): Error {
   return new Error(
     'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment.',
   );
 }
 
+/** Convenience wrapper — returns boolean (non-throwing) for fast UI checks */
 export async function isCurrentUserAdmin(): Promise<boolean> {
-  const p = await getMyProfile();
-  return p?.role === 'admin';
+  try {
+    await requireAdmin();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export type AdminDashboardStats = {
@@ -331,6 +390,10 @@ export async function updateOrderStatus(
   if (!supabase) {
     return { ok: false, error: supabaseRequired() };
   }
+  // Service-layer guard — 401/403 if not an authenticated admin
+  try { await requireAdmin(); } catch (e) {
+    return { ok: false, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   
   /** ห้ามส่งค่า legacy เช่น "completed" ลง Supabase — แปลงเป็น enum จริงก่อนเสมอ */
   // Rigid enforcement to guarantee no "completed" slips to DB
@@ -388,6 +451,9 @@ export async function upsertGameGenre(
   if (!supabase) {
     return { data: null, error: supabaseRequired() };
   }
+  try { await requireAdmin(); } catch (e) {
+    return { data: null, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   const { id, ...rest } = row;
   if (id) {
     const { data, error } = await supabase.from('game_genres').update(rest).eq('id', id).select().single();
@@ -401,6 +467,9 @@ export async function deleteGameGenre(id: string): Promise<{ ok: boolean; error:
   if (!supabase) {
     return { ok: false, error: supabaseRequired() };
   }
+  try { await requireAdmin(); } catch (e) {
+    return { ok: false, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   const { error } = await supabase.from('game_genres').delete().eq('id', id);
   return { ok: !error, error: error ? new Error(error.message) : null };
 }
@@ -412,6 +481,9 @@ export async function listAllProductsAdmin(): Promise<Product[]> {
 export async function adminCreateProduct(
   input: ProductInsert,
 ): Promise<{ data: Product | null; error: Error | null }> {
+  try { await requireAdmin(); } catch (e) {
+    return { data: null, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   return createProduct(input);
 }
 
@@ -419,10 +491,16 @@ export async function adminUpdateProduct(
   id: string,
   patch: Partial<Omit<Product, 'id'>>,
 ): Promise<{ data: Product | null; error: Error | null }> {
+  try { await requireAdmin(); } catch (e) {
+    return { data: null, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   return updateProduct(id, patch);
 }
 
 export async function adminDeleteProduct(id: string): Promise<{ ok: boolean; error: Error | null }> {
+  try { await requireAdmin(); } catch (e) {
+    return { ok: false, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   return deleteProduct(id);
 }
 
@@ -453,6 +531,9 @@ export async function updateHomeHero(
   if (!supabase) {
     return { data: null, error: supabaseRequired() };
   }
+  try { await requireAdmin(); } catch (e) {
+    return { data: null, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   const { data, error } = await supabase
     .from('home_hero')
     .update({ ...patch, updated_at: new Date().toISOString() })
@@ -481,6 +562,9 @@ export async function upsertHomePlatform(
   if (!supabase) {
     return { data: null, error: supabaseRequired() };
   }
+  try { await requireAdmin(); } catch (e) {
+    return { data: null, error: e instanceof Error ? e : new Error('Unauthorized') };
+  }
   const { id, ...rest } = row;
   if (id) {
     const { data, error } = await supabase.from('home_platforms').update(rest).eq('id', id).select().single();
@@ -493,6 +577,9 @@ export async function upsertHomePlatform(
 export async function deleteHomePlatform(id: string): Promise<{ ok: boolean; error: Error | null }> {
   if (!supabase) {
     return { ok: false, error: supabaseRequired() };
+  }
+  try { await requireAdmin(); } catch (e) {
+    return { ok: false, error: e instanceof Error ? e : new Error('Unauthorized') };
   }
   const { error } = await supabase.from('home_platforms').delete().eq('id', id);
   return { ok: !error, error: error ? new Error(error.message) : null };
@@ -513,6 +600,9 @@ export async function updateSiteSettingsAdmin(
 ): Promise<{ data: SiteSettings | null; error: Error | null }> {
   if (!supabase) {
     return { data: null, error: supabaseRequired() };
+  }
+  try { await requireAdmin(); } catch (e) {
+    return { data: null, error: e instanceof Error ? e : new Error('Unauthorized') };
   }
   const { data, error } = await supabase
     .from('site_settings')

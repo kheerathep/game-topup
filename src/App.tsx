@@ -3,6 +3,8 @@ import { MainLayout } from './components/layout/MainLayout';
 
 import { Home } from './pages/Home';
 import { Auth } from './pages/Auth';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
 import { GameDetail } from './pages/GameDetail';
 import { Checkout } from './pages/Checkout';
 import { CheckoutPayment } from './pages/CheckoutPayment';
@@ -38,6 +40,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Auth mode="login" />} />
           <Route path="/register" element={<Auth mode="register" />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/admin"
             element={

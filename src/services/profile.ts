@@ -13,13 +13,8 @@ export async function getMyProfile(): Promise<{ role: ProfileRole } | null> {
   return { role: data.role as ProfileRole };
 }
 
-/** หลังล็อกอินสำเร็จ — admin ไปแดชบอร์ดผู้ดูแล ส่วน user ไปตาม fallback (เช่น state.from หรือ /) */
+/** หลังล็อกอินสำเร็จ — ให้ไปตาม fallback (เช่น state.from) ถ้าไม่ได้กำหนดไว้ให้ไปที่ /profile */
 export async function resolvePostLoginPath(fallback: string): Promise<string> {
-  try {
-    const p = await getMyProfile();
-    if (p?.role === 'admin') return '/admin/dashboard';
-  } catch {
-    /* เช่น API ล้ม — ใช้ fallback */
-  }
-  return fallback;
+  const target = fallback && fallback !== '/' ? fallback : '/profile';
+  return target;
 }

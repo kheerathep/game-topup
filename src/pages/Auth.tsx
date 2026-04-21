@@ -7,6 +7,7 @@ import type { OAuthProvider } from '../services/oauth';
 import { supabase } from '../services/supabase';
 import { resolvePostLoginPath } from '../services/profile';
 import { useLanguage } from '../context/LanguageContext';
+import { formatAuthError } from '../utils/formatAuthError';
 
 function PostLoginNavigate({ fallback }: { fallback: string }) {
   const [to, setTo] = useState<string | undefined>(undefined);
@@ -102,7 +103,7 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
           },
         });
         if (error) {
-          setFormError(error.message);
+          setFormError(formatAuthError(error));
           return;
         }
         if (data.session) {
@@ -114,14 +115,20 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
           );
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
-          setFormError(error.message);
+          setFormError(formatAuthError(error));
+          return;
+        }
+        if (!data.session) {
+          setFormError('Sign in succeeded but no session was returned. Check Supabase Auth settings and try again.');
           return;
         }
         const to = await resolvePostLoginPath(redirectTo);
         navigate(to, { replace: true });
       }
+    } catch (e) {
+      setFormError(formatAuthError(e));
     } finally {
       setSubmitBusy(false);
     }
@@ -178,7 +185,7 @@ export function Auth({ mode }: { mode: 'login' | 'register' }) {
               <div className="space-y-1.5">
                 <div className="flex justify-between items-end px-1">
                   <label className="font-label text-xs uppercase tracking-wider text-on-surface-variant" htmlFor="password">Password</label>
-                  {mode === 'login' && <a className="text-[11px] text-[--color-primary] hover:text-[--color-secondary] transition-colors" href="#">Forgot Password?</a>}
+                  {mode === 'login' && <Link to="/forgot-password" className="text-[11px] text-[--color-primary] hover:text-[--color-secondary] transition-colors">Forgot Password?</Link>}
                 </div>
                 <div className="relative group">
                   <input required value={password} onChange={(e) => setPassword(e.target.value)} id="password" type="password" className="w-full bg-[--color-surface-container-highest] border-none text-white px-4 py-3.5 rounded-lg focus:ring-1 focus:ring-[--color-secondary]/40 placeholder-[--color-outline-variant] transition-all outline-none" placeholder="••••••••" />

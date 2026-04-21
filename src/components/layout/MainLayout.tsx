@@ -15,6 +15,7 @@ import {
   Search,
   LogOut,
   X,
+  Shield,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
@@ -209,6 +210,15 @@ export function MainLayout() {
 
             {auth.user ? (
               <div className="hidden sm:flex items-center gap-1.5 rounded-xl border border-white/12 bg-[--color-surface-container-high]/80 p-1 pl-2 shadow-md">
+                {auth.user.role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    className="flex shrink-0 items-center gap-2 p-1.5 px-2 mr-1 rounded-lg text-[--color-primary] border border-[--color-primary]/30 bg-[--color-primary]/10 hover:bg-[--color-primary]/20 transition-colors"
+                  >
+                    <Shield className="w-4 h-4" strokeWidth={2.5} />
+                    <span className="text-[10px] font-bold uppercase tracking-wider">Dashboard</span>
+                  </Link>
+                )}
                 <Link
                   to="/profile"
                   className="flex max-w-[140px] items-center gap-2 lg:max-w-[180px] hover:opacity-80 transition-opacity"
@@ -279,8 +289,19 @@ export function MainLayout() {
               </label>
             </div>
             {auth.user ? (
-              <div className="mt-4 flex items-center justify-center gap-3 sm:hidden">
-                <Link to="/profile" className="flex items-center gap-2 rounded-xl border border-white/12 px-3 py-2 hover:bg-white/5 transition-colors">
+              <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:hidden">
+                {auth.user.role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-2 rounded-xl border border-[--color-primary]/40 bg-[--color-primary]/15 px-4 py-2 hover:bg-[--color-primary]/25 transition-colors w-full max-w-[200px]"
+                  >
+                    <Shield className="w-4 h-4 text-[--color-primary]" strokeWidth={2} />
+                    <span className="text-sm font-bold text-[--color-primary]">Admin Dashboard</span>
+                  </Link>
+                )}
+                <div className="flex items-center gap-3">
+                  <Link to="/profile" className="flex items-center gap-2 rounded-xl border border-white/12 px-3 py-2 hover:bg-white/5 transition-colors">
                   <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full ring-2 ring-[--color-primary]/20">
                     {auth.user.avatar_url ? (
                       <img src={auth.user.avatar_url} alt="" className="h-full w-full object-cover" />
@@ -295,6 +316,7 @@ export function MainLayout() {
                 <IconAction onClick={() => void handleLogout()} title={t('logout')} aria-label={t('logout')}>
                   <LogOut className="w-5 h-5 text-[--color-error]" />
                 </IconAction>
+                </div>
               </div>
             ) : (
               <div className="mt-4 flex justify-center sm:hidden">

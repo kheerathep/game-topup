@@ -54,7 +54,7 @@ export function AdminLayout() {
   const searchRef  = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const [, setUserMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -262,12 +262,35 @@ export function AdminLayout() {
                 )}
               </div>
               <div className="h-6 w-px bg-white/10 hidden sm:block"></div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center font-bold text-xs">{userName[0]?.toUpperCase()}</div>
-                <div className="hidden sm:block text-left">
-                  <p className="text-xs font-bold text-white leading-none">{userName}</p>
-                  <p className="text-[9px] uppercase text-gray-500">Admin</p>
-                </div>
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 hover:bg-white/5 p-1 rounded-lg transition-colors text-left"
+                >
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center font-bold text-xs text-white">
+                    {userName[0]?.toUpperCase()}
+                  </div>
+                  <div className="hidden sm:block text-left">
+                    <p className="text-xs font-bold text-white leading-none">{userName}</p>
+                    <p className="text-[9px] uppercase text-gray-500">Admin</p>
+                  </div>
+                </button>
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-xl overflow-hidden dropdown-panel z-50 shadow-2xl bg-[#161c24] border border-white/10 p-2">
+                    <button
+                      onClick={async () => {
+                        setUserMenuOpen(false);
+                        const { supabase } = await import('../../services/supabase');
+                        if (supabase) await supabase.auth.signOut();
+                      }}
+                      className="w-full flex items-center gap-3 p-2 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors text-sm font-bold"
+                    >
+                      <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>logout</span>
+                      Sign Out
+                    </button>
+                  </div>
+                )}
               </div>
            </div>
         </header>
