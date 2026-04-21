@@ -1,6 +1,5 @@
 import { normalizeOrderStatusForDb } from '../lib/orderStatus';
 import { supabase } from './supabase';
-import { getMyProfile } from './profile';
 import { createProduct, deleteProduct, getProducts, updateProduct, type ProductInsert } from './api';
 import type { AdminOrderRow, Game, GameGenre, Order, OrderItem, Product, SiteSettings } from '../types';
 import type { HomeHeroRow, HomePlatformRow } from './home';
@@ -11,12 +10,15 @@ import type { HomeHeroRow, HomePlatformRow } from './home';
 // The actual data-level enforcement is Supabase RLS (patch_rls_is_admin.sql).
 
 export class AuthorizationError extends Error {
+  status: 401 | 403;
+
   constructor(
     message: string,
     /** HTTP status semantics: 401 = not authenticated, 403 = not admin */
-    public readonly status: 401 | 403,
+    status: 401 | 403,
   ) {
     super(message);
+    this.status = status;
     this.name = 'AuthorizationError';
   }
 }
