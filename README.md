@@ -1,74 +1,21 @@
-# React + TypeScript + Vite
+# 🎮 Game Top-up Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive web application for purchasing game top-ups, virtual currencies, and digital items. 
 
-Currently, two official plugins are available:
+🚀 **Live Demo:** [https://game-topup-snowy.vercel.app/](https://game-topup-snowy.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📝 About The Project
+This project is a centralized E-commerce marketplace for purchasing digital game items and online game top-ups. It features a responsive (mobile-first) design and implements a relational database structured up to the 3rd Normal Form (3NF) to minimize data redundancy and ensure data integrity.
 
-## React Compiler
+### ✨ Core Features
+* **Authentication:** Secure user registration and login (Powered by Supabase Auth).
+* **Storefront:** Browse available products, top-up packages, and in-game items.
+* **Categories & Filtering:** Easily navigate and filter products by category and game titles.
+* **Order Management:** Seamless shopping cart and order tracking system.
+* **Responsive Design:** Fully optimized for mobile, tablet, and desktop screens.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-"# game-topup" 
+## 🛠️ Built With
+* **Frontend:** React, TypeScript (TSX)
+* **Styling:** Tailwind CSS
+* **Backend & Database:** Supabase (PostgreSQL)
+* **Deployment:** Vercel
